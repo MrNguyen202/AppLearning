@@ -27,7 +27,7 @@ const TabsLayout = () => {
           name='home'
           options={{
             title: 'home',
-            headerShown: 'false',
+            headerShown: false,
             tabBarIcon: ({color, focused}) => (
               <TabIcon
                 icon={<AntDesign name="home" size={24}  color={color} />}
@@ -42,7 +42,7 @@ const TabsLayout = () => {
           name='search'
           options={{
             title: 'search',
-            headerShown: 'false',
+            headerShown: false,
             tabBarIcon: ({color, focused}) => (
               <TabIcon
                 icon={<AntDesign name="search1" size={24} color={color}/>}
@@ -57,7 +57,7 @@ const TabsLayout = () => {
           name='myCourses'
           options={{
             title: 'myCourses',
-            headerShown: 'false',
+            headerShown: false,
             tabBarIcon: ({color, focused}) => (
               <TabIcon
                 icon={<Feather name="book-open" size={24}  color={color} />}
@@ -72,7 +72,7 @@ const TabsLayout = () => {
           name='profile'
           options={{
             title: 'profile',
-            headerShown: 'false',
+            headerShown: false,
             tabBarIcon: ({color, focused}) => (
               <TabIcon
                 icon={<FontAwesome6 name="user" size={22} color={color} />}
