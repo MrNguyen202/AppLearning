@@ -21,7 +21,7 @@ const Tab = createBottomTabNavigator();
 
 const TabsLayout = () => {
   return (
-    <Tab.Navigator screenOptions={{
+    <Tab.Navigator initialRouteName='Search' screenOptions={{
       tabBarShowLabel: false,
       tabBarActiveTintColor:'#11cbd1',
     }}>
