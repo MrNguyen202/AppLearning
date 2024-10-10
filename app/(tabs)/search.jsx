@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
 
-const search = () => {
+const Search = () => {
   return (
-    <View>
+    <ScrollView>
       <Text>search</Text>
-    </View>
+    </ScrollView>
   )
 }
 
-export default search
+export default Search
