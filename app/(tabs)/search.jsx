@@ -33,7 +33,10 @@ const Search = () => {
         </View>
       </View>
       <View>
+        <View>
         <Text>Categories</Text>
+        
+        </View>
         
       </View>
       <ScrollView>
