@@ -3,10 +3,10 @@ import React from 'react'
 import Icon from '../../constants/Icon'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './Home'
-import MyCourses from './MyCourses'
-import Profile from './Profile'
-import Search from './Search'
+import Home from './home'
+import MyCourses from './myCourses'
+import Profile from './profile'
+import Search from './search'
 
 const TabIcon = ({icon, color, name, focused}) => {
     return (
@@ -21,7 +21,7 @@ const Tab = createBottomTabNavigator();
 
 const TabsLayout = () => {
   return (
-    <Tab.Navigator initialRouteName='Search' screenOptions={{
+    <Tab.Navigator initialRouteName='Home' screenOptions={{
       tabBarShowLabel: false,
       tabBarActiveTintColor:'#11cbd1',
     }}>
