@@ -40,7 +40,7 @@ const Search = () => {
         
       </View>
       <ScrollView>
-        <Text>Search3</Text>
+        <Text>Search di</Text>
       </ScrollView>
     </ScrollView>
   )
