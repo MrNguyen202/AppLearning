@@ -33,11 +33,14 @@ const Search = () => {
         </View>
       </View>
       <View>
+        <View>
         <Text>Categories</Text>
+        
+        </View>
         
       </View>
       <ScrollView>
-        <Text>Search3</Text>
+        <Text>Search di</Text>
       </ScrollView>
     </ScrollView>
   )
