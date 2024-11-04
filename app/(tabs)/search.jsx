@@ -20,7 +20,7 @@ const Search = () => {
     <ScrollView className={`bg-white pl-5 pr-5`}>
       <View className={`flex-row justify-between mt-3`}>
         <View className={`flex-row pl-3 rounded bg-gray-200 h-10  items-center w-3/4 mr-3`}>
-          <Icon type="antdesign" name="search1" size={16} color={'black'}  />
+          
           <TextInput className={`pl-2`} placeholder='Search course'/>
         </View>
         <View>
@@ -51,7 +51,6 @@ const Search = () => {
                   <Image source={item.icon} className={`w-7 h-7`} />
                   <Text className={`pl-4 text-lg font-light`}>{item.name}</Text>
                 </View>
-                <Icon type="MaterialIcons" name="keyboard-arrow-right" size={30} color="gray"/>
               </TouchableOpacity>
             )
           }}

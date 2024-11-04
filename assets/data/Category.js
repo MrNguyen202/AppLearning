@@ -1,30 +1,32 @@
-const Category = 
+import Icon from "../../constants/Icon"
+
+const Categories = 
 [
     {
         "id":1,
         "name":"Business",
-        "icon": require("../images/trend-up.png")
+        "image": Icon.trendUp
     },
     {
         "id":2,
         "name":"Design",
-        "icon": require("../images/pen.png")
+        "image": Icon.pen
     },
     {
         "id":3,
         "name":"Code",
-        "icon": require("../images/coding.png")
+        "image": Icon.coding
     },
     {
         "id":4,
         "name":"Movie",
-        "icon": require("../images/cam-recorder.png")
+        "image": Icon.camRecorder
     },
     {
         "id":5,
         "name":"Language",
-        "icon": require("../images/earth.png")
+        "image": Icon.earth
     }
 ]
 
-export default Category
+export default Categories
