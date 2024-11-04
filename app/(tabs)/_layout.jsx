@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React from 'react'
 import Icon from '../../constants/Icon'
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,7 +11,7 @@ import Search from './Search'
 const TabIcon = ({icon, color, name, focused}) => {
     return (
         <View className={'justify-center items-center'}>
-            {icon}
+            <Image source={icon} style={{width:24, height: 24}} resizeMode='contain' />
             <Text className={`translate-x-1 text-zinc-400 ${focused?'font-bold':'font-normal'}`} style={{color:color}}>{name}</Text>
         </View>
     )
@@ -23,7 +23,10 @@ const TabsLayout = () => {
   return (
     <Tab.Navigator initialRouteName='Home' screenOptions={{
       tabBarShowLabel: false,
-      tabBarActiveTintColor:'#11cbd1',
+      tabBarActiveTintColor:'#265AE8',
+      tabBarStyle:{
+        height: 60,
+      }
     }}>
       <Tab.Screen name="Home" component={Home} 
         options={{
@@ -31,7 +34,7 @@ const TabsLayout = () => {
                   headerShown: false,
                   tabBarIcon: ({color, focused}) => (
                     <TabIcon
-                      icon={<Icon type="antdesign" name="home" size={24}  color={color} />}
+                      icon={focused?Icon.homeFill:Icon.home}
                       color={color}
                       name="Home"
                       focused={focused}
@@ -45,7 +48,7 @@ const TabsLayout = () => {
                   headerShown: false,
                   tabBarIcon: ({color, focused}) => (
                     <TabIcon
-                      icon={<Icon type="antdesign" name="search1" size={24} color={color}/>}
+                      icon={focused?Icon.searchFill:Icon.searchNormal}
                       color={color}
                       name="Search"
                       focused={focused}
@@ -59,7 +62,7 @@ const TabsLayout = () => {
                   headerShown: false,
                   tabBarIcon: ({color, focused}) => (
                     <TabIcon
-                      icon={<Icon type="feather" name="book-open" size={24}  color={color} />}
+                      icon={focused?Icon.myCourseFill:Icon.myCourse}
                       color={color}
                       name="My Courses"
                       focused={focused}
@@ -73,7 +76,7 @@ const TabsLayout = () => {
                   headerShown: false,
                   tabBarIcon: ({color, focused}) => (
                     <TabIcon
-                      icon={<Icon type="fontawesome6" name="user" size={22} color={color} />}
+                      icon={focused?Icon.userFill:Icon.user2}
                       color={color}
                       name="Profile"
                       focused={focused}
@@ -82,77 +85,6 @@ const TabsLayout = () => {
                 }}
       />
     </Tab.Navigator>
-    // <>
-      
-    // <Tabs
-    //     screenOptions={{
-    //         tabBarShowLabel: false,
-    //         tabBarActiveTintColor:'#11cbd1',
-    //       }}
-    // >
-    //     <Tabs.Screen
-    //       name='Home'
-    //       options={{
-    //         title: 'home',
-    //         headerShown: false,
-    //         tabBarIcon: ({color, focused}) => (
-    //           <TabIcon
-    //             icon={<Icon type="antdesign" name="home" size={24}  color={color} />}
-    //             color={color}
-    //             name="Home"
-    //             focused={focused}
-    //           />
-    //         )
-    //       }}
-    //     />
-    //     <Tabs.Screen
-    //       name='Search'
-    //       options={{
-    //         title: 'search',
-    //         headerShown: false,
-    //         tabBarIcon: ({color, focused}) => (
-    //           <TabIcon
-    //             icon={<Icon type="antdesign" name="search1" size={24} color={color}/>}
-    //             color={color}
-    //             name="Search"
-    //             focused={focused}
-    //           />
-    //         )
-    //       }}
-    //     />
-    //     <Tabs.Screen
-    //       name='MyCourses'
-    //       options={{
-    //         title: 'myCourses',
-    //         headerShown: false,
-    //         tabBarIcon: ({color, focused}) => (
-    //           <TabIcon
-    //             icon={<Icon type="feather" name="book-open" size={24}  color={color} />}
-    //             color={color}
-    //             name="My Courses"
-    //             focused={focused}
-    //           />
-    //         )
-    //       }}
-    //     />
-    //     <Tabs.Screen
-    //       name='Profile'
-    //       options={{
-    //         title: 'profile',
-    //         headerShown: false,
-    //         tabBarIcon: ({color, focused}) => (
-    //           <TabIcon
-    //             icon={<Icon type="fontawesome6" name="user" size={22} color={color} />}
-    //             color={color}
-    //             name="Profile"
-    //             focused={focused}
-    //           />
-    //         )
-    //       }}
-    //     />
-        
-    //     </Tabs>
-    // </>
   )
 }
 

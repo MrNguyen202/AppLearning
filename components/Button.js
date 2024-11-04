@@ -10,7 +10,6 @@ const Button = ({bgColor, width, height, nameIcon, size, valTxt, type}) => {
           width:width, 
           height:height,
           }}>
-            <Icon type={type} name={nameIcon} size={size} color='#d3dae3' />
             <Text className={`text-white font-bold`}>{valTxt}</Text>
         </TouchableOpacity>
     </>

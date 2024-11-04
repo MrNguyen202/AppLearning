@@ -1,7 +1,8 @@
-import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TextInput, TouchableOpacity, FlatList, Image } from 'react-native'
 import React from 'react'
 import Icon from '../../constants/Icon'
 import Button from '../../components/Button'
+import Category from '../../assets/data/Category'
 
 const Search = () => {
   const hotTopics = ['Java', 'SQL', 'Javascript', 'Python', 'Digital Marketing', 'Photoshop', 'Watercolor']
@@ -19,7 +20,7 @@ const Search = () => {
     <ScrollView className={`bg-white pl-5 pr-5`}>
       <View className={`flex-row justify-between mt-3`}>
         <View className={`flex-row pl-3 rounded bg-gray-200 h-10  items-center w-3/4 mr-3`}>
-          <Icon type="antdesign" name="search1" size={16} color={'black'}  />
+          
           <TextInput className={`pl-2`} placeholder='Search course'/>
         </View>
         <View>
@@ -33,14 +34,47 @@ const Search = () => {
         </View>
       </View>
       <View>
-        <View>
-        <Text>Categories</Text>
-        
+        <View className={`flex-row items-center justify-between mt-6`}>
+          <Text className={`font-bold text-lg`}>Categories</Text>
+          <TouchableOpacity >
+            <Text className={`text-cyan-500`}>
+            View more
+            </Text>
+          </TouchableOpacity>
         </View>
-        
+        <FlatList
+          data={Category}
+          renderItem={({item})=>{
+            return (
+              <TouchableOpacity className={`flex-row items-end justify-between border border-gray-200 mt-2 pl-2 pr-2 pb-2 rounded-md`}>
+                <View className={`flex-row items-center mt-3`}>
+                  <Image source={item.icon} className={`w-7 h-7`} />
+                  <Text className={`pl-4 text-lg font-light`}>{item.name}</Text>
+                </View>
+              </TouchableOpacity>
+            )
+          }}
+        />
       </View>
       <ScrollView>
-        <Text>Search di</Text>
+        <View className={`flex-row items-center justify-between mt-6`}>
+          <Text className={`font-bold text-lg`}>Recommend for you</Text>
+          <TouchableOpacity >
+            <Text className={`text-cyan-500`}>
+            View more
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={Category}
+          renderItem={({item})=>{
+            return (
+              <>
+              </>
+            )
+          }}
+          horizontal={true}
+        />
       </ScrollView>
     </ScrollView>
   )
