@@ -7,6 +7,7 @@ import Home from './Home'
 import MyCourses from './MyCourses'
 import Profile from './Profile'
 import Search from './Search'
+import SearchResult from './SearchResult';
 
 const TabIcon = ({icon, color, name, focused}) => {
     return (
@@ -21,7 +22,7 @@ const Tab = createBottomTabNavigator();
 
 const TabsLayout = () => {
   return (
-    <Tab.Navigator initialRouteName='Home' screenOptions={{
+    <Tab.Navigator initialRouteName='Search' screenOptions={{
       tabBarShowLabel: false,
       tabBarActiveTintColor:'#265AE8',
       tabBarStyle:{
@@ -30,7 +31,7 @@ const TabsLayout = () => {
     }}>
       <Tab.Screen name="Home" component={Home} 
         options={{
-                  title: 'home',
+                  title: 'Home',
                   headerShown: false,
                   tabBarIcon: ({color, focused}) => (
                     <TabIcon
@@ -82,6 +83,14 @@ const TabsLayout = () => {
                       focused={focused}
                     />
                   )
+                }}
+      />
+      <Tab.Screen name="SearchResult" component={SearchResult}
+        options={{
+                  title: 'SearchResult',
+                  headerShown: false,
+                  tabBarButton: () => null,
+                  
                 }}
       />
     </Tab.Navigator>

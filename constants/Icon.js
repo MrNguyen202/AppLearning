@@ -42,6 +42,7 @@ import homeFill from "../assets/icons/home-fill.png";
 import searchFill from "../assets/icons/search-normal-fill.png";
 import myCourseFill from "../assets/icons/my-course-fill.png";
 import userFill from "../assets/icons/user-2-fill.png";
+import savedFill from "../assets/icons/saved-fill.png";
 
 export default {
   apple,
@@ -87,5 +88,6 @@ export default {
     homeFill,
     searchFill,
     myCourseFill,
-    userFill
+    userFill,
+    savedFill
 };
