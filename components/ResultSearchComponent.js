@@ -3,9 +3,9 @@ import React from "react";
 import Icon from "../constants/Icon";
 import enroll_courses from "../assets/data/enroll_course";
 
-const ResultSearchComponent = ({ item }) => {
+const ResultSearchComponent = ({ item, onPress }) => {
   return (
-    <TouchableOpacity className={`flex-row mt-3`}>
+    <TouchableOpacity className={`flex-row mt-3`} onPress={onPress}>
       <Image source={item.image} className={`w-[106] h-[92] rounded-md`} />
       <View className={`justify-between ml-4 w-3/5`}>
         <Text className={`font-bold text-lg`}>{item.title}</Text>

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TextInput, TouchableOpacity, FlatList, Image } from 'react-native'
+import { View, Text, ScrollView, TextInput, TouchableOpacity, FlatList, Image, StatusBar } from 'react-native'
 import React, {useState} from 'react'
 import Icon from '../../constants/Icon'
 import Button from '../../components/Button'
@@ -24,6 +24,7 @@ const Search = ({navigation}) => {
 
   return (
     <View className={`bg-white pl-5 pr-5 flex-1`}>
+
       <View className={`flex-row justify-between mt-2`}>
         <SearchComponent placeholder={"Graphic illustration"} img={Icon.searchNormal} onChange={(val)=>{
           setTxtSearch(val)
@@ -77,7 +78,9 @@ const Search = ({navigation}) => {
           data={Course}
           renderItem={({item})=>{
             return (
-              <RecommendComponent item={item}/>
+              <RecommendComponent item={item} onPress={() => {
+                navigation.navigate('CourseDetail', {item})
+              }}/>
             )
           }}
           horizontal={true}

@@ -42,6 +42,7 @@ import homeFill from "../assets/icons/home-fill.png";
 import searchFill from "../assets/icons/search-normal-fill.png";
 import myCourseFill from "../assets/icons/my-course-fill.png";
 import userFill from "../assets/icons/user-2-fill.png";
+import arrowLeft from "../assets/icons/arrow-left.png";
 import savedFill from "../assets/icons/saved-fill.png";
 
 export default {
@@ -89,5 +90,6 @@ export default {
     searchFill,
     myCourseFill,
     userFill,
-    savedFill
+    savedFill,
+    arrowLeft
 };

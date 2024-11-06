@@ -1,5 +1,5 @@
-import { View, Text, Image } from 'react-native'
-import React from 'react'
+import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native'
+import React,{useState} from 'react'
 import Icon from '../../constants/Icon'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -18,17 +18,24 @@ const TabIcon = ({icon, color, name, focused}) => {
     )
 }
 
+
+
 const Tab = createBottomTabNavigator();
 
 const TabsLayout = () => {
+
+
   return (
+    
     <Tab.Navigator initialRouteName='Search' screenOptions={{
       tabBarShowLabel: false,
       tabBarActiveTintColor:'#265AE8',
       tabBarStyle:{
         height: 60,
-      }
+      },
+      
     }}>
+
       <Tab.Screen name="Home" component={Home} 
         options={{
                   title: 'Home',
@@ -93,6 +100,7 @@ const TabsLayout = () => {
                   
                 }}
       />
+      
     </Tab.Navigator>
   )
 }

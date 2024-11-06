@@ -1,22 +1,68 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, Image, StatusBar, } from 'react-native'
+import React, {useState} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import TabsLayout from './(tabs)/_layout';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import login from './(auth)/login';
 import signup from './(auth)/signup';
 const Stack = createNativeStackNavigator();
+import CourseDetail from './(tabs)/CourseDetail';
+import Icon from '../constants/Icon';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const index = () => {
-    return (
-        <NavigationContainer independent={true}>
-            {/* <Stack.Navigator>
-                <Stack.Screen name="login" component={login} />
-                <Stack.Screen name="signup" component={signup} />
-            </Stack.Navigator> */}
+    const [status, setStatus] = useState(false)
 
-            <TabsLayout />
+
+    const Header = ({navigation}) =>{
+      return (
+        <View className={`flex-row items-center justify-between flex-1 w-full`}>
+          <TouchableOpacity onPress={() => {
+              // console.log(navigation)
+              navigation.navigate('Search');
+            }}>
+            <Image source={Icon.arrowLeft} className={``} />
+          </TouchableOpacity>
+          <Text className={`font-bold text-2xl`}>Details</Text>
+          <TouchableOpacity onPress={()=>{setStatus(!status)}}>
+            <Image source={status?Icon.saved:Icon.savedFill} className ={`mr-11`}/>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+    return (
+        <SafeAreaProvider>
+<NavigationContainer independent={true} >
+            <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1"  />
+
+            <Stack.Navigator initialRouteName='Home'>
+
+                {/* <Stack.Screen name="login" component={login} />
+                <Stack.Screen name="signup" component={signup} /> */}
+                <Stack.Screen
+                 name="CourseDetail" component={CourseDetail}
+                    options={({navigation})=>({
+                        title: '',
+                        tabBarButton: () => null,
+                        // headerShown:false
+                        // statusBarTranslucent: true,
+                            statusBarColor:'black',
+                            statusBarHidden: true,
+                            headerTitle:  () => <Header navigation={navigation} />,
+                            headerBackVisible: false,
+
+                        })}
+                        
+                 />
+                 <Stack.Screen name="Home" component={TabsLayout}
+                    options={{
+                        headerShown: false,
+                        statusBarColor:'black',
+                    }}
+                 />
+            </Stack.Navigator>
         </NavigationContainer>
+        </SafeAreaProvider> 
       );
 }
 

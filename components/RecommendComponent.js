@@ -5,7 +5,7 @@ import enroll_courses from '../assets/data/enroll_course'
 import sections from '../assets/data/Section'
 import lessons from '../assets/data/Lesson'
 
-const RecommendComponent = ({item}) => {
+const RecommendComponent = ({item, onPress}) => {
   const [count, setCount] = useState(0)
   const [status, setStatus] = useState(false)
   var course_sections = sections.filter(value => {return value.course_id == item.course_id})
@@ -23,7 +23,7 @@ const RecommendComponent = ({item}) => {
   
   
   return (
-    <TouchableOpacity className={`mr-2 mt-2 rounded border pl-2 pr-2 pt-2 pb-2  border-[#6666663b]`}>
+    <TouchableOpacity className={`mr-2 mt-2 rounded border pl-2 pr-2 pt-2 pb-2  border-[#6666663b]`} onPress={onPress}>
       <View >
         <Image source={item.image} className={`w-[165] h-[75] rounded `}/>
         <Text className={`absolute ml-2 mt-1 text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold `}>{item.status}</Text>

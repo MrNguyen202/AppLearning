@@ -34,7 +34,9 @@ const SearchResult = ({navigation, route}) => {
       <Text className={`mt-6 text-[#666666] mb-4`}>Your search result</Text>
       <FlatList
         data={coursesResult}
-        renderItem={({item}) => <ResultSearchComponent item={item} />}
+        renderItem={({item}) => <ResultSearchComponent item={item} onPress={() => {
+          navigation.navigate('CourseDetail', {item})
+        }}/>}
       />
     </View>
   )
