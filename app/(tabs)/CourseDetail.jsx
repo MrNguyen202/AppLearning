@@ -1,17 +1,54 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, ScrollView, Image } from "react-native";
+import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Search from "./Search";
 import Home from "./Home";
 import { NavigationContainer } from "@react-navigation/native";
+import courses from "../../assets/data/Course";
+import Icon from "../../constants/Icon";
+import sections from "../../assets/data/Section";
+import lessons from "../../assets/data/Lesson";
+import enroll_courses from "../../assets/data/enroll_course";
 
 const Tab = createMaterialTopTabNavigator();
 
 function OverView() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Home!</Text>
-    </View>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
+      <Text>Introduction</Text>
+      <Text>{courses[0].description}</Text>
+      <Text>What You'll Get</Text>
+      <View>
+        <Image source={Icon.book}></Image>
+        <Text>25 Lessons</Text>
+      </View>
+      <View>
+        <Image source={Icon.book}></Image>
+        <Text>25 Lessons</Text>
+      </View>
+      <View>
+        <Image source={Icon.book}></Image>
+        <Text>25 Lessons</Text>
+      </View>
+      <View>
+        <Image source={Icon.book}></Image>
+        <Text>25 Lessons</Text>
+      </View>
+      <View>
+        <Image source={Icon.book}></Image>
+        <Text>25 Lessons</Text>
+      </View>
+      <View>
+        <Image source={Icon.book}></Image>
+        <Text>25 Lessons</Text>
+      </View>
+      <View>
+        <Image source={Icon.book}></Image>
+        <Text>25 Lessons</Text>
+      </View>
+
+    </ScrollView>
+    
   );
 }
 
@@ -23,14 +60,81 @@ function Lessons() {
   );
 }
 const CourseDetail = ({ navigation, route }) => {
-  // const videoSource = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-  // console.log(videoSource);
+  const [student, setStudent] = useState(0);
+  const [section, setSection] = useState([]);
+  const [lesson, setLesson] = useState([]);
+  const [time, setTime] = useState(0);
+  var section_course = sections.filter(
+    (section) => section.course_id === courses[0].course_id
+  );
+
+  useEffect(() => {
+    setSection(section_course);
+    setLesson(
+      lessons.filter((lesson) =>
+        section_course
+          .map((section) => section.section_id)
+          .includes(lesson.section_id)
+      )
+    );
+
+    var sum = 0;
+    setStudent(0);
+    enroll_courses.map((value, index) => {
+      sum += value.course == courses[0].course_id ? 1 : 0;
+    });
+    setStudent(sum);
+
+    var totalSecond = 0;
+    lessons.map((value, index) => {
+      const [minutes, seconds] = value.time.split(":").map(Number);
+      totalSecond += minutes * 60 + seconds;
+    });
+    setTime(totalSecond);
+  }, []);
   return (
-    <View>
+    <View className={`bg-white`}>
       <View className={`w-full h-[200] bg-slate-500`}></View>
 
-      <View>
-        <Text>abc</Text>
+      <View className={`ml-4 mt-3 mr-4`}>
+        <Text
+          className={` text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold w-1/5 text-center `}
+        >
+          {courses[0].status}
+        </Text>
+        <View className={`flex-row items-center`}>
+          <Image
+            className={`mt-2 mr-3`}
+            source={require("../../assets/images/avatar.png")}
+          />
+          <Text className={`font-bold`}>{courses[0].teacher}</Text>
+        </View>
+        <Text className={`font-bold text-xl mt`}>{courses[0].title}</Text>
+
+        <View className={`justify-between flex-row mt-4`}>
+          <View className={`flex-row items-center`}>
+            <Image source={Icon.clock} />
+            <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
+              {Math.floor(time / 3600)} hour {Math.floor((time % 3600) / 60)}{" "}
+              min
+            </Text>
+          </View>
+          <View className={`flex-row items-center`}>
+            <Image source={Icon.camera} />
+            <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>{lesson.length} lessons</Text>
+          </View>
+        </View>
+        <View className={`justify-between flex-row mb-4 mt-2`}>
+          <View className={`flex-row items-center`}>
+            <Image source={Icon.starNoFill} />
+            <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>{courses[0].rating}</Text>
+          </View>
+          <View className={`flex-row items-center`}>
+            <Image source={Icon.user3} />
+            <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>{student} students</Text>
+          </View>
+        </View>
+        <Text className={`mb-4`}>{courses[0].description}</Text>
       </View>
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <NavigationContainer independent={true}>

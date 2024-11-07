@@ -35,7 +35,7 @@ const index = () => {
 <NavigationContainer independent={true} >
             <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1"  />
 
-            <Stack.Navigator initialRouteName='Home'>
+            <Stack.Navigator initialRouteName='Tabs'>
 
                 {/* <Stack.Screen name="login" component={login} />
                 <Stack.Screen name="signup" component={signup} /> */}
@@ -54,7 +54,7 @@ const index = () => {
                         })}
                         
                  />
-                 <Stack.Screen name="Home" component={TabsLayout}
+                 <Stack.Screen name="Tabs" component={TabsLayout}
                     options={{
                         headerShown: false,
                         statusBarColor:'black',
