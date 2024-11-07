@@ -2,10 +2,10 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Icon from '../constants/Icon'
 
-const Button = ({bgColor, width, height, valTxt, type, onPress}) => {
+const Button = ({bgColor, width, height, valTxt, txtColor, onPress, border, status}) => {
   return (
     <>
-        <TouchableOpacity className={`flex-row justify-evenly items-center rounded`} style={{
+        <TouchableOpacity  className={`flex-row justify-evenly items-center rounded ${border}`} style={{
           backgroundColor:bgColor, 
           width:width, 
           height:height,
@@ -13,7 +13,7 @@ const Button = ({bgColor, width, height, valTxt, type, onPress}) => {
           onPress={onPress}
           
           >
-            <Text className={`text-white font-bold`}>{valTxt}</Text>
+            <Text className={`${txtColor} font-bold`}>{valTxt}</Text>
         </TouchableOpacity>
     </>
   )

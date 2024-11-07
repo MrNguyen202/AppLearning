@@ -31,7 +31,7 @@ const Search = ({navigation}) => {
         }} />
         <View>
         
-          <Button bgColor='#265AE8' width='60%' height={40} size={20} valTxt='Search' onPress={() => {
+          <Button bgColor='#265AE8' width='60%' height={40} size={20} valTxt='Search' txtColor={"text-white"} onPress={() => {
             navigation.navigate('SearchResult',{txtSearch})
           }}/>
         </View>
