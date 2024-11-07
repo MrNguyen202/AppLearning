@@ -23,7 +23,7 @@ const Search = ({navigation}) => {
   }
 
   return (
-    <View className={`bg-white pl-5 pr-5 flex-1`}>
+    <ScrollView className={`bg-white pl-5 pr-5 flex-1`}>
 
       <View className={`flex-row justify-between mt-2`}>
         <SearchComponent placeholder={"Graphic illustration"} img={Icon.searchNormal} onChange={(val)=>{
@@ -83,10 +83,11 @@ const Search = ({navigation}) => {
               }}/>
             )
           }}
+          nestedScrollEnabled={true}
           horizontal={true}
         />
       </ScrollView>
-    </View>
+    </ScrollView>
   )
 }
 

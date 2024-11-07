@@ -162,7 +162,7 @@ const CourseDetail = ({ navigation, route }) => {
 
       <View className={`ml-4 mt-3 mr-4`}>
         <Text
-          className={` text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold w-1/5 text-center `}
+          className={` text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold w-1/4 text-center `}
         >
           {courses[0].status}
         </Text>
@@ -173,8 +173,8 @@ const CourseDetail = ({ navigation, route }) => {
           />
           <Text className={`font-bold`}>{courses[0].teacher}</Text>
         </View>
-        <Text className={`font-bold text-xl mt`}>{courses[0].title}</Text>
-        <View className={`justify-between flex-row mt-4`}>
+        <Text className={`font-bold text-xl `}>{courses[0].title}</Text>
+        <View className={`justify-between flex-row mt-2`}>
           <View className={`flex-row items-center`}>
             <Image source={Icon.clock} />
             <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
@@ -189,7 +189,7 @@ const CourseDetail = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
-        <View className={`justify-between flex-row mb-4 mt-2`}>
+        <View className={`justify-between flex-row mb-3 mt-2`}>
           <View className={`flex-row items-center`}>
             <Image source={Icon.starNoFill} />
             <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
@@ -203,7 +203,7 @@ const CourseDetail = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
-        <Text className={`mb-4`}>{courses[0].description}</Text>
+        <Text className={`mb-3`}>{courses[0].description}</Text>
       </View>
       <ScrollView contentContainerStyle={{ height: "100%", flexGrow:3}}>
         <NavigationContainer independent={true}>
