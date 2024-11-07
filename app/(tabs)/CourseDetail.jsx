@@ -213,8 +213,9 @@ const CourseDetail = ({ navigation, route }) => {
           </Tab.Navigator>
         </NavigationContainer>
       </ScrollView>
-      <View className="absolute bottom-0 inset-x-0 bg-gray-800 py-4">
-        <Text className="text-center text-white">Fixed Footer</Text>
+      <View className="absolute bottom-0 inset-x-0 border-t border-[#DDDDDD] py-4 bg-[#F5F9FF] flex-row justify-between pl-8 pr-8 items-center">
+        <Text className=" text-black font-bold">$  {courses[0].price}</Text>
+        <Button bgColor={"#265AE8"} width={141} height={44} icon={Icon.shoppingCart} txtColor={"text-white"} valTxt={"Add to cart"}/>
       </View>
     </View>
   );
