@@ -41,6 +41,7 @@ import searchFill from "../assets/icons/search-normal-fill.png";
 import myCourseFill from "../assets/icons/my-course-fill.png";
 import userFill from "../assets/icons/user-2-fill.png";
 import coding from "../assets/icons/coding.png";
+import eye from "../assets/icons/eye.png";
 export default {
   apple,
   arrowRight1,
@@ -84,5 +85,6 @@ export default {
   searchFill,
   myCourseFill,
   userFill,
-  coding
+  coding,
+  eye
 };

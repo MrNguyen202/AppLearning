@@ -3,19 +3,19 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import TabsLayout from './(tabs)/_layout';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import login from './(auth)/login';
-import signup from './(auth)/signup';
+import Login from './(auth)/login';
+import Signup from './(auth)/signup';
 const Stack = createNativeStackNavigator();
 
 const index = () => {
     return (
         <NavigationContainer independent={true}>
-            {/* <Stack.Navigator>
-                <Stack.Screen name="login" component={login} />
-                <Stack.Screen name="signup" component={signup} />
-            </Stack.Navigator> */}
+            <Stack.Navigator>
+                <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
+                <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
+            </Stack.Navigator>
 
-            <TabsLayout />
+            {/* <TabsLayout /> */}
         </NavigationContainer>
       );
 }
