@@ -9,7 +9,8 @@ const courses = [
       "created_create": "2024-01-01",
       "category": "Programming",
       "teacher": "John Doe",
-      "status": "Best seller"
+      "status": "Best seller",
+      "totalReview": 25
     },
     {
       "course_id": 2,
@@ -21,7 +22,8 @@ const courses = [
       "created_create": "2024-02-15",
       "category": "Programming",
       "teacher": "Jane Smith",
-      "status": "new"
+      "status": "new",
+      "totalReview": 10
     },
     {
       "course_id": 3,
@@ -33,7 +35,8 @@ const courses = [
       "created_create": "2024-03-10",
       "category": "Web Development",
       "teacher": "Alice Johnson",
-      "status": "hot"
+      "status": "hot",
+      "totalReview": 15
     },
     {
       "course_id": 4,
@@ -45,7 +48,8 @@ const courses = [
       "created_create": "2024-04-05",
       "category": "Data Science",
       "teacher": "Robert Brown",
-      "status": "Best seller"
+      "status": "Best seller",
+      "totalReview": 20
     },
     {
       "course_id": 5,
@@ -57,7 +61,60 @@ const courses = [
       "created_create": "2024-05-20",
       "category": "Data Science",
       "teacher": "Emily Davis",
-      "status": "new"
+      "status": "new",
+      "totalReview": 5
+    },
+    {
+      "course_id": 6,
+      "title": "HTML, CSS for noob and nerds!",
+      "description": "Learn the basics of HTML and CSS.",
+      "price": 19.99,
+      "rating": 4.0,
+      "image": require('../../assets/images/CSS_HTML_Home.png'),
+      "created_create": "2024-06-15",
+      "category": "Web Development",
+      "teacher": "Sayef Mamud",
+      "status": "hot",
+      "totalReview": 4051
+    },
+    {
+      "course_id": 7,
+      "title": "Modern interior design for beginner!",
+      "description": "Learn the basics of interior design.",
+      "price": 19.99,
+      "rating": 4.0,
+      "image": require('../../assets/images/Modern_design.png'),
+      "created_create": "2024-06-16",
+      "category": "Design",
+      "teacher": "Sayef Mamud",
+      "status": "new",
+      "totalReview": 551
+    },
+    {
+      "course_id": 8,
+      "title": "Take care your home plants!",
+      "description": "Learn how to take care of your home plants.",
+      "price": 19.99,
+      "rating": 4.0,
+      "image": require('../../assets/images/home_plant.png'),
+      "created_create": "2024-06-17",
+      "category": "Gardening",
+      "teacher": "Sarrah Maningger",
+      "status": "new",
+      "totalReview": 7051
+    },
+    {
+      "course_id": 8,
+      "title": "Grow your creative business with Insta!",
+      "description": "Learn how to grow your business with Instagram.",
+      "price": 19.99,
+      "rating": 4.0,
+      "image": require('../../assets/images/Course_instagram.png'),
+      "created_create": "2024-06-17",
+      "category": "Gardening",
+      "teacher": "Samantha Rossye",
+      "status": "new",
+      "totalReview": 7051
     }
   ]
 
