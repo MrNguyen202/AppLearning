@@ -63,6 +63,32 @@ const courses = [
       "teacher": "Emily Davis",
       "status": "new",
       "totalReview": 5
+    },
+    {
+      "course_id": 6,
+      "title": "HTML, CSS for noob and nerds!",
+      "description": "Learn the basics of HTML and CSS.",
+      "price": 19.99,
+      "rating": 4.0,
+      "image": require('../../assets/images/CSS_HTML_Home.png'),
+      "created_create": "2024-06-15",
+      "category": "Web Development",
+      "teacher": "Sayef Mamud",
+      "status": "hot",
+      "totalReview": 4051
+    },
+    {
+      "course_id": 7,
+      "title": "Modern interior design for beginner!",
+      "description": "Learn the basics of interior design.",
+      "price": 19.99,
+      "rating": 4.0,
+      "image": require('../../assets/images/Modern_design.png'),
+      "created_create": "2024-06-16",
+      "category": "Design",
+      "teacher": "Sayef Mamud",
+      "status": "new",
+      "totalReview": 551
     }
   ]
 

@@ -13,7 +13,7 @@ import { useState } from 'react'
 const Home = () => {
 
   const [categoryPopular, setCategoryPopular] = useState(Category.slice(0, 2))
-  const [courseMostWatching, setCourseMostWatching] = useState(Course.slice(0, 2))
+  const [courseMostWatching, setCourseMostWatching] = useState(Course.slice(5, 7))
 
   return (
     <View>
