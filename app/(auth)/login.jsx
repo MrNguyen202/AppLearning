@@ -27,11 +27,11 @@ const Login = ({ navigation }) => {
             <Image source={Icon.eye} className="w-5 h-5"></Image>
           </TouchableOpacity>
         </View>
-        <View className="flex-row items-center justify-end w-[360] h-[60]">
+        <TouchableOpacity className="flex-row items-center justify-end w-[360] h-[60]">
           <Text className="font-bold">Forgot Password?</Text>
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity className="bg-[#0961F5] w-[350] h-[60] rounded-full justify-center items-center">
-          <Text className="text-[18px] text-white font-bold">Sing In</Text>
+          <Text className="text-[18px] text-white font-bold">Sign In</Text>
           <View className="w-12 h-12 bg-white rounded-full absolute right-2 justify-center items-center">
             <Image source={Icon.arrowRight} className="w-4 h-4"></Image>
           </View>
@@ -50,7 +50,7 @@ const Login = ({ navigation }) => {
       </View>
       <View className="flex-row items-center justify-center my-3">
         <Text className="text-[14px] mr-2">Don't have an Account?</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {navigation.navigate("Signup")}}>
           <Text className="text-[#0961F5] text-[14px] font-bold uppercase underline">Sign Up</Text>
         </TouchableOpacity>
       </View>

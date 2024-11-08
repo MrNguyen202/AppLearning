@@ -11,8 +11,8 @@ const index = () => {
     return (
         <NavigationContainer independent={true}>
             <Stack.Navigator>
-                <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
                 <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
+                <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
             </Stack.Navigator>
 
             {/* <TabsLayout /> */}
