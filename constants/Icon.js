@@ -6,8 +6,6 @@ import camRecorder from "../assets/icons/cam-recorder.png";
 import camera from "../assets/icons/camera.png";
 import check from "../assets/icons/check.png";
 import clock from "../assets/icons/clock.png";
-import coding from "../assets/icons/coding.png";
-import download from "../assets/icons/download.png";
 import earth from "../assets/icons/earth.png";
 import filter from "../assets/icons/Filter.png";
 import google from "../assets/icons/google.png";
@@ -42,7 +40,7 @@ import homeFill from "../assets/icons/home-fill.png";
 import searchFill from "../assets/icons/search-normal-fill.png";
 import myCourseFill from "../assets/icons/my-course-fill.png";
 import userFill from "../assets/icons/user-2-fill.png";
-
+import coding from "../assets/icons/coding.png";
 export default {
   apple,
   arrowRight1,
@@ -52,8 +50,6 @@ export default {
   camera,
   check,
   clock,
-  coding,
-  download,
   earth,
   filter,
   google,
@@ -84,8 +80,9 @@ export default {
   user2,
   user3,
   write,
-    homeFill,
-    searchFill,
-    myCourseFill,
-    userFill
+  homeFill,
+  searchFill,
+  myCourseFill,
+  userFill,
+  coding
 };

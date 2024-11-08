@@ -1,14 +1,11 @@
-import { Text, View } from "react-native";
+import { Text, View, Image } from "react-native";
 import React from "react";
-import Icon from "../constants/Icon";
 
-const CategoryComponent = ({item, index}) => {
+const CategoryComponent = ({item}) => {
   return (
-    <View className={"h-14 w-44 m-3 flex-row items-center"}>
-      <View style={{backgroundColor: item.bgColor}} className={"w-14 h-14 justify-center items-center rounded-md"}>
-        <Icon type={item.typeIcon} name={item.nameIcon} size={24} color={"white"}/>
-      </View>
-      <Text className={"text-xl ml-2"}>{item.title}</Text>
+    <View className={"my-2 h-12 w-44 pl-2 flex-row items-center border-gray-300 border rounded "}>
+      <Image source={item.image} className={"w-7 h-7"}></Image>
+      <Text className={"text-base ml-2"}>{item.name}</Text>
     </View>
   );
 };

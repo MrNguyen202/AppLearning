@@ -9,7 +9,8 @@ const courses = [
       "created_create": "2024-01-01",
       "category": "Programming",
       "teacher": "John Doe",
-      "status": "Best seller"
+      "status": "Best seller",
+      "totalReview": 25
     },
     {
       "course_id": 2,
@@ -21,7 +22,8 @@ const courses = [
       "created_create": "2024-02-15",
       "category": "Programming",
       "teacher": "Jane Smith",
-      "status": "new"
+      "status": "new",
+      "totalReview": 10
     },
     {
       "course_id": 3,
@@ -33,7 +35,8 @@ const courses = [
       "created_create": "2024-03-10",
       "category": "Web Development",
       "teacher": "Alice Johnson",
-      "status": "hot"
+      "status": "hot",
+      "totalReview": 15
     },
     {
       "course_id": 4,
@@ -45,7 +48,8 @@ const courses = [
       "created_create": "2024-04-05",
       "category": "Data Science",
       "teacher": "Robert Brown",
-      "status": "Best seller"
+      "status": "Best seller",
+      "totalReview": 20
     },
     {
       "course_id": 5,
@@ -57,7 +61,8 @@ const courses = [
       "created_create": "2024-05-20",
       "category": "Data Science",
       "teacher": "Emily Davis",
-      "status": "new"
+      "status": "new",
+      "totalReview": 5
     }
   ]
 
