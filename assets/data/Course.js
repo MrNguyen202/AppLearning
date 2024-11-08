@@ -89,6 +89,32 @@ const courses = [
       "teacher": "Sayef Mamud",
       "status": "new",
       "totalReview": 551
+    },
+    {
+      "course_id": 8,
+      "title": "Take care your home plants!",
+      "description": "Learn how to take care of your home plants.",
+      "price": 19.99,
+      "rating": 4.0,
+      "image": require('../../assets/images/home_plant.png'),
+      "created_create": "2024-06-17",
+      "category": "Gardening",
+      "teacher": "Sarrah Maningger",
+      "status": "new",
+      "totalReview": 7051
+    },
+    {
+      "course_id": 8,
+      "title": "Grow your creative business with Insta!",
+      "description": "Learn how to grow your business with Instagram.",
+      "price": 19.99,
+      "rating": 4.0,
+      "image": require('../../assets/images/Course_instagram.png'),
+      "created_create": "2024-06-17",
+      "category": "Gardening",
+      "teacher": "Samantha Rossye",
+      "status": "new",
+      "totalReview": 7051
     }
   ]
 

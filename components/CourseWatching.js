@@ -2,7 +2,7 @@ import { Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "../constants/Icon";
 
-const CourseWatchingInMonthComponent = ({ item }) => {
+const CourseWatching= ({ item }) => {
   return (
     <TouchableOpacity className={"my-2 mr-[11] h-56 w-44 justify-evenly"}>
       <Image source={item.image} className="w-44 h-28 rounded-lg"/>
@@ -25,5 +25,5 @@ const CourseWatchingInMonthComponent = ({ item }) => {
   );
 };
 
-export default CourseWatchingInMonthComponent;
+export default CourseWatching;
 

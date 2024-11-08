@@ -6,7 +6,9 @@ const users = [
       "password": "password123",
       "phone": "1234567890",
       "address": "123 Main St, Cityville",
-      "role": "teacher"
+      "role": "teacher",
+      "school": "ABC School",
+      "avatar": require("../../assets/images/teacher.png"),
     },
     {
       "user_id": 2,
@@ -15,7 +17,9 @@ const users = [
       "password": "password456",
       "phone": "0987654321",
       "address": "456 Elm St, Townsville",
-      "role": "student"
+      "role": "student",
+      "school": "ABC School",
+      "avatar": require("../../assets/images/teacher.png"),
     },
     {
       "user_id": 3,
@@ -24,7 +28,9 @@ const users = [
       "password": "password789",
       "phone": "1122334455",
       "address": "789 Maple St, Villageville",
-      "role": "teacher"
+      "role": "teacher",
+      "school": "ABC School",
+      "avatar": require("../../assets/images/teacher.png"),
     },
     {
       "user_id": 4,
@@ -33,7 +39,9 @@ const users = [
       "password": "password101",
       "phone": "2233445566",
       "address": "101 Oak St, Hamletville",
-      "role": "student"
+      "role": "student",
+      "school": "ABC School",
+      "avatar": require("../../assets/images/teacher.png"),
     },
     {
       "user_id": 5,
@@ -42,7 +50,9 @@ const users = [
       "password": "password202",
       "phone": "3344556677",
       "address": "202 Pine St, Metropolis",
-      "role": "teacher"
+      "role": "teacher",
+      "school": "ABC School",
+      "avatar": require("../../assets/images/teacher.png"),
     },
     {
       "user_id": 6,
@@ -51,16 +61,32 @@ const users = [
       "password": "password303",
       "phone": "4455667788",
       "address": "303 Cedar St, Cosmopolis",
-      "role": "student"
+      "role": "student",
+      "school": "ABC School",
+      "avatar": require("../../assets/images/teacher.png"),
     },
     {
       "user_id": 7,
-      "fullname": "George Vu",
-      "email": "george.vu@example.com",
+      "fullname": "Samatha Rossye",
+      "email": "samatha.rossye@example.com",
       "password": "password404",
-      "phone": "5566778899",
-      "address": "404 Birch St, Capital City",
-      "role": "teacher"
+      "phone": "4455667788",
+      "address": "303 Cedar St, Cosmopolis",
+      "role": "teacher",
+      "school": "University of Havard",
+      "avatar": require("../../assets/images/Samatha_Rossye.png"),
+    },
+    {
+      "user_id": 8,
+      "fullname": "Samatha Rossye",
+      "email": "samatha.rossye@example.com",
+      "password": "password404",
+      "phone": "4455667788",
+      "address": "303 Cedar St, Cosmopolis",
+      "role": "teacher",
+      "school": "University of Havard",
+      "avatar": require("../../assets/images/Samatha_Rossye1.png"),
     }
   ]
   
+  export default users

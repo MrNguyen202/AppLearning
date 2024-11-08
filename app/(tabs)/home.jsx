@@ -4,16 +4,20 @@ import Icon from '../../constants/Icon'
 import { Link } from 'expo-router'
 import CategoryComponent from '../../components/CategoryComponent'
 import CategoryPopularComponent from '../../components/CategoryPopularComponent'
-import CourseWatchingInMonthComponent from '../../components/CourseWatchingInMonthComponent'
+import CourseWatching from '../../components/CourseWatching'
+import TeacherPopularComponent from '../../components/TeacherPopularComponent'
 import Category from '../../assets/data/Category'
 import Course from '../../assets/data/Course'
+import User from '../../assets/data/User'
 import { useState } from 'react'
 
 
 const Home = () => {
 
   const [categoryPopular, setCategoryPopular] = useState(Category.slice(0, 2))
-  const [courseMostWatching, setCourseMostWatching] = useState(Course.slice(5, 7))
+  const [courseMostWatching, setCourseMostWatching] = useState(Course.slice(5,7))
+  const [teacherPopular, setTeacherPopular] = useState(User.filter((item) => item.role === 'teacher').slice(-2))
+  const [watchingInApp, setWatchingInApp] = useState(Course.slice(-2))
 
   return (
     <View>
@@ -32,7 +36,7 @@ const Home = () => {
         <Text className={"text-white text-base"}>What do you want to learn today?</Text>
       </View>
 
-      <ScrollView>
+      <ScrollView className="h-[670]">
         <View className={"bg-[#1A6EFC] my-8 mx-6 h-40 rounded-3xl justify-center pl-6"}>
           <View>
             <Text className="text-white text-xl">25% OFF*</Text>
@@ -70,13 +74,13 @@ const Home = () => {
           </View>
           <View className="mx-6">
             <FlatList
-            data={categoryPopular}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <CategoryPopularComponent item={item} />
-            )}
-            horizontal={true}
-            scrollEnabled={false}
+              data={categoryPopular}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <CategoryPopularComponent item={item} />
+              )}
+              horizontal={true}
+              scrollEnabled={false}
             />
           </View>
         </View>
@@ -88,34 +92,56 @@ const Home = () => {
               <Text className="text-gray-500">See more</Text>
             </TouchableOpacity>
           </View>
-          <View className="mx-6"> 
+          <View className="mx-6">
             <FlatList
-            data={courseMostWatching}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <CourseWatchingInMonthComponent item={item} />
-            )}
-            horizontal={true}
-            scrollEnabled={false}
+              data={courseMostWatching}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <CourseWatching item={item} />
+              )}
+              horizontal={true}
+              scrollEnabled={false}
             />
           </View>
         </View>
 
         <View>
           <View className="flex-row justify-between mx-6 my-4 items-end">
-            <Text className="w-40 text-lg font-bold">Popular category our in platform</Text>
+            <Text className="w-40 text-lg font-bold">Our top popular teacher this month</Text>
             <TouchableOpacity>
               <Text className="text-gray-500">See more</Text>
             </TouchableOpacity>
+          </View>
+          <View className="mx-6">
+            <FlatList
+              data={teacherPopular}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <TeacherPopularComponent item={item} />
+              )}
+              horizontal={true}
+              scrollEnabled={false}
+            />
           </View>
         </View>
 
         <View>
           <View className="flex-row justify-between mx-6 my-4 items-end">
-            <Text className="w-40 text-lg font-bold">Popular category our in platform</Text>
+            <Text className="w-40 text-lg font-bold">Most watching category in month</Text>
             <TouchableOpacity>
               <Text className="text-gray-500">See more</Text>
             </TouchableOpacity>
+          </View>
+          <View className="mx-6">
+            <FlatList
+              data={watchingInApp}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <CourseWatching item={item} />
+              )}
+              horizontal={true}
+              scrollEnabled={false}
+            />
           </View>
         </View>
 
