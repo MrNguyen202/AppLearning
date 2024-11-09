@@ -8,7 +8,13 @@ import MyCourseCompletedComponent from '../../components/MyCourseCompletedCompon
 
 const MyCourses = () => {
 
+  const [status, setStatus] = useState('completed');
   const [myCoursesCompleted, setMyCoursesCompleted] = useState(User_courses.filter((course) => course.progress === 'completed'));
+  const [myCoursesOngoing, setMyCoursesOngoing] = useState(User_courses.filter((course) => course.progress === 'ongoing'));
+
+  const handleStatus = (newStatus) => {
+    setStatus(newStatus);
+  }
 
   return (
     <View>
@@ -24,20 +30,20 @@ const MyCourses = () => {
         </View>
       </View>
       <View className="flex-row justify-between m-6">
-        <TouchableOpacity className="bg-[#0961F5] w-[170] h-[48] rounded-full items-center justify-center">
-          <Text className="text-white text-[17px] font-bold">Completed</Text>
+        <TouchableOpacity onPress={() => handleStatus('completed')} className={`${status === 'completed' ? 'bg-[#0961F5]' : 'bg-[#E8F1FF]'} w-[170] h-[48] rounded-full items-center justify-center`}>
+          <Text className={`${status === 'completed' ? 'text-white' : 'text-black'} text-[17px] font-bold`}>Completed</Text>
         </TouchableOpacity>
-        <TouchableOpacity className="bg-[#E8F1FF] w-[170] h-[48] rounded-full items-center justify-center">
-          <Text className="text-black text-[17px] font-bold">Ongoing</Text>
+        <TouchableOpacity onPress={() => handleStatus('ongoing')} className={`${status === 'ongoing' ? 'bg-[#0961F5]' : 'bg-[#E8F1FF]'} w-[170] h-[48] rounded-full items-center justify-center`}>
+          <Text className={`${status === 'ongoing' ? 'text-white' : 'text-black'} text-[17px] font-bold`}>Ongoing</Text>
         </TouchableOpacity>
       </View>
       <View className="h-[575] items-center">
         <FlatList
-        data={myCoursesCompleted}
-        keyExtractor={(item) => item.course_id}
-        renderItem={({ item }) => (
-          <MyCourseCompletedComponent item={item}/>
-        )}
+          data={status === 'completed' ? myCoursesCompleted : myCoursesOngoing}
+          keyExtractor={(item) => item.course_id}
+          renderItem={({ item }) => (
+            <MyCourseCompletedComponent item={item} status={status} />
+          )}
         />
       </View>
     </View>
