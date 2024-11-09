@@ -3,15 +3,15 @@ import React, {useState} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import TabsLayout from './(tabs)/_layout';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import login from './(auth)/login';
-import signup from './(auth)/signup';
+import Login from './(auth)/login';
+import Signup from './(auth)/signup';
 const Stack = createNativeStackNavigator();
 import CourseDetail from './(tabs)/CourseDetail';
 import Icon from '../constants/Icon';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const index = () => {
-    const [status, setStatus] = useState(false)
+    
 
 
     const Header = ({navigation}) =>{
@@ -37,8 +37,8 @@ const index = () => {
 
             <Stack.Navigator initialRouteName='Tabs'>
 
-                {/* <Stack.Screen name="login" component={login} />
-                <Stack.Screen name="signup" component={signup} /> */}
+                <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="signup" component={Signup} />
                 <Stack.Screen
                  name="CourseDetail" component={CourseDetail}
                     options={({navigation})=>({
