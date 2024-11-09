@@ -5,6 +5,7 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -23,55 +24,63 @@ import LessonComponent from "../../components/LessonComponent";
 
 const Tab = createMaterialTopTabNavigator();
 
-function Lessons() {
-  return (
-    <View className={`bg-white flex-1  pl-4 pr-4 pt-5 `}>
-      <ScrollView className={`rounded-2xl shadow-md shadow-[#d4d3d3]`}>
-        <LessonComponent txtValue="a" item={sections} />
-      </ScrollView>
-    </View>
-  );
-}
 const CourseDetail = ({ navigation, route }) => {
   const [student, setStudent] = useState(0);
   const [section, setSection] = useState([]);
   const [lesson, setLesson] = useState([]);
   const [time, setTime] = useState(0);
   const [feedbackCourse, setFeedbackCourse] = useState([]);
-  var section_course = sections.filter(
-    (section) => section.course_id === courses[0].course_id
+  const [scrollHeight, setScrollHeight] = useState(
+    Dimensions.get("window").height
   );
 
+  var section_course = sections.filter(
+    (section) => section.course_id === route.params.course.course_id
+  );
+
+  // console.log(lesson_course)
+
   useEffect(() => {
-    setSection(section_course);
-    setLesson(
-      lessons.filter((lesson) =>
+    const initializeData = async () => {
+      const section_course = sections.filter(
+        (section) => section.course_id === route.params.course.course_id
+      );
+      setSection(section_course);
+
+      const studentCount = enroll_courses.reduce(
+        (count, value) =>
+          value.course === route.params.course.course_id ? count + 1 : count,
+        0
+      );
+      setStudent(studentCount);
+
+      const lesson_course = lessons.filter((lesson) =>
         section_course
           .map((section) => section.section_id)
           .includes(lesson.section_id)
-      )
-    );
+      );
+      setLesson(lesson_course);
 
-    var sum = 0;
-    setStudent(0);
-    enroll_courses.map((value, index) => {
-      sum += value.course == courses[0].course_id ? 1 : 0;
-    });
-    setStudent(sum);
+      const totalSeconds = lesson_course.reduce((total, lesson) => {
+        const [minutes, seconds] = lesson.time.split(":").map(Number);
+        return total + minutes * 60 + seconds;
+      }, 0);
+      setTime(totalSeconds);
 
-    var totalSecond = 0;
-    lessons.map((value, index) => {
-      const [minutes, seconds] = value.time.split(":").map(Number);
-      totalSecond += minutes * 60 + seconds;
-    });
-    setTime(totalSecond);
+      const filteredFeedback = feedback.filter(
+        (value) => value.course === route.params.course.course_id
+      );
+      setFeedbackCourse(filteredFeedback);
+    };
 
-    setFeedbackCourse(
-      feedback.filter((value) => {
-        return value.course == courses[0].course_id;
-      })
-    );
-  }, []);
+    initializeData();
+  }, [
+    sections,
+    enroll_courses,
+    lessons,
+    feedback,
+    route.params.course.course_id,
+  ]);
 
   function OverView() {
     const [status, setStatus] = useState(true);
@@ -85,12 +94,14 @@ const CourseDetail = ({ navigation, route }) => {
 
     return (
       <ScrollView
-        contentContainerStyle={{ height:"400%"}}
-        className={`bg-white pl-4 pr-4 pt-6`}
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }}
+      style={{ alignSelf: 'stretch' }} 
+              className={`bg-white pl-4 pr-4 pt-6`}
       >
-        
         <Text className={`font-bold mb-4 text-lg`}>Introduction</Text>
-        <Text className={`text-[#666666] mb-4`}>{courses[0].description}</Text>
+        <Text className={`text-[#666666] mb-4`}>
+          {route.params.course.description}
+        </Text>
         <Text className={`font-bold mb-4  text-lg`}>What You'll Get</Text>
         <View className={`flex-row mt-2`}>
           <Image source={Icon.book}></Image>
@@ -159,6 +170,17 @@ const CourseDetail = ({ navigation, route }) => {
     );
   }
 
+  function Lessons() {
+    return (
+      <ScrollView className={`bg-white flex-1 rounded-2xl`} contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+      style={{ alignSelf: 'stretch' }} >
+          <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
+            <LessonComponent item={section} status={0} />
+        </View>
+      </ScrollView>
+    );
+  }
+
   return (
     <View className={`bg-white flex-1`}>
       <View className={`w-full h-[200] bg-slate-500`}></View>
@@ -167,16 +189,18 @@ const CourseDetail = ({ navigation, route }) => {
         <Text
           className={` text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold w-1/4 text-center `}
         >
-          {courses[0].status}
+          {route.params.course.status}
         </Text>
         <View className={`flex-row items-center`}>
           <Image
             className={`mt-2 mr-3`}
             source={require("../../assets/images/avatar.png")}
           />
-          <Text className={`font-bold`}>{courses[0].teacher}</Text>
+          <Text className={`font-bold`}>{route.params.course.teacher}</Text>
         </View>
-        <Text className={`font-bold text-xl `}>{courses[0].title}</Text>
+        <Text className={`font-bold text-xl `}>
+          {route.params.course.title}
+        </Text>
         <View className={`justify-between flex-row mt-2`}>
           <View className={`flex-row items-center`}>
             <Image source={Icon.clock} />
@@ -196,7 +220,7 @@ const CourseDetail = ({ navigation, route }) => {
           <View className={`flex-row items-center`}>
             <Image source={Icon.starNoFill} />
             <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
-              {courses[0].rating}
+              {route.params.course.rating}
             </Text>
           </View>
           <View className={`flex-row items-center`}>
@@ -206,9 +230,9 @@ const CourseDetail = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
-        <Text className={`mb-3`}>{courses[0].description}</Text>
+        <Text className={`mb-3`}>{route.params.course.description}</Text>
       </View>
-      <ScrollView contentContainerStyle={{ height: "100%", flexGrow:3}}>
+      <ScrollView contentContainerStyle={{ height: "100%", flexGrow: 1 }}>
         <NavigationContainer independent={true}>
           <Tab.Navigator>
             <Tab.Screen name="Over view" component={OverView} />
@@ -217,8 +241,17 @@ const CourseDetail = ({ navigation, route }) => {
         </NavigationContainer>
       </ScrollView>
       <View className="absolute bottom-0 inset-x-0 border-t border-[#DDDDDD] py-4 bg-[#F5F9FF] flex-row justify-between pl-8 pr-8 items-center">
-        <Text className=" text-black font-bold">$  {courses[0].price}</Text>
-        <Button bgColor={"#265AE8"} width={141} height={44} icon={Icon.shoppingCart} txtColor={"text-white"} valTxt={"Add to cart"}/>
+        <Text className=" text-black font-bold">
+          $ {route.params.course.price}
+        </Text>
+        <Button
+          bgColor={"#265AE8"}
+          width={141}
+          height={44}
+          icon={Icon.shoppingCart}
+          txtColor={"text-white"}
+          valTxt={"Add to cart"}
+        />
       </View>
     </View>
   );

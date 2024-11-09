@@ -79,7 +79,7 @@ const Search = ({navigation}) => {
           renderItem={({item})=>{
             return (
               <RecommendComponent item={item} onPress={() => {
-                navigation.navigate('CourseDetail', {item})
+                navigation.navigate('CourseDetail', {course:item})
               }}/>
             )
           }}

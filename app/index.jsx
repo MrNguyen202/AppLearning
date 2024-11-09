@@ -35,7 +35,7 @@ const index = () => {
 <NavigationContainer independent={true} >
             <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1"  />
 
-            <Stack.Navigator initialRouteName='CourseDetail'>
+            <Stack.Navigator initialRouteName='Tabs'>
 
                 {/* <Stack.Screen name="login" component={login} />
                 <Stack.Screen name="signup" component={signup} /> */}
