@@ -19,13 +19,16 @@ import enroll_courses from "../../assets/data/enroll_course";
 import feedback from "../../assets/data/FeedBack";
 import CommentComponent from "../../components/CommentComponent";
 import Button from "../../components/Button";
+import LessonComponent from "../../components/LessonComponent";
 
 const Tab = createMaterialTopTabNavigator();
 
 function Lessons() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
+    <View className={`bg-white flex-1  pl-4 pr-4 pt-5 `}>
+      <ScrollView className={`rounded-2xl shadow-md shadow-[#d4d3d3]`}>
+        <LessonComponent txtValue="a" item={sections} />
+      </ScrollView>
     </View>
   );
 }
