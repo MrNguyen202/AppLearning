@@ -21,12 +21,11 @@ import feedback from "../../assets/data/FeedBack";
 import CommentComponent from "../../components/CommentComponent";
 import Button from "../../components/Button";
 import LessonComponent from "../../components/LessonComponent";
-import { Video } from 'expo-av'
-
+import { Video } from "expo-av";
 
 const Tab = createMaterialTopTabNavigator();
 
-const CourseDetail = ({ navigation, route }) => {
+const MyCourseDetail = ({ navigation, route }) => {
   const [student, setStudent] = useState(0);
   const [section, setSection] = useState([]);
   const [lesson, setLesson] = useState([]);
@@ -36,17 +35,11 @@ const CourseDetail = ({ navigation, route }) => {
   const [status, setStatus] = React.useState({});
   const [course, setCourse] = useState([]);
 
-
-
-
-
-
   // console.log(lesson_course)
 
   useEffect(() => {
     const initializeData = async () => {
-
-      setCourse(courses[0])
+      setCourse(courses[0]);
 
       var section_course = sections.filter(
         (section) => section.course_id === course.course_id
@@ -54,14 +47,12 @@ const CourseDetail = ({ navigation, route }) => {
 
       setSection(section_course);
 
-
       const studentCount = enroll_courses.reduce(
         (count, value) =>
-          value.course === course.course_id  ? count + 1 : count,
+          value.course === course.course_id ? count + 1 : count,
         0
       );
       setStudent(studentCount);
-
 
       const lesson_course = lessons.filter((lesson) =>
         section_course
@@ -80,20 +71,12 @@ const CourseDetail = ({ navigation, route }) => {
         (value) => value.course === course.course_id
       );
       setFeedbackCourse(filteredFeedback);
-
     };
 
     initializeData();
-  }, [
-    sections,
-    enroll_courses,
-    lessons,
-    feedback,
-    course,
-  ]);
+  }, [sections, enroll_courses, lessons, feedback, course]);
 
-
-  function OverView() {
+  function Project() {
     const [status, setStatus] = useState(true);
     const [showFeedback, setShowFeedback] = useState([]);
 
@@ -105,14 +88,12 @@ const CourseDetail = ({ navigation, route }) => {
 
     return (
       <ScrollView
-      contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }}
-      style={{ alignSelf: 'stretch' }} 
-              className={`bg-white pl-4 pr-4 pt-6`}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }}
+        style={{ alignSelf: "stretch" }}
+        className={`bg-white pl-4 pr-4 pt-6`}
       >
         <Text className={`font-bold mb-4 text-lg`}>Introduction</Text>
-        <Text className={`text-[#666666] mb-4`}>
-          {course.description}
-        </Text>
+        <Text className={`text-[#666666] mb-4`}>{course.description}</Text>
         <Text className={`font-bold mb-4  text-lg`}>What You'll Get</Text>
         <View className={`flex-row mt-2`}>
           <Image source={Icon.book}></Image>
@@ -183,10 +164,27 @@ const CourseDetail = ({ navigation, route }) => {
 
   function Lessons() {
     return (
-      <ScrollView className={`bg-white flex-1 rounded-2xl`} contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
-      style={{ alignSelf: 'stretch' }} >
-          <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
-            <LessonComponent item={section} status={0} />
+      <ScrollView
+        className={`bg-white flex-1 rounded-2xl`}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+        style={{ alignSelf: "stretch" }}
+      >
+        <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
+          <LessonComponent item={section} status={0} />
+        </View>
+      </ScrollView>
+    );
+  }
+
+  function QA() {
+    return (
+      <ScrollView
+        className={`bg-white flex-1 rounded-2xl`}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+        style={{ alignSelf: "stretch" }}
+      >
+        <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
+          <LessonComponent item={section} status={0} />
         </View>
       </ScrollView>
     );
@@ -197,7 +195,9 @@ const CourseDetail = ({ navigation, route }) => {
       <Video
         ref={video}
         className={`w-full h-[200]`}
-        source={{uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
+        source={{
+          uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+        }}
         useNativeControls
         isLooping
         onPlaybackStatusUpdate={setStatus}
@@ -217,9 +217,7 @@ const CourseDetail = ({ navigation, route }) => {
           />
           <Text className={`font-bold`}>{course.teacher}</Text>
         </View>
-        <Text className={`font-bold text-xl `}>
-          {course.title}
-        </Text>
+        <Text className={`font-bold text-xl `}>{course.title}</Text>
         <View className={`justify-between flex-row mt-2`}>
           <View className={`flex-row items-center`}>
             <Image source={Icon.clock} />
@@ -254,15 +252,14 @@ const CourseDetail = ({ navigation, route }) => {
       <ScrollView contentContainerStyle={{ height: "100%", flexGrow: 1 }}>
         <NavigationContainer independent={true}>
           <Tab.Navigator>
-            <Tab.Screen name="Over view" component={OverView} />
             <Tab.Screen name="Lessons" component={Lessons} />
+            <Tab.Screen name="Project" component={Project} />
+            <Tab.Screen name="Q&A" component={QA} />
           </Tab.Navigator>
         </NavigationContainer>
       </ScrollView>
       <View className="absolute bottom-0 inset-x-0 border-t border-[#DDDDDD] py-4 bg-[#F5F9FF] flex-row justify-between pl-8 pr-8 items-center">
-        <Text className=" text-black font-bold">
-          $ {course.price}
-        </Text>
+        <Text className=" text-black font-bold">$ {course.price}</Text>
         <Button
           bgColor={"#265AE8"}
           width={141}
@@ -276,4 +273,4 @@ const CourseDetail = ({ navigation, route }) => {
   );
 };
 
-export default CourseDetail;
+export default MyCourseDetail;

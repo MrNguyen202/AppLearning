@@ -22,12 +22,10 @@ const TabIcon = ({icon, color, name, focused}) => {
 
 const Tab = createBottomTabNavigator();
 
-const TabsLayout = () => {
-
-
+const TabsLayout = ({navigation, route}) => {
   return (
     
-    <Tab.Navigator initialRouteName='Search' screenOptions={{
+    <Tab.Navigator initialRouteName='CourseDetail' screenOptions={{
       tabBarShowLabel: false,
       tabBarActiveTintColor:'#265AE8',
       tabBarStyle:{
@@ -89,7 +87,8 @@ const TabsLayout = () => {
                       name="Profile"
                       focused={focused}
                     />
-                  )
+                  ),
+                  tabBarButton:() => null
                 }}
       />
       <Tab.Screen name="SearchResult" component={SearchResult}
