@@ -42,10 +42,13 @@ import myCourseFill from "../assets/icons/my-course-fill.png";
 import userFill from "../assets/icons/user-2-fill.png";
 import arrowLeft from "../assets/icons/arrow-left.png";
 import savedFill from "../assets/icons/saved-fill.png";
-
+import cloud from "../assets/icons/cloud.png";
 import coding from "../assets/icons/coding.png";
 import eye from "../assets/icons/eye.png";
 import searchFillWhite from "../assets/icons/searchFillWhite.png";
+import bin from "../assets/icons/bin.png";
+
+
 export default {
   apple,
   arrowRight1,
@@ -93,5 +96,7 @@ export default {
     arrowLeft,
   coding,
   eye,
-  searchFillWhite
+  searchFillWhite,
+  cloud,
+  bin
 };

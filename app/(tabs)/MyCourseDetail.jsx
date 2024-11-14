@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -22,6 +23,9 @@ import CommentComponent from "../../components/CommentComponent";
 import Button from "../../components/Button";
 import LessonComponent from "../../components/LessonComponent";
 import { Video } from "expo-av";
+import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system";
+import { shareAsync } from "expo-sharing";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -34,7 +38,20 @@ const MyCourseDetail = ({ navigation, route }) => {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [course, setCourse] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
+  const selectFiles = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        multiple: true, // Cho phép chọn nhiều file
+      });
+
+      setSelectedFiles(result.assets || [result]); // Sử dụng `assets` nếu chọn nhiều file, hoặc lưu thông tin của file đơn
+      console.log("Selected files:", result.assets || [result]);
+    } catch (error) {
+      console.error("Error picking document:", error);
+    }
+  };
   // console.log(lesson_course)
 
   useEffect(() => {
@@ -86,17 +103,105 @@ const MyCourseDetail = ({ navigation, route }) => {
         : setShowFeedback(feedbackCourse);
     }, [status]);
 
+    const downloadFromUrl = async () => {
+      const filename = "sample.pdf"; // Đổi tên file cho phù hợp
+    
+      try {
+        const result = await FileSystem.downloadAsync(
+          'https://pdfobject.com/pdf/sample.pdf',
+          FileSystem.documentDirectory + filename
+        );
+        console.log(result);
+    
+        // Kiểm tra sự tồn tại của Content-Type và sử dụng giá trị mặc định nếu cần
+        const mimeType = result.headers && result.headers["Content-Type"] 
+          ? result.headers["Content-Type"] 
+          : "application/pdf"; // Sử dụng "application/pdf" cho file PDF
+    
+        save(result.uri, filename, mimeType);
+      } catch (error) {
+        console.error('Download failed:', error);
+      }
+    };
+    
+    const save = async (uri, filename, mimetype) => {
+      console.log(3 + filename);
+      console.log(2 + mimetype);
+      console.log(1 + uri);
+      if (Platform.OS === "android") {
+        const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+        if (permissions.granted) {
+          const base64 = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
+          await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, filename, mimetype)
+            .then(async (uri) => {
+              await FileSystem.writeAsStringAsync(uri, base64, { encoding: FileSystem.EncodingType.Base64 });
+            })
+            .catch(e => console.log('Error saving file:', e));
+        } else {
+          shareAsync(uri);
+        }
+      } else {
+        shareAsync(uri);
+      }
+    };
+    
+
     return (
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }}
         style={{ alignSelf: "stretch" }}
         className={`bg-white pl-4 pr-4 pt-6`}
       >
-        <TouchableOpacity onPress={() => {
+        <TouchableOpacity
+          onPress={selectFiles}
+          className={`border-dashed justify-center items-center p-6 border-[#1849D6] border-2 `}
+        >
+          <Image source={Icon.cloud} />
+          <Text className={`text-base`}>
+            Drag your file(s) or {`\t`}
+            <Text className={"text-blue-500 text-lg"}>browse</Text>
+          </Text>
 
-        }}>
-          <Text>Select file</Text>
+          <Text className={"text-gray-500 text-sm"}>
+            Max 10 MB files are allowed
+          </Text>
         </TouchableOpacity>
+        {selectedFiles.map((file, index) => {
+          if (index >= 3 && status) {
+            return null;
+          } else {
+            return (
+              <View
+                key={index}
+                className={`flex-row items-center justify-between border border-[#E7E7E7] rounded-md pl-2 pr-2 pt-3 pb-3 mt-2`}
+              >
+                <View>
+                  <Text className={`bold`}>{file.name}</Text>
+                  <Text className={`text-[#167F71]`}>Upload success</Text>
+                </View>
+                <TouchableOpacity>
+                  <Image source={Icon.bin} />
+                </TouchableOpacity>
+              </View>
+            );
+          }
+        })}
+        <View className={`mt-3`}>
+          <Text className={`font-bold mb-4 text-lg`}>
+            Description for project
+          </Text>
+          <Text className={`text-[#666666] mb-4`}>{course.description}</Text>
+        </View>
+        <View>
+          <Text className={`font-bold mb-4 text-lg`}>
+            Resources for download
+          </Text>
+          <Text className={`text-[#666666] mb-4`}>{course.description}</Text>
+        </View>
+        <TouchableOpacity onPress={downloadFromUrl} > 
+          <Text>Abc</Text>
+        </TouchableOpacity>
+
       </ScrollView>
     );
   }
