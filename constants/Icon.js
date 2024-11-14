@@ -6,6 +6,7 @@ import camRecorder from "../assets/icons/cam-recorder.png";
 import camera from "../assets/icons/camera.png";
 import check from "../assets/icons/check.png";
 import clock from "../assets/icons/clock.png";
+import download from "../assets/icons/download.png";
 import earth from "../assets/icons/earth.png";
 import filter from "../assets/icons/Filter.png";
 import google from "../assets/icons/google.png";
@@ -98,5 +99,6 @@ export default {
   eye,
   searchFillWhite,
   cloud,
-  bin
+  bin,
+  download
 };

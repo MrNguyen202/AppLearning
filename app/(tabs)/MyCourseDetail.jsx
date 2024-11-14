@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
+  StyleSheet,
+  TextInput,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -26,6 +28,8 @@ import { Video } from "expo-av";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
+import questions from "../../assets/data/Question";
+import answers from "../../assets/data/Answer";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -39,6 +43,8 @@ const MyCourseDetail = ({ navigation, route }) => {
   const [status, setStatus] = React.useState({});
   const [course, setCourse] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
 
   const selectFiles = async () => {
     try {
@@ -55,13 +61,17 @@ const MyCourseDetail = ({ navigation, route }) => {
   // console.log(lesson_course)
 
   useEffect(() => {
-    const initializeData = async () => {
+    if (courses && courses.length > 0) {
       setCourse(courses[0]);
+    }
+  }, [courses]);
 
-      var section_course = sections.filter(
+  // Cập nhật dữ liệu section và student count khi course thay đổi
+  useEffect(() => {
+    if (course && sections) {
+      const section_course = sections.filter(
         (section) => section.course_id === course.course_id
       );
-
       setSection(section_course);
 
       const studentCount = enroll_courses.reduce(
@@ -70,11 +80,14 @@ const MyCourseDetail = ({ navigation, route }) => {
         0
       );
       setStudent(studentCount);
+    }
+  }, [course, sections, enroll_courses]);
 
+  // Cập nhật danh sách bài học và tổng thời gian khi section thay đổi
+  useEffect(() => {
+    if (section.length > 0 && lessons) {
       const lesson_course = lessons.filter((lesson) =>
-        section_course
-          .map((section) => section.section_id)
-          .includes(lesson.section_id)
+        section.map((sec) => sec.section_id).includes(lesson.section_id)
       );
       setLesson(lesson_course);
 
@@ -83,19 +96,34 @@ const MyCourseDetail = ({ navigation, route }) => {
         return total + minutes * 60 + seconds;
       }, 0);
       setTime(totalSeconds);
+    }
+  }, [section, lessons]);
 
-      const filteredFeedback = feedback.filter(
-        (value) => value.course === course.course_id
+  // Cập nhật danh sách câu hỏi và câu trả lời khi course hoặc danh sách questions thay đổi
+  useEffect(() => {
+    if (course && questions) {
+      const questionCourse = questions.filter(
+        (question) => question.course === course.course_id
       );
-      setFeedbackCourse(filteredFeedback);
-    };
+      setQuestions(questionCourse);
 
-    initializeData();
-  }, [sections, enroll_courses, lessons, feedback, course]);
+      const questionIds = questionCourse.map(
+        (question) => question.question_id
+      );
+
+      if (answers) {
+        const answerQuestion = answers.filter((answer) =>
+          questionIds.includes(answer.question)
+        );
+        setAnswers(answerQuestion);
+      }
+    }
+  }, [course, questions, answers]);
 
   function Project() {
     const [status, setStatus] = useState(true);
     const [showFeedback, setShowFeedback] = useState([]);
+    const [fileResource, setFileResource] = useState("sample.pdf");
 
     useEffect(() => {
       status
@@ -105,38 +133,42 @@ const MyCourseDetail = ({ navigation, route }) => {
 
     const downloadFromUrl = async () => {
       const filename = "sample.pdf"; // Đổi tên file cho phù hợp
-    
+      setFileResource(filename);
       try {
         const result = await FileSystem.downloadAsync(
-          'https://pdfobject.com/pdf/sample.pdf',
+          "https://pdfobject.com/pdf/sample.pdf",
           FileSystem.documentDirectory + filename
         );
-        console.log(result);
-    
         // Kiểm tra sự tồn tại của Content-Type và sử dụng giá trị mặc định nếu cần
-        const mimeType = result.headers && result.headers["Content-Type"] 
-          ? result.headers["Content-Type"] 
-          : "application/pdf"; // Sử dụng "application/pdf" cho file PDF
-    
+        const mimeType =
+          result.headers && result.headers["Content-Type"]
+            ? result.headers["Content-Type"]
+            : "application/pdf"; // Sử dụng "application/pdf" cho file PDF
         save(result.uri, filename, mimeType);
       } catch (error) {
-        console.error('Download failed:', error);
+        console.error("Download failed:", error);
       }
     };
-    
+
     const save = async (uri, filename, mimetype) => {
-      console.log(3 + filename);
-      console.log(2 + mimetype);
-      console.log(1 + uri);
       if (Platform.OS === "android") {
-        const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+        const permissions =
+          await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
         if (permissions.granted) {
-          const base64 = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
-          await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, filename, mimetype)
+          const base64 = await FileSystem.readAsStringAsync(uri, {
+            encoding: FileSystem.EncodingType.Base64,
+          });
+          await FileSystem.StorageAccessFramework.createFileAsync(
+            permissions.directoryUri,
+            filename,
+            mimetype
+          )
             .then(async (uri) => {
-              await FileSystem.writeAsStringAsync(uri, base64, { encoding: FileSystem.EncodingType.Base64 });
+              await FileSystem.writeAsStringAsync(uri, base64, {
+                encoding: FileSystem.EncodingType.Base64,
+              });
             })
-            .catch(e => console.log('Error saving file:', e));
+            .catch((e) => console.log("Error saving file:", e));
         } else {
           shareAsync(uri);
         }
@@ -144,7 +176,6 @@ const MyCourseDetail = ({ navigation, route }) => {
         shareAsync(uri);
       }
     };
-    
 
     return (
       <ScrollView
@@ -196,12 +227,58 @@ const MyCourseDetail = ({ navigation, route }) => {
           <Text className={`font-bold mb-4 text-lg`}>
             Resources for download
           </Text>
-          <Text className={`text-[#666666] mb-4`}>{course.description}</Text>
-        </View>
-        <TouchableOpacity onPress={downloadFromUrl} > 
-          <Text>Abc</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={downloadFromUrl}
+            className={`flex-row justify-between items-center mt-1`}
+          >
+            <View className={`flex-row items-center`}>
+              <Image source={Icon.pdf} className={`mr-3`} />
+              <View>
+                <Text className={`text-base font-bold`}>{fileResource}</Text>
+                <View className={`flex-row w-[70] justify-between mt-2`}>
+                  <Text className={`text-xs text-[#888C94]`}>.pdf</Text>
+                  <Text className={`text-xs text-[#888C94]`}>2Mb</Text>
+                </View>
+              </View>
+            </View>
 
+            <Image source={Icon.download} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={downloadFromUrl}
+            className={`flex-row justify-between items-center  mt-3`}
+          >
+            <View className={`flex-row items-center`}>
+              <Image source={Icon.pdf} className={`mr-3`} />
+              <View>
+                <Text className={`text-base font-bold`}>{fileResource}</Text>
+                <View className={`flex-row w-[70] justify-between mt-2`}>
+                  <Text className={`text-xs text-[#888C94]`}>.pdf</Text>
+                  <Text className={`text-xs text-[#888C94]`}>2Mb</Text>
+                </View>
+              </View>
+            </View>
+
+            <Image source={Icon.download} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={downloadFromUrl}
+            className={`flex-row justify-between items-center mt-3`}
+          >
+            <View className={`flex-row items-center`}>
+              <Image source={Icon.pdf} className={`mr-3`} />
+              <View>
+                <Text className={`text-base font-bold`}>{fileResource}</Text>
+                <View className={`flex-row w-[70] justify-between mt-2`}>
+                  <Text className={`text-xs text-[#888C94]`}>.pdf</Text>
+                  <Text className={`text-xs text-[#888C94]`}>2Mb</Text>
+                </View>
+              </View>
+            </View>
+
+            <Image source={Icon.download} />
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }
@@ -221,16 +298,59 @@ const MyCourseDetail = ({ navigation, route }) => {
   }
 
   function QA() {
-    return (
-      <ScrollView
-        className={`bg-white flex-1 rounded-2xl`}
-        contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
-        style={{ alignSelf: "stretch" }}
-      >
-        <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
-          <LessonComponent item={section} status={0} />
+    console.log(questions);
+
+    const renderPost = ({ item }) => (
+      <View className="bg-white p-4 mb-2">
+        <View className="flex-row items-center mb-2">
+          <Image
+            source={{ uri: item.avatar }}
+            className="w-10 h-10 rounded-full mr-3"
+          />
+          <View>
+            <Text className="font-bold text-base">{item.username}</Text>
+            <Text className="text-gray-500 text-sm">
+              {item.timestamp} · Student
+            </Text>
+          </View>
         </View>
-      </ScrollView>
+        <Text className="text-base mb-2">{item.content}</Text>
+        <TouchableOpacity>
+          <Text className="text-blue-600 font-medium mb-1">Reply</Text>
+        </TouchableOpacity>
+        {item.replies > 0 && (
+          <TouchableOpacity>
+            <Text className="text-blue-600 font-medium">
+              view {item.replies} replies
+            </Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+
+    return (
+      <View className="flex-1 bg-gray-100 ">
+        {questions.length > 0
+          ? questions.map((question) => {
+              console.log(question);
+              renderPost({ item: question });
+            })
+          : null}
+        <View className="flex-row items-center bg-gray-200 p-2 border-t border-gray-300">
+          <Image
+            source={{ uri: "https://v0.dev/placeholder.svg" }}
+            className="w-8 h-8 rounded-full mr-2"
+          />
+          <TextInput
+            className="flex-1 bg-white rounded-full px-4 py-2 text-base"
+            placeholder="Write a Q&A"
+            placeholderTextColor="#999"
+          />
+          <TouchableOpacity className="bg-blue-600 w-8 h-8 rounded-full justify-center items-center ml-2">
+            <Text className="text-white text-lg">➤</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 
@@ -302,17 +422,6 @@ const MyCourseDetail = ({ navigation, route }) => {
           </Tab.Navigator>
         </NavigationContainer>
       </ScrollView>
-      <View className="absolute bottom-0 inset-x-0 border-t border-[#DDDDDD] py-4 bg-[#F5F9FF] flex-row justify-between pl-8 pr-8 items-center">
-        <Text className=" text-black font-bold">$ {course.price}</Text>
-        <Button
-          bgColor={"#265AE8"}
-          width={141}
-          height={44}
-          icon={Icon.shoppingCart}
-          txtColor={"text-white"}
-          valTxt={"Add to cart"}
-        />
-      </View>
     </View>
   );
 };
