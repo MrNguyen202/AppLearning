@@ -7,6 +7,8 @@ import Home from './home'
 import MyCourses from './myCourses'
 import Profile from './profile'
 import Search from './search'
+import PaymentMethod from './PaymentMethod'
+import PaymentSuccess from './PaymentSuccess'
 
 const TabIcon = ({icon, color, name, focused}) => {
     return (
@@ -21,7 +23,7 @@ const Tab = createBottomTabNavigator();
 
 const TabsLayout = () => {
   return (
-    <Tab.Navigator initialRouteName='My Courses' screenOptions={{
+    <Tab.Navigator initialRouteName='PaymentMethod' screenOptions={{
       tabBarShowLabel: false,
       tabBarActiveTintColor:'#265AE8',
       tabBarStyle:{
@@ -82,6 +84,22 @@ const TabsLayout = () => {
                       focused={focused}
                     />
                   )
+                }}
+      />
+      <Tab.Screen name="PaymentMethod" component={PaymentMethod}
+        options={{
+                  title: 'PaymentMethod',
+                  headerShown: false,
+                  tabBarButton: () => null,
+                  
+                }}
+      />
+      <Tab.Screen name="PaymentSuccess" component={PaymentSuccess}
+        options={{
+                  title: 'PaymentSuccess',
+                  headerShown: false,
+                  tabBarButton: () => null,
+                  
                 }}
       />
     </Tab.Navigator>

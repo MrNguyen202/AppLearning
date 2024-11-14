@@ -43,6 +43,8 @@ import userFill from "../assets/icons/user-2-fill.png";
 import coding from "../assets/icons/coding.png";
 import eye from "../assets/icons/eye.png";
 import searchFillWhite from "../assets/icons/searchFillWhite.png";
+import goBack from "../assets/icons/go-back.png";
+
 export default {
   apple,
   arrowRight1,
@@ -88,5 +90,6 @@ export default {
   userFill,
   coding,
   eye,
-  searchFillWhite
+  searchFillWhite,
+  goBack
 };
