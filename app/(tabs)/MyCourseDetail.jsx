@@ -92,72 +92,11 @@ const MyCourseDetail = ({ navigation, route }) => {
         style={{ alignSelf: "stretch" }}
         className={`bg-white pl-4 pr-4 pt-6`}
       >
-        <Text className={`font-bold mb-4 text-lg`}>Introduction</Text>
-        <Text className={`text-[#666666] mb-4`}>{course.description}</Text>
-        <Text className={`font-bold mb-4  text-lg`}>What You'll Get</Text>
-        <View className={`flex-row mt-2`}>
-          <Image source={Icon.book}></Image>
-          <Text className={`ml-3`}>25 Lessons</Text>
-        </View>
-        <View className={`flex-row mt-2`}>
-          <Image source={Icon.phone}></Image>
-          <Text className={`ml-3`}>Access Mobile, Desktop & TV</Text>
-        </View>
-        <View className={`flex-row mt-2`}>
-          <Image source={Icon.trendUp1}></Image>
-          <Text className={`ml-3`}>Beginner Level</Text>
-        </View>
-        <View className={`flex-row mt-2`}>
-          <Image source={Icon.soundcloud}></Image>
-          <Text className={`ml-3`}>Audio Book</Text>
-        </View>
-        <View className={`flex-row mt-2`}>
-          <Image source={Icon.ride}></Image>
-          <Text className={`ml-3`}>Lifetime Access</Text>
-        </View>
-        <View className={`flex-row mt-2`}>
-          <Image source={Icon.write}></Image>
-          <Text className={`ml-3`}>100 Quizzes</Text>
-        </View>
-        <View className={`flex-row mt-2`}>
-          <Image source={Icon.book}></Image>
-          <Text className={`ml-3`}>25 Lessons</Text>
-        </View>
-        <Text className={`font-bold mb-4 mt-4 text-lg`}>Feedback</Text>
-        <View className={`flex-row justify-between mb-3`}>
-          <View
-            className={`w-[180] h-[90] bg-[#FFF1F3] items-center justify-center rounded`}
-          >
-            <View className={`flex-row items-center`}>
-              <Image source={Icon.star} />
-              <Text className={`ml-2`}>5.0</Text>
-            </View>
-            <Text className={`font-bold`}>Reviews</Text>
-          </View>
-          <View
-            className={`w-[180] h-[90] bg-[#FFF1F3] items-center justify-center rounded`}
-          >
-            <View className={`flex-row items-center`}>
-              <Image source={Icon.user1} />
-              <Text className={`ml-2`}>475</Text>
-            </View>
-            <Text className={`font-bold`}>Students</Text>
-          </View>
-        </View>
-        {showFeedback.map((value, index) => {
-          return <CommentComponent key={index} item={value} />;
-        })}
-        <View className={`mb-5`}></View>
-        <Button
-          border={"border"}
-          txtColor={"text-[#265AE8]"}
-          height={60}
-          width={375}
-          valTxt={status ? "Load more" : "Hide"}
-          onPress={() => {
-            setStatus(!status);
-          }}
-        />
+        <TouchableOpacity onPress={() => {
+
+        }}>
+          <Text>Select file</Text>
+        </TouchableOpacity>
       </ScrollView>
     );
   }
