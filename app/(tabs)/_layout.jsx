@@ -8,7 +8,7 @@ import MyCourses from './myCourses'
 import Profile from './profile'
 import Search from './search'
 import PaymentMethod from './PaymentMethod'
-import PaymentSuccess from './PaymentSuccess'
+import PaymentSuccess from '././PaymentSuccess'
 
 const TabIcon = ({icon, color, name, focused}) => {
     return (
