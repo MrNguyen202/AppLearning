@@ -81,43 +81,7 @@ const Profile = ({ route }) => {
                 :
                 (item.progress_status === "ongoing" ?
                   <View>
-                    <View
-                      className={`relative items-center justify-center`}
-                      style={{ width: 50, height: 50 }}>
-                      {/* Vòng nền */}
-                      <View
-                        className="absolute rounded-full"
-                        style={{
-                          borderWidth: strokeWidth,
-                          borderColor: backgroundColor,
-                          width: size,
-                          height: size,
-                        }}
-                      />
-                      {/* Vòng tiến độ */}
-                      <View
-                        className="absolute rounded-full"
-                        style={{
-                          width: size,
-                          height: size,
-                          borderWidth: strokeWidth,
-                          borderRightColor: 'transparent',
-                          borderBottomColor: 'transparent',
-                          borderLeftColor: color,
-                          borderTopColor: color,
-                          transform: [{ rotate: `${rotateValue}deg` }],
-                        }}
-                      />
-                      {/* Nội dung bên trong */}
-                      <View
-                        className="absolute bg-white rounded-full items-center justify-center"
-                        style={{
-                          width: size - strokeWidth * 2,
-                          height: size - strokeWidth * 2,
-                        }}>
-                        <Text className="text-lg font-bold">{`${percentage}%`}</Text>
-                      </View>
-                    </View>
+                    <Image source={Icon.play} />
                   </View>
                   : ""
                 )
