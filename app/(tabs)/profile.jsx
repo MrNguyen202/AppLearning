@@ -4,6 +4,8 @@ import Icon from '../../constants/Icon'
 import User from '../../assets/data/User'
 import EnrolCourse from '../../assets/data/enroll_course'
 import Course from '../../assets/data/Course'
+import Lesson from '../../assets/data/Lesson'
+import Section from '../../assets/data/Section'
 
 const Profile = ({ route }) => {
   const [user, setUser] = useState(User[1]);
@@ -61,7 +63,7 @@ const Profile = ({ route }) => {
             <TouchableOpacity key={index} className="flex-row mx-6 mt-4 shadow-2xl bg-white">
               <Image source={Course.find((a) => a.course_id === item.course).image} className="w-20 h-24 rounded-md" />
               <View className="justify-evenly">
-                <Text className="ml-2 font-bold text-base">{Course.find((a) => a.course_id === item.course).title}</Text>
+                <Text numberOfLines={1} ellipsizeMode='tail' className="ml-2 w-56 font-bold text-base">{Course.find((a) => a.course_id === item.course).title}</Text>
                 <Text className="ml-2">{Course.find((a) => a.course_id === item.course).teacher}</Text>
                 <View className="flex-row items-center">
                   <View className="flex-row items-center">
@@ -80,8 +82,20 @@ const Profile = ({ route }) => {
                 </View>
                 :
                 (item.progress_status === "ongoing" ?
-                  <View>
-                    <Image source={Icon.play} />
+                  <View className="absolute right-5 bottom-4">
+                    <Text className="font-bold text-red-600" >
+                      {
+                        
+                      }
+                      /
+                      {
+                        Lesson.filter((l) =>
+                          Section.filter((s) => item.course === s.course_id)
+                            .map((s) => s.section_id)
+                            .includes(l.section_id)
+                        ).length
+                      }
+                    </Text>
                   </View>
                   : ""
                 )

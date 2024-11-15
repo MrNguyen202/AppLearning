@@ -179,6 +179,43 @@ const lessons = [
       "url_video": "https://example.com/video20",
       "time": "28:35",
       "view": 75
-    }
+    },
+    {
+      "lesson_id": 21,
+      "num_lesson": 2,
+      "section_id": 10,
+      "title": "Understanding Regression Models",
+      "url_video": "https://example.com/video20",
+      "time": "28:35",
+      "view": 75
+    },
+    {
+      "lesson_id": 22,
+      "num_lesson": 2,
+      "section_id": 9,
+      "title": "Understanding Regression Models",
+      "url_video": "https://example.com/video20",
+      "time": "28:35",
+      "view": 75
+    },
+    {
+      "lesson_id": 23,
+      "num_lesson": 2,
+      "section_id": 10,
+      "title": "Understanding Regression Models",
+      "url_video": "https://example.com/video20",
+      "time": "28:35",
+      "view": 75
+    },
+    {
+      "lesson_id": 24,
+      "num_lesson": 2,
+      "section_id": 9,
+      "title": "Understanding Regression Models",
+      "url_video": "https://example.com/video20",
+      "time": "28:35",
+      "view": 75
+    },
+    
   ]
   export default lessons;
