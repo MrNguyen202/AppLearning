@@ -1,5 +1,5 @@
 import { View, Text, Image } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import Icon from '../../constants/Icon'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -23,14 +23,14 @@ const Tab = createBottomTabNavigator();
 
 const TabsLayout = () => {
   return (
-    <Tab.Navigator initialRouteName='PaymentMethod' screenOptions={{
+    <Tab.Navigator initialRouteName='Profile' screenOptions={{
       tabBarShowLabel: false,
       tabBarActiveTintColor:'#265AE8',
       tabBarStyle:{
         height: 60,
       }
     }}>
-      <Tab.Screen name="Home" component={Home} 
+      <Tab.Screen name="Home" component={Home}
         options={{
                   title: 'home',
                   headerShown: false,
