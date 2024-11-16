@@ -28,8 +28,8 @@ const CourseWatching = ({ item, status }) => {
                 </View>
                 {status === 'ongoing' ? (
                     <View className="flex-row items-center justify-between">
-                        <View className="w-[140] bg-[#E8F1FF] border-cyan-200 border h-2 rounded-full my-4">
-                            <View className="bg-[#0961F5] h-2 rounded-full" style={{ width: `${(item.completed_lesson / item.total_lesson) * 100}%` }}></View>
+                        <View className="w-[140] bg-[#E8F1FF] border-cyan-200 border h-3 rounded-full my-4 justify-center">
+                            <View className="bg-[#0961F5] h-2 rounded-full " style={{ width: `${(item.completed_lesson / item.total_lesson) * 100}%` }}></View>
                         </View>
                         <Text className="text-[#FF6B00] mr-2">{item.completed_lesson}/{item.total_lesson}</Text>
                     </View>

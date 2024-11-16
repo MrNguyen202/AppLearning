@@ -49,13 +49,13 @@ const sections = [
     },
     {
       "section_id": 9,
-      "course_id": 5,
+      "course_id": 8,
       "section_num": 1,
       "title": "Machine Learning Basics"
     },
     {
       "section_id": 10,
-      "course_id": 5,
+      "course_id": 8,
       "section_num": 2,
       "title": "Supervised Learning"
     }
