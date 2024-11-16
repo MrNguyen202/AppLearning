@@ -9,6 +9,7 @@ const users = [
       "role": "teacher",
       "school": "ABC School",
       "avatar": require("../../assets/images/teacher.png"),
+      "description": "I am a teacher at ABC School. I love teaching and helping students learn new things.",
     },
     {
       "user_id": 2,
@@ -20,6 +21,7 @@ const users = [
       "role": "student",
       "school": "ABC School",
       "avatar": require("../../assets/images/teacher.png"),
+      "description": "I am a teacher at ABC School. I love teaching and helping students learn new things.",
     },
     {
       "user_id": 3,

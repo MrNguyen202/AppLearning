@@ -10,12 +10,13 @@ const Stack = createNativeStackNavigator();
 const index = () => {
     return (
         <NavigationContainer independent={true}>
-            {/* <Stack.Navigator>
+            <Stack.Navigator initialRouteName='TabsLayout'>
                 <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
                 <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
-            </Stack.Navigator> */}
+                <Stack.Screen name="TabsLayout" component={TabsLayout} options={{headerShown: false}} />
+            </Stack.Navigator>
 
-            <TabsLayout />
+            {/* <TabsLayout /> */}
         </NavigationContainer>
       );
 }

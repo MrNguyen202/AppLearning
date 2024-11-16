@@ -1,9 +1,10 @@
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'expo-router'
 import Icon from '../../constants/Icon'
+import User from '../../assets/data/User'
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, route }) => {
   return (
     <View className="bg-[#F5F9FF]">
       <View className="justify-center items-center h-[184] mx-[34]">

@@ -1,5 +1,5 @@
 import { View, Text, Image } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import Icon from '../../constants/Icon'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,6 +7,8 @@ import Home from './home'
 import MyCourses from './myCourses'
 import Profile from './profile'
 import Search from './search'
+import PaymentMethod from './PaymentMethod'
+import PaymentSuccess from '././PaymentSuccess'
 
 const TabIcon = ({icon, color, name, focused}) => {
     return (
@@ -21,14 +23,14 @@ const Tab = createBottomTabNavigator();
 
 const TabsLayout = () => {
   return (
-    <Tab.Navigator initialRouteName='My Courses' screenOptions={{
+    <Tab.Navigator initialRouteName='Profile' screenOptions={{
       tabBarShowLabel: false,
       tabBarActiveTintColor:'#265AE8',
       tabBarStyle:{
         height: 60,
       }
     }}>
-      <Tab.Screen name="Home" component={Home} 
+      <Tab.Screen name="Home" component={Home}
         options={{
                   title: 'home',
                   headerShown: false,
@@ -82,6 +84,22 @@ const TabsLayout = () => {
                       focused={focused}
                     />
                   )
+                }}
+      />
+      <Tab.Screen name="PaymentMethod" component={PaymentMethod}
+        options={{
+                  title: 'PaymentMethod',
+                  headerShown: false,
+                  tabBarButton: () => null,
+                  
+                }}
+      />
+      <Tab.Screen name="PaymentSuccess" component={PaymentSuccess}
+        options={{
+                  title: 'PaymentSuccess',
+                  headerShown: false,
+                  tabBarButton: () => null,
+                  
                 }}
       />
     </Tab.Navigator>
