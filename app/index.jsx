@@ -1,24 +1,99 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native';
-import TabsLayout from './(tabs)/_layout';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from './(auth)/login';
-import Signup from './(auth)/signup';
+import { View, Text, TouchableOpacity, Image, StatusBar } from "react-native";
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import TabsLayout from "./(tabs)/_layout";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Login from "./(auth)/login";
+import Signup from "./(auth)/signup";
 const Stack = createNativeStackNavigator();
+import CourseDetail from "./(tabs)/CourseDetail";
+import MyCourseDetail from "./(tabs)/MyCourseDetail";
+import Icon from "../constants/Icon";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const index = () => {
+  const [status, setStatus] = useState(false);
+
+  const Header = ({ navigation }) => {
     return (
-        <NavigationContainer independent={true}>
-            <Stack.Navigator initialRouteName='TabsLayout'>
-                <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
-                <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
-                <Stack.Screen name="TabsLayout" component={TabsLayout} options={{headerShown: false}} />
-            </Stack.Navigator>
+      <View className={`flex-row items-center justify-between flex-1 w-full`}>
+        <TouchableOpacity
+          onPress={() => {
+            // console.log(navigation)
+            navigation.navigate("Search");
+          }}
+        >
+          <Image source={Icon.arrowLeft} className={``} />
+        </TouchableOpacity>
+        <Text className={`font-bold text-2xl`}>Details</Text>
+        <TouchableOpacity
+          onPress={() => {
+            setStatus(!status);
+          }}
+        >
+          <Image
+            source={status ? Icon.saved : Icon.savedFill}
+            className={`mr-11`}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer independent={true}>
+        <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
 
-            {/* <TabsLayout /> */}
-        </NavigationContainer>
-      );
-}
+        <Stack.Navigator initialRouteName="MyCourseDetail">
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={({ navigation }) => ({
+              headerShown: false,
+              // statusBarTranslucent: true
+            })}
+          />
+          <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen
+            name="CourseDetail"
+            component={CourseDetail}
+            options={({ navigation }) => ({
+              title: "",
+              tabBarButton: () => null,
+              // headerShown:false
+              // statusBarTranslucent: true,
+              statusBarColor: "black",
+              statusBarHidden: true,
+              headerTitle: () => <Header navigation={navigation} />,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="MyCourseDetail"
+            component={MyCourseDetail}
+            options={({ navigation }) => ({
+              title: "",
+              tabBarButton: () => null,
+              // headerShown:false
+              // statusBarTranslucent: true,
+              statusBarColor: "black",
+              statusBarHidden: true,
+              headerTitle: () => <Header navigation={navigation} />,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="Tabs"
+            component={TabsLayout}
+            options={{
+              headerShown: false,
+              statusBarColor: "black",
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+};
 
-export default index
+export default index;

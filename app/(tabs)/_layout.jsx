@@ -19,20 +19,23 @@ const TabIcon = ({icon, color, name, focused}) => {
     )
 }
 
+
+
 const Tab = createBottomTabNavigator();
 
-const TabsLayout = () => {
+const TabsLayout = ({navigation, route}) => {
   return (
     <Tab.Navigator initialRouteName='Profile' screenOptions={{
       tabBarShowLabel: false,
       tabBarActiveTintColor:'#265AE8',
       tabBarStyle:{
         height: 60,
-      }
+      },
+      
     }}>
       <Tab.Screen name="Home" component={Home}
         options={{
-                  title: 'home',
+                  title: 'Home',
                   headerShown: false,
                   tabBarIcon: ({color, focused}) => (
                     <TabIcon
@@ -83,7 +86,24 @@ const TabsLayout = () => {
                       name="Profile"
                       focused={focused}
                     />
-                  )
+                  ),
+                  tabBarButton:() => null
+                }}
+      />
+      <Tab.Screen name="PaymentMethod" component={PaymentMethod}
+        options={{
+                  title: 'PaymentMethod',
+                  headerShown: false,
+                  tabBarButton: () => null,
+                  
+                }}
+      />
+      <Tab.Screen name="PaymentSuccess" component={PaymentSuccess}
+        options={{
+                  title: 'PaymentSuccess',
+                  headerShown: false,
+                  tabBarButton: () => null,
+                  
                 }}
       />
       <Tab.Screen name="PaymentMethod" component={PaymentMethod}
