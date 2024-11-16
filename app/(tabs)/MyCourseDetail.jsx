@@ -20,9 +20,6 @@ import Icon from "../../constants/Icon";
 import sections from "../../assets/data/Section";
 import lessons from "../../assets/data/Lesson";
 import enroll_courses from "../../assets/data/enroll_course";
-import feedback from "../../assets/data/FeedBack";
-import CommentComponent from "../../components/CommentComponent";
-import Button from "../../components/Button";
 import LessonComponent from "../../components/LessonComponent";
 import { Video } from "expo-av";
 import * as DocumentPicker from "expo-document-picker";
@@ -30,21 +27,92 @@ import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
 import questions from "../../assets/data/Question";
 import answers from "../../assets/data/Answer";
+import users from "../../assets/data/User";
 
 const Tab = createMaterialTopTabNavigator();
 
 const MyCourseDetail = ({ navigation, route }) => {
-  const [student, setStudent] = useState(0);
   const [section, setSection] = useState([]);
   const [lesson, setLesson] = useState([]);
-  const [time, setTime] = useState(0);
   const [feedbackCourse, setFeedbackCourse] = useState([]);
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
-  const [course, setCourse] = useState([]);
+  const [course, setCourse] = useState(courses[0]);
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState([]);
+  const [questionCourse, setQuestionCourse] = useState([]);
+  const [answerQuestion, setAnswerQuestion] = useState([]);
+
+  useEffect(() => {
+    const initializeData = async () => {
+      if (!course) return; // Kiểm tra nếu `course` chưa được gán giá trị
+
+      // Lọc các section thuộc về khóa học này
+      const section_course = sections.filter(
+        (section) => section.course_id === course.course_id
+      );
+
+      // Cập nhật `section` chỉ nếu `section_course` thay đổi
+      setSection((prevSections) => {
+        const prevSectionIds = prevSections
+          .map((s) => s.section_id)
+          .sort()
+          .join(",");
+        const newSectionIds = section_course
+          .map((s) => s.section_id)
+          .sort()
+          .join(",");
+        return prevSectionIds === newSectionIds ? prevSections : section_course;
+      });
+
+      // Lọc các bài học thuộc về các section của khóa học
+      const lesson_course = lessons.filter((lesson) =>
+        section_course
+          .map((section) => section.section_id)
+          .includes(lesson.section_id)
+      );
+
+      // Cập nhật `lesson` chỉ nếu `lesson_course` thay đổi
+      setLesson((prevLessons) => {
+        const prevLessonIds = prevLessons
+          .map((l) => l.lesson_id)
+          .sort()
+          .join(",");
+        const newLessonIds = lesson_course
+          .map((l) => l.lesson_id)
+          .sort()
+          .join(",");
+        return prevLessonIds === newLessonIds ? prevLessons : lesson_course;
+      });
+    };
+
+    initializeData();
+  }, [sections, enroll_courses, lessons, course]);
+
+  useEffect(() => {
+    const filterQuestion = questions.filter(
+      (question) => question.course == course.course_id
+    );
+    setQuestionCourse(filterQuestion);
+    // console.log(questionCourse)
+    const questionIds = questionCourse.map((question) => question.question_id);
+
+    if (answers) {
+      const answer = answers.filter((answer) =>
+        questionIds.includes(answer.question)
+      );
+      setAnswerQuestion(answer);
+    }
+  }, []);
+
+  const time = lesson.reduce((total, lesson) => {
+    const [minutes, seconds] = lesson.time.split(":").map(Number);
+    return total + minutes * 60 + seconds;
+  }, 0);
+
+  const student = enroll_courses.reduce(
+    (count, value) => (value.course === course.course_id ? count + 1 : count),
+    0
+  );
 
   const selectFiles = async () => {
     try {
@@ -60,76 +128,8 @@ const MyCourseDetail = ({ navigation, route }) => {
   };
   // console.log(lesson_course)
 
-  useEffect(() => {
-    if (courses && courses.length > 0) {
-      setCourse(courses[0]);
-    }
-  }, [courses]);
-
-  // Cập nhật dữ liệu section và student count khi course thay đổi
-  useEffect(() => {
-    if (course && sections) {
-      const section_course = sections.filter(
-        (section) => section.course_id === course.course_id
-      );
-      setSection(section_course);
-
-      const studentCount = enroll_courses.reduce(
-        (count, value) =>
-          value.course === course.course_id ? count + 1 : count,
-        0
-      );
-      setStudent(studentCount);
-    }
-  }, [course, sections, enroll_courses]);
-
-  // Cập nhật danh sách bài học và tổng thời gian khi section thay đổi
-  useEffect(() => {
-    if (section.length > 0 && lessons) {
-      const lesson_course = lessons.filter((lesson) =>
-        section.map((sec) => sec.section_id).includes(lesson.section_id)
-      );
-      setLesson(lesson_course);
-
-      const totalSeconds = lesson_course.reduce((total, lesson) => {
-        const [minutes, seconds] = lesson.time.split(":").map(Number);
-        return total + minutes * 60 + seconds;
-      }, 0);
-      setTime(totalSeconds);
-    }
-  }, [section, lessons]);
-
-  // Cập nhật danh sách câu hỏi và câu trả lời khi course hoặc danh sách questions thay đổi
-  useEffect(() => {
-    if (course && questions) {
-      const questionCourse = questions.filter(
-        (question) => question.course === course.course_id
-      );
-      setQuestions(questionCourse);
-
-      const questionIds = questionCourse.map(
-        (question) => question.question_id
-      );
-
-      if (answers) {
-        const answerQuestion = answers.filter((answer) =>
-          questionIds.includes(answer.question)
-        );
-        setAnswers(answerQuestion);
-      }
-    }
-  }, [course, questions, answers]);
-
   function Project() {
-    const [status, setStatus] = useState(true);
-    const [showFeedback, setShowFeedback] = useState([]);
     const [fileResource, setFileResource] = useState("sample.pdf");
-
-    useEffect(() => {
-      status
-        ? setShowFeedback(feedbackCourse.slice(0, 3))
-        : setShowFeedback(feedbackCourse);
-    }, [status]);
 
     const downloadFromUrl = async () => {
       const filename = "sample.pdf"; // Đổi tên file cho phù hợp
@@ -198,7 +198,7 @@ const MyCourseDetail = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
         {selectedFiles.map((file, index) => {
-          if (index >= 3 && status) {
+          if (index >= 3) {
             return null;
           } else {
             return (
@@ -298,44 +298,34 @@ const MyCourseDetail = ({ navigation, route }) => {
   }
 
   function QA() {
-    console.log(questions);
-
-    const renderPost = ({ item }) => (
-      <View className="bg-white p-4 mb-2">
-        <View className="flex-row items-center mb-2">
-          <Image
-            source={{ uri: item.avatar }}
-            className="w-10 h-10 rounded-full mr-3"
-          />
-          <View>
-            <Text className="font-bold text-base">{item.username}</Text>
-            <Text className="text-gray-500 text-sm">
-              {item.timestamp} · Student
-            </Text>
-          </View>
-        </View>
-        <Text className="text-base mb-2">{item.content}</Text>
-        <TouchableOpacity>
-          <Text className="text-blue-600 font-medium mb-1">Reply</Text>
-        </TouchableOpacity>
-        {item.replies > 0 && (
-          <TouchableOpacity>
-            <Text className="text-blue-600 font-medium">
-              view {item.replies} replies
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    );
-
     return (
-      <View className="flex-1 bg-gray-100 ">
-        {questions.length > 0
-          ? questions.map((question) => {
-              console.log(question);
-              renderPost({ item: question });
-            })
-          : null}
+      <ScrollView
+        className={`bg-white flex-1 rounded-2xl`}
+        contentContainerStyle={{ flexGrow: 1}}
+        style={{ alignSelf: "stretch" }}
+      >
+        {questionCourse.map((quest) => {
+          var anw = answerQuestion.find(({question})=>question===quest.question_id)
+          // console.log(anw)
+          return(
+            <View className="bg-blue p-4 mb-2" >
+            <View className="flex-row items-center mb-2">
+              <Image source={require("../../assets/images/avatar.png")} className="w-10 h-10 rounded-full mr-3" />
+              <View>
+                <Text className="font-bold text-base">{users.find(({user_id})=>user_id===quest.user).fullname}</Text>
+                <Text className="text-gray-500 text-sm">{quest.comment_date}</Text>
+              </View>
+            </View>
+            <Text className="text-base mb-2">{quest.comment}</Text>
+            <TouchableOpacity>
+              <Text className="text-blue-600 font-medium mb-1">Reply</Text>
+            </TouchableOpacity>
+            {anw!=undefined?{
+              
+            } :null}
+          </View>
+          )
+        })}
         <View className="flex-row items-center bg-gray-200 p-2 border-t border-gray-300">
           <Image
             source={{ uri: "https://v0.dev/placeholder.svg" }}
@@ -350,7 +340,7 @@ const MyCourseDetail = ({ navigation, route }) => {
             <Text className="text-white text-lg">➤</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 
