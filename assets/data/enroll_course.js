@@ -39,6 +39,13 @@ const enroll_courses = [
     },
     {
       "user": 2,
+      "course": 2,
+      "enrollment_date": "2024-06-01",
+      "progress_status": "completed",
+      "completion_date": "2024-07-15"
+    },
+    {
+      "user": 2,
       "course": 3,
       "enrollment_date": "2024-07-20",
       "progress_status": "in progress",

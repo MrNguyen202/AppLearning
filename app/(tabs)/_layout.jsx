@@ -106,6 +106,22 @@ const TabsLayout = ({navigation, route}) => {
                   
                 }}
       />
+      <Tab.Screen name="PaymentMethod" component={PaymentMethod}
+        options={{
+                  title: 'PaymentMethod',
+                  headerShown: false,
+                  tabBarButton: () => null,
+                  
+                }}
+      />
+      <Tab.Screen name="PaymentSuccess" component={PaymentSuccess}
+        options={{
+                  title: 'PaymentSuccess',
+                  headerShown: false,
+                  tabBarButton: () => null,
+                  
+                }}
+      />
     </Tab.Navigator>
   )
 }
