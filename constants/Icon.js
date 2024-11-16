@@ -49,6 +49,7 @@ import eye from "../assets/icons/eye.png";
 import searchFillWhite from "../assets/icons/searchFillWhite.png";
 import bin from "../assets/icons/bin.png";
 
+import goBack from "../assets/icons/go-back.png";
 
 export default {
   apple,
@@ -100,5 +101,6 @@ export default {
   searchFillWhite,
   cloud,
   bin,
-  download
+  download,
+  goBack
 };
