@@ -101,6 +101,6 @@ export default {
   searchFillWhite,
   cloud,
   bin,
-  download
+  download,
   goBack
 };
