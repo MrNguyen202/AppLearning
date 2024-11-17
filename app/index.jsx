@@ -5,11 +5,12 @@ import TabsLayout from "./(tabs)/_layout";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./(auth)/login";
 import Signup from "./(auth)/signup";
-const Stack = createNativeStackNavigator();
 import CourseDetail from "./(tabs)/CourseDetail";
 import MyCourseDetail from "./(tabs)/MyCourseDetail";
 import Icon from "../constants/Icon";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+
+const Stack = createNativeStackNavigator();
 
 const index = () => {
   const [status, setStatus] = useState(false);
@@ -44,7 +45,7 @@ const index = () => {
       <NavigationContainer independent={true}>
         <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
 
-        <Stack.Navigator initialRouteName="MyCourseDetail">
+        <Stack.Navigator initialRouteName="Tabs">
           <Stack.Screen
             name="Login"
             component={Login}

@@ -3,14 +3,9 @@ import {
   Text,
   ScrollView,
   Image,
-  FlatList,
-  TouchableOpacity,
-  Dimensions,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Search from "./Search";
-import Home from "./Home";
 import { NavigationContainer } from "@react-navigation/native";
 import courses from "../../assets/data/Course";
 import Icon from "../../constants/Icon";
@@ -35,13 +30,6 @@ const CourseDetail = ({ navigation, route }) => {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [course, setCourse] = useState([]);
-
-
-
-
-
-
-  // console.log(lesson_course)
 
   useEffect(() => {
     const initializeData = async () => {

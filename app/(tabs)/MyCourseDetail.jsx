@@ -12,8 +12,6 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Search from "./Search";
-import Home from "./Home";
 import { NavigationContainer } from "@react-navigation/native";
 import courses from "../../assets/data/Course";
 import Icon from "../../constants/Icon";
