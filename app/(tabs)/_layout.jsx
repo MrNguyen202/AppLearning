@@ -8,7 +8,7 @@ import Profile from './Profile'
 import Search from './Search'
 import PaymentMethod from './PaymentMethod'
 import PaymentSuccess from '././PaymentSuccess'
-import Home from './home';
+import Home from './Home';
 
 const TabIcon = ({icon, color, name, focused}) => {
     return (

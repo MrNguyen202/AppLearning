@@ -4,7 +4,7 @@ import Icon from "../constants/Icon";
 
 const TeacherPopularComponent = ({ item }) => {
     return (
-        <TouchableOpacity className={"my-2 mr-[11] h-56 w-44 justify-evenly"}>
+        <TouchableOpacity key={item.id} className={"my-2 mr-[11] h-56 w-44 justify-evenly"}>
             <Image source={item.avatar} className="w-44 h-28 rounded-lg" />
             <View>
                 <Text className="font-bold">{item.fullname}</Text>

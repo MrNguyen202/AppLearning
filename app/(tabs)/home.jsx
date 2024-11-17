@@ -19,12 +19,6 @@ const Home = ({ navigation, route }) => {
     const [teacherPopular, setTeacherPopular] = useState(User.filter((item) => item.role === 'teacher').slice(-2))
     const [watchingInApp, setWatchingInApp] = useState(Course.slice(-2))
 
-    console.log('categoryPopular', categoryPopular)
-    console.log('courseMostWatching', courseMostWatching)
-    console.log('teacherPopular', teacherPopular)
-    console.log('watchingInApp', watchingInApp)
-
-
     return (
         <View>
             <View className={"bg-[#00B2FF] h-28 justify-evenly p-5"}>
@@ -67,7 +61,6 @@ const Home = ({ navigation, route }) => {
                     <View>
                         <FlatList className="mx-6 h-48"
                             data={Category}
-                            keyExtractor={(c) => c.id.toString()}
                             renderItem={({ item }) => (
                                 <CategoryComponent item={item} />
                             )}
@@ -91,7 +84,6 @@ const Home = ({ navigation, route }) => {
                     <View className="mx-6">
                         <FlatList
                             data={categoryPopular}
-                            keyExtractor={(cp) => cp.id}
                             renderItem={({ item }) => (
                                 <CategoryPopularComponent item={item} />
                             )}
@@ -112,7 +104,6 @@ const Home = ({ navigation, route }) => {
                     <View className="mx-6">
                         <FlatList
                             data={courseMostWatching}
-                            keyExtractor={(cw) => cw.id}
                             renderItem={({ item }) => (
                                 <CourseWatching item={item} />
                             )}
@@ -133,7 +124,6 @@ const Home = ({ navigation, route }) => {
                     <View className="mx-6">
                         <FlatList
                             data={teacherPopular}
-                            keyExtractor={(tp) => tp.id}
                             renderItem={({ item }) => (
                                 <TeacherPopularComponent item={item} />
                             )}
@@ -154,7 +144,6 @@ const Home = ({ navigation, route }) => {
                     <View className="mx-6">
                         <FlatList
                             data={watchingInApp}
-                            keyExtractor={(wi) => wi.id}
                             renderItem={({ item }) => (
                                 <CourseWatching item={item} />
                             )}
