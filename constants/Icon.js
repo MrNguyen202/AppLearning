@@ -6,6 +6,7 @@ import camRecorder from "../assets/icons/cam-recorder.png";
 import camera from "../assets/icons/camera.png";
 import check from "../assets/icons/check.png";
 import clock from "../assets/icons/clock.png";
+import download from "../assets/icons/download.png";
 import earth from "../assets/icons/earth.png";
 import filter from "../assets/icons/Filter.png";
 import google from "../assets/icons/google.png";
@@ -40,9 +41,14 @@ import homeFill from "../assets/icons/home-fill.png";
 import searchFill from "../assets/icons/search-normal-fill.png";
 import myCourseFill from "../assets/icons/my-course-fill.png";
 import userFill from "../assets/icons/user-2-fill.png";
+import arrowLeft from "../assets/icons/arrow-left.png";
+import savedFill from "../assets/icons/saved-fill.png";
+import cloud from "../assets/icons/cloud.png";
 import coding from "../assets/icons/coding.png";
 import eye from "../assets/icons/eye.png";
 import searchFillWhite from "../assets/icons/searchFillWhite.png";
+import bin from "../assets/icons/bin.png";
+
 import goBack from "../assets/icons/go-back.png";
 
 export default {
@@ -84,12 +90,17 @@ export default {
   user2,
   user3,
   write,
-  homeFill,
-  searchFill,
-  myCourseFill,
-  userFill,
+    homeFill,
+    searchFill,
+    myCourseFill,
+    userFill,
+    savedFill,
+    arrowLeft,
   coding,
   eye,
   searchFillWhite,
+  cloud,
+  bin,
+  download,
   goBack
 };
