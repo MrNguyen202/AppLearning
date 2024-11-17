@@ -15,7 +15,7 @@ import { useState } from 'react'
 const Home = () => {
 
   const [categoryPopular, setCategoryPopular] = useState(Category.slice(0, 2))
-  const [courseMostWatching, setCourseMostWatching] = useState(Course.slice(5,7))
+  const [courseMostWatching, setCourseMostWatching] = useState(Course.slice(5, 7))
   const [teacherPopular, setTeacherPopular] = useState(User.filter((item) => item.role === 'teacher').slice(-2))
   const [watchingInApp, setWatchingInApp] = useState(Course.slice(-2))
 
@@ -52,15 +52,15 @@ const Home = () => {
           <Text className="text-lg mx-6 my-4 font-bold">Categories</Text>
           <View>
             <FlatList className="mx-6 h-48"
-              key={2}
               data={Category}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <CategoryComponent item={item} />
+                <CategoryComponent key={item.id} item={item} />
               )}
               numColumns={2}
               columnWrapperStyle={{ justifyContent: 'space-between' }}
               nestedScrollEnabled={true}
+              scrollEnabled={false}
             />
           </View>
         </View>
@@ -77,10 +77,9 @@ const Home = () => {
               data={categoryPopular}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <CategoryPopularComponent item={item} />
+                <CategoryPopularComponent key={item.id} item={item} />
               )}
               horizontal={true}
-              scrollEnabled={false}
             />
           </View>
         </View>
@@ -97,10 +96,9 @@ const Home = () => {
               data={courseMostWatching}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <CourseWatching item={item} />
+                <CourseWatching key={item.id} item={item} />
               )}
               horizontal={true}
-              scrollEnabled={false}
             />
           </View>
         </View>
@@ -117,10 +115,9 @@ const Home = () => {
               data={teacherPopular}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <TeacherPopularComponent item={item} />
+                <TeacherPopularComponent key={item.id} item={item} />
               )}
               horizontal={true}
-              scrollEnabled={false}
             />
           </View>
         </View>
@@ -137,10 +134,9 @@ const Home = () => {
               data={watchingInApp}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <CourseWatching item={item} />
+                <CourseWatching key={item.id} item={item} />
               )}
               horizontal={true}
-              scrollEnabled={false}
             />
           </View>
         </View>
