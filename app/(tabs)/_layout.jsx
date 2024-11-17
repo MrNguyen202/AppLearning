@@ -3,9 +3,9 @@ import React, {useState} from 'react'
 import Icon from '../../constants/Icon'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MyCourses from './MyCourses'
-import Profile from './Profile'
-import Search from './Search'
+import MyCourses from './MyCourses_temp'
+import Profile from './Profile_temp'
+import Search from './Search_temp'
 import PaymentMethod from './PaymentMethod'
 import PaymentSuccess from '././PaymentSuccess'
 import Home from './Home_test';
