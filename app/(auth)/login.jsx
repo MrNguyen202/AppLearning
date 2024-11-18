@@ -3,6 +3,7 @@ import React,{useState, useEffect} from 'react'
 import { Link } from 'expo-router'
 import Icon from '../../constants/Icon'
 import users from '../../assets/data/User'
+import userController from '../../controllers/user_controller'
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState("")
@@ -19,8 +20,8 @@ const Login = ({ navigation }) => {
   }, [userLogin]);
   
   const handleLogin = () => {
-    const user = users.find(user => user.email === username && user.password === password);
-    setUserLogin(user || null);
+    const user = userController.checkLogin(username, password);
+    // setUserLogin(user || null);
   };
   return (
     <View className="bg-[#F5F9FF] flex-1">

@@ -197,7 +197,7 @@ const CourseDetail = ({ navigation, route }) => {
       <Video
         ref={video}
         className={`w-full h-[200]`}
-        source={{uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
+        source={{uri: "https://www.youtube.com/watch?v=44OBOSBd73M"}}
         useNativeControls
         isLooping
         onPlaybackStatusUpdate={setStatus}

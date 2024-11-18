@@ -3,10 +3,10 @@ import React, {useState} from 'react'
 import Icon from '../../constants/Icon'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './home'
-import MyCourses from './myCourses'
-import Profile from './profile'
-import Search from './search'
+import Home from './Home'
+import MyCourses from './MyCourses'
+import Profile from './Profile'
+import Search from './Search'
 import PaymentMethod from './PaymentMethod'
 import PaymentSuccess from '././PaymentSuccess'
 

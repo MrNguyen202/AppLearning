@@ -10,7 +10,7 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Search from "./Search";
 import Home from "./Home";
@@ -28,6 +28,7 @@ import { shareAsync } from "expo-sharing";
 import questions from "../../assets/data/Question";
 import answers from "../../assets/data/Answer";
 import users from "../../assets/data/User";
+import YoutubeIframe from "react-native-youtube-iframe";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -343,19 +344,27 @@ const MyCourseDetail = ({ navigation, route }) => {
       </ScrollView>
     );
   }
+  const [playing, setPlaying] = useState(false);
+
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+      Alert.alert("video has finished playing!");
+    }
+  }, []);
+
+  const togglePlaying = useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
 
   return (
+    
     <View className={`bg-white flex-1`}>
-      <Video
-        ref={video}
-        className={`w-full h-[200]`}
-        source={{
-          uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-        }}
-        useNativeControls
-        isLooping
-        onPlaybackStatusUpdate={setStatus}
-        resizeMode="contain"
+      <YoutubeIframe
+        height={250}
+        play={playing}
+        videoId={"gLCk_WfURiE"}
+        onChangeState={onStateChange}
       />
 
       <View className={`ml-4 mt-3 mr-4`}>

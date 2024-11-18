@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import TabsLayout from "./(tabs)/_layout";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "./(auth)/login";
+import Login from "./(auth)/Login";
 import Signup from "./(auth)/signup";
 const Stack = createNativeStackNavigator();
 import CourseDetail from "./(tabs)/CourseDetail";
@@ -44,7 +44,7 @@ const index = () => {
       <NavigationContainer independent={true}>
         <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
 
-        <Stack.Navigator initialRouteName="MyCourseDetail">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Login"
             component={Login}
