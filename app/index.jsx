@@ -7,6 +7,7 @@ import Login from "./(auth)/login";
 import Signup from "./(auth)/signup";
 import CourseDetail from "./(tabs)/CourseDetail";
 import MyCourseDetail from "./(tabs)/MyCourseDetail";
+import ProfileTeacher from "./(tabs)/ProfileTeacher";
 import Icon from "../constants/Icon";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -72,6 +73,20 @@ const index = () => {
           <Stack.Screen
             name="MyCourseDetail"
             component={MyCourseDetail}
+            options={({ navigation }) => ({
+              title: "",
+              tabBarButton: () => null,
+              // headerShown:false
+              // statusBarTranslucent: true,
+              statusBarColor: "black",
+              statusBarHidden: true,
+              headerTitle: () => <Header navigation={navigation} />,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="ProfileTeacher"
+            component={ProfileTeacher}
             options={({ navigation }) => ({
               title: "",
               tabBarButton: () => null,

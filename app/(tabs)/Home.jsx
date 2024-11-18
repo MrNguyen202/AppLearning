@@ -19,6 +19,10 @@ const Home = ({ navigation, route }) => {
     const [teacherPopular, setTeacherPopular] = useState(User.filter((item) => item.role === 'teacher').slice(-2))
     const [watchingInApp, setWatchingInApp] = useState(Course.slice(-2))
 
+    const handleGetTeacherId = (id) => {
+        navigation.navigate('ProfileTeacher', { id: id });
+    };
+
     return (
         <View>
             <View className={"bg-[#00B2FF] h-28 justify-evenly p-5"}>
@@ -125,7 +129,7 @@ const Home = ({ navigation, route }) => {
                         <FlatList
                             data={teacherPopular}
                             renderItem={({ item }) => (
-                                <TeacherPopularComponent item={item} />
+                                <TeacherPopularComponent item={item} getTeacherId={handleGetTeacherId} />
                             )}
                             horizontal={true}
                         />

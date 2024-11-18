@@ -2,9 +2,14 @@ import { Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "../constants/Icon";
 
-const TeacherPopularComponent = ({ item }) => {
+const TeacherPopularComponent = ({ item, getTeacherId }) => {
+
+    const handleTeacherId = (id) => {
+        getTeacherId(id);
+    };
+
     return (
-        <TouchableOpacity key={item.id} className={"my-2 mr-[11] h-56 w-44 justify-evenly"}>
+        <TouchableOpacity onPress={() => handleTeacherId(item.user_id)} key={item.user_id} className={"my-2 mr-[11] h-56 w-44 justify-evenly"}>
             <Image source={item.avatar} className="w-44 h-28 rounded-lg" />
             <View>
                 <Text className="font-bold">{item.fullname}</Text>

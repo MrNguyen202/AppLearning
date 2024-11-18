@@ -77,6 +77,7 @@ const users = [
       "role": "teacher",
       "school": "University of Havard",
       "avatar": require("../../assets/images/Samatha_Rossye.png"),
+      "description": "",
     },
     {
       "user_id": 8,
