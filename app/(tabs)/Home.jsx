@@ -14,17 +14,29 @@ import { useState } from 'react'
 
 const Home = ({ navigation, route }) => {
 
+    //Dữ liệu user đang đăng nhập
     const [user, setUser] = useState(User[7])
+
+    //Dữ liệu category phổ biến top 5
     const [categoryPopular, setCategoryPopular] = useState(Category.slice(0, 2))
+
+    //Dữ liệu khóa học được xem nhiều nhất top 5
     const [courseMostWatching, setCourseMostWatching] = useState(Course.slice(5, 7))
+
+    //Dữ liệu giáo viên phổ biến top 5
     const [teacherPopular, setTeacherPopular] = useState(User.filter((item) => item.role === 'teacher').slice(-2))
+
+    //Dữ liệu khóa học được xem nhiều trong tháng hiện tai "time now" top 5
     const [watchingInApp, setWatchingInApp] = useState(Course.slice(-2))
 
+    //Hàm chuyển hướng đến trang ProfileTeacher
     const handleGetTeacherId = (id) => {
         console.log(id);
         navigation.navigate('ProfileTeacher', { id: id });
     };
 
+
+    //Hàm chuyển hướng đến trang CourseDetail
     const handleGetCourse = (it) => {
         console.log(it);
         navigation.navigate('CourseDetail', { course: it });
