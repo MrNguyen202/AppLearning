@@ -55,7 +55,12 @@ const index = () => {
               // statusBarTranslucent: true
             })}
           />
-          <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen name="Signup"
+            component={Signup}
+            options={({ navigation }) => ({
+              headerShown: false,
+              // statusBarTranslucent: true
+            })} />
           <Stack.Screen
             name="CourseDetail"
             component={CourseDetail}
