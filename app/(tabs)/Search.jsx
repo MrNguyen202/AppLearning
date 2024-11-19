@@ -63,6 +63,7 @@ const Search = ({navigation}) => {
               </TouchableOpacity>
             )
           }}
+          scrollEnabled={false}
         />
       </View>
       <ScrollView>

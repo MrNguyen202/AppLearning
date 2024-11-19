@@ -5,11 +5,13 @@ import TabsLayout from "./(tabs)/_layout";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./(auth)/Login";
 import Signup from "./(auth)/signup";
-const Stack = createNativeStackNavigator();
 import CourseDetail from "./(tabs)/CourseDetail";
 import MyCourseDetail from "./(tabs)/MyCourseDetail";
+import ProfileTeacher from "./(tabs)/ProfileTeacher";
 import Icon from "../constants/Icon";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+
+const Stack = createNativeStackNavigator();
 
 const index = () => {
   const [status, setStatus] = useState(false);
@@ -20,7 +22,7 @@ const index = () => {
         <TouchableOpacity
           onPress={() => {
             // console.log(navigation)
-            navigation.navigate("Search");
+            navigation.goBack();
           }}
         >
           <Image source={Icon.arrowLeft} className={``} />
@@ -44,7 +46,7 @@ const index = () => {
       <NavigationContainer independent={true}>
         <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
 
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Tabs">
           <Stack.Screen
             name="Login"
             component={Login}
@@ -71,6 +73,20 @@ const index = () => {
           <Stack.Screen
             name="MyCourseDetail"
             component={MyCourseDetail}
+            options={({ navigation }) => ({
+              title: "",
+              tabBarButton: () => null,
+              // headerShown:false
+              // statusBarTranslucent: true,
+              statusBarColor: "black",
+              statusBarHidden: true,
+              headerTitle: () => <Header navigation={navigation} />,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="ProfileTeacher"
+            component={ProfileTeacher}
             options={({ navigation }) => ({
               title: "",
               tabBarButton: () => null,

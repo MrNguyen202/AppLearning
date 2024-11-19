@@ -23,6 +23,7 @@ const Login = ({ navigation }) => {
     const user = userController.checkLogin(username, password);
     // setUserLogin(user || null);
   };
+  
   return (
     <View className="bg-[#F5F9FF] flex-1">
       <View className="justify-center items-center h-[184] mx-[34]">

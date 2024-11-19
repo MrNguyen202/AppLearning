@@ -3,14 +3,9 @@ import {
   Text,
   ScrollView,
   Image,
-  FlatList,
-  TouchableOpacity,
-  Dimensions,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Search from "./Search";
-import Home from "./Home";
 import { NavigationContainer } from "@react-navigation/native";
 import courses from "../../assets/data/Course";
 import Icon from "../../constants/Icon";
@@ -36,17 +31,10 @@ const CourseDetail = ({ navigation, route }) => {
   const [status, setStatus] = React.useState({});
   const [course, setCourse] = useState([]);
 
-
-
-
-
-
-  // console.log(lesson_course)
-
   useEffect(() => {
     const initializeData = async () => {
 
-      setCourse(courses[0])
+      setCourse(route.params.course);
 
       var section_course = sections.filter(
         (section) => section.course_id === course.course_id

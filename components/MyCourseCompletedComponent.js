@@ -3,15 +3,17 @@ import React from "react";
 import Icon from "../constants/Icon";
 import { useState } from "react";
 import Course from "../assets/data/Course";
-import User from "../assets/data/User";
 
-const CourseWatching = ({ item, status }) => {
+const CourseWatching = ({ item, status, getMyCourse }) => {
 
     const [CourseTemp, setCourseTemp] = useState(Course.filter((course) => course.course_id === item.course_id));
-    const [UserTemp, setUserTemp] = useState(User.filter((user) => user.user_id === item.user_id));
+    
+    const handleMyCourse = (it) => {
+        getMyCourse(it);
+    }
 
     return (
-        <TouchableOpacity className={"w-[360] bg-white h-[130] my-4 flex-row rounded-2xl shadow-xl"}>
+        <TouchableOpacity onPress={() => handleMyCourse(item)} className={"w-[360] bg-white h-[130] my-4 flex-row rounded-2xl shadow-xl"}>
             <View className="w-[130] bg-black rounded-l-2xl">
                 <Image source={CourseTemp[0].image} className="w-full h-full object-contain rounded-l-2xl"></Image>
             </View>

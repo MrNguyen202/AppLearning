@@ -31,25 +31,25 @@ const Profile = ({ route }) => {
           <Text className="text-3xl font-bold">{user.fullname}</Text>
         </View>
         <View>
-          <Text className="text-center w-72 my-4">{user.description}</Text>
+          <Text className="text-center w-72 my-4 text-gray-500">{user.description}</Text>
         </View>
         <View className="flex-row justify-evenly w-[100%] mx-6">
           <TouchableOpacity
             onPress={() => handleProgressStatus("all")}
             className={`items-center justify-evenly w-1/4 ${progress_status === "all" ? "border-b-2 border-blue-500" : ""} `}>
-            <Text className="text-base">{courses.length}</Text>
+            <Text className="text-base">{courses.length < 10 ? "0"+courses.length : courses.length}</Text>
             <Text className="text-base">Course</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => handleProgressStatus("ongoing")}
             className={`items-center justify-evenly w-1/4 ${progress_status === "ongoing" ? "border-b-2 border-blue-500" : ""} `}>
-            <Text className="text-base">{courses.filter((item) => item.progress_status === "ongoing").length}</Text>
+            <Text className="text-base">{courses.filter((item) => item.progress_status === "ongoing").length < 10 ? "0"+courses.filter((item) => item.progress_status === "ongoing").length : courses.filter((item) => item.progress_status === "ongoing").length}</Text>
             <Text className="text-base">On going</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => handleProgressStatus("completed")}
             className={`items-center justify-evenly w-1/4 ${progress_status === "completed" ? "border-b-2 border-blue-500" : ""} `}>
-            <Text className="text-base">{courses.filter((item) => item.progress_status === "completed").length}</Text>
+            <Text className="text-base">{courses.filter((item) => item.progress_status === "completed").length < 10 ? "0"+courses.filter((item) => item.progress_status === "completed").length : courses.filter((item) => item.progress_status === "completed").length}</Text>
             <Text className="text-base">Completed</Text>
           </TouchableOpacity>
         </View>
@@ -60,15 +60,15 @@ const Profile = ({ route }) => {
       <View className="w-[100%]">
         <ScrollView>
           {(progress_status === "all" ? courses : (progress_status === "ongoing" ? courses.filter((item) => item.progress_status === "ongoing") : courses.filter((item) => item.progress_status === "completed"))).map((item, index) => (
-            <TouchableOpacity key={index} className="flex-row mx-6 mt-4 shadow-2xl bg-white">
-              <Image source={Course.find((a) => a.course_id === item.course).image} className="w-20 h-24 rounded-md" />
+            <TouchableOpacity key={index} className="flex-row mx-6 mt-4 shadow-2xl bg-white rounded-md">
+              <Image source={Course.find((a) => a.course_id === item.course).image} className="w-20 h-24 rounded-md m-2" />
               <View className="justify-evenly">
                 <Text numberOfLines={1} ellipsizeMode='tail' className="ml-2 w-56 font-bold text-base">{Course.find((a) => a.course_id === item.course).title}</Text>
                 <Text className="ml-2">{Course.find((a) => a.course_id === item.course).teacher}</Text>
                 <View className="flex-row items-center">
                   <View className="flex-row items-center">
                     <Image className="ml-2" source={Icon.user3} />
-                    <Text className="ml-3">{EnrolCourse.filter((a) => a.course === item.course).length} student</Text>
+                    <Text className="ml-3">{EnrolCourse.filter((a) => a.course === item.course).length < 10 ? "0"+EnrolCourse.filter((a) => a.course === item.course).length : EnrolCourse.filter((a) => a.course === item.course).length} student</Text>
                   </View>
                   <View className="ml-6 flex-row items-center">
                     <Image className="mx-2" source={Icon.star} />
