@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Icon from '../../constants/Icon'
 import { Link } from 'expo-router'
 import CategoryComponent from '../../components/CategoryComponent'
@@ -10,24 +10,60 @@ import Category from '../../assets/data/Category'
 import Course from '../../assets/data/Course'
 import User from '../../assets/data/User'
 import { useState } from 'react'
-
+import courseController from '../../controllers/course_controller'
+import categoryController from '../../controllers/category_controller'
+import teacherController from '../../controllers/teacher_controller'
 
 const Home = ({ navigation, route }) => {
 
     //Dữ liệu user đang đăng nhập
     const [user, setUser] = useState(route.params.user)
 
+    //Dữ liệu category
+    const [category, setCategory] = useState([])
+
     //Dữ liệu category phổ biến top 5
-    const [categoryPopular, setCategoryPopular] = useState(Category.slice(0, 2))
+    const [categoryPopular, setCategoryPopular] = useState([])
 
     //Dữ liệu khóa học được xem nhiều nhất top 5
-    const [courseMostWatching, setCourseMostWatching] = useState(Course.slice(5, 7))
+    const [courseMostWatching, setCourseMostWatching] = useState([])
 
     //Dữ liệu giáo viên phổ biến top 5
-    const [teacherPopular, setTeacherPopular] = useState(User.filter((item) => item.role === 'teacher').slice(-2))
+    const [teacherPopular, setTeacherPopular] = useState([])
 
     //Dữ liệu khóa học được xem nhiều trong tháng hiện tai "time now" top 5
-    const [watchingInApp, setWatchingInApp] = useState(Course.slice(-2))
+    const [watchingInApp, setWatchingInApp] = useState([])
+
+
+    //Hàm lấy dữ liệu category
+    useEffect(() => {
+        const fetchData = async () => {
+            const categories = await categoryController.getCategories()
+            setCategory(categories)
+            setCategoryPopular(categories.slice(-2))
+        }
+        fetchData()
+    }, [])
+
+    //Hàm lấy dữ liệu khóa học
+    useEffect(() => {
+        const fetchData = async () => {
+            const courses = await courseController.getCourses()
+            setCourseMostWatching(JSON.parse(JSON.stringify(courses)))
+            setWatchingInApp(JSON.parse(JSON.stringify(courses)))
+        }
+        fetchData()
+    }, [])
+
+    //Hàm lấy dữ liệu teacher phổ biến
+    useEffect(() => {
+        const fetchData = async () => {
+            const teacher = await teacherController.getTeachers()
+            console.log(teacher)
+            setTeacherPopular(teacher)
+        }
+        fetchData()
+    }, [])
 
     //Hàm chuyển hướng đến trang ProfileTeacher
     const handleGetTeacherId = (id) => {
@@ -83,7 +119,7 @@ const Home = ({ navigation, route }) => {
                     <Text className="text-lg mx-6 my-4 font-bold">Categories</Text>
                     <View>
                         <FlatList className="mx-6 h-48"
-                            data={Category}
+                            data={category}
                             renderItem={({ item }) => (
                                 <CategoryComponent item={item} />
                             )}
