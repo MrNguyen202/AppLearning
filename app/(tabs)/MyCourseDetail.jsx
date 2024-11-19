@@ -12,8 +12,6 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Search from "./Search";
-import Home from "./Home";
 import { NavigationContainer } from "@react-navigation/native";
 import courses from "../../assets/data/Course";
 import Icon from "../../constants/Icon";
@@ -301,29 +299,29 @@ const MyCourseDetail = ({ navigation, route }) => {
     return (
       <ScrollView
         className={`bg-white flex-1 rounded-2xl`}
-        contentContainerStyle={{ flexGrow: 1}}
+        contentContainerStyle={{ flexGrow: 1 }}
         style={{ alignSelf: "stretch" }}
       >
         {questionCourse.map((quest) => {
-          var anw = answerQuestion.find(({question})=>question===quest.question_id)
+          var anw = answerQuestion.find(({ question }) => question === quest.question_id)
           // console.log(anw)
-          return(
-            <View className="bg-blue p-4 mb-2" >
-            <View className="flex-row items-center mb-2">
-              <Image source={require("../../assets/images/avatar.png")} className="w-10 h-10 rounded-full mr-3" />
-              <View>
-                <Text className="font-bold text-base">{users.find(({user_id})=>user_id===quest.user).fullname}</Text>
-                <Text className="text-gray-500 text-sm">{quest.comment_date}</Text>
+          return (
+            <View key={quest.question_id} className="bg-blue p-4 mb-2" >
+              <View className="flex-row items-center mb-2">
+                <Image source={require("../../assets/images/avatar.png")} className="w-10 h-10 rounded-full mr-3" />
+                <View>
+                  <Text className="font-bold text-base">{users.find(({ user_id }) => user_id === quest.user).fullname}</Text>
+                  <Text className="text-gray-500 text-sm">{quest.comment_date}</Text>
+                </View>
               </View>
+              <Text className="text-base mb-2">{quest.comment}</Text>
+              <TouchableOpacity>
+                <Text className="text-blue-600 font-medium mb-1">Reply</Text>
+              </TouchableOpacity>
+              {anw != undefined ? {
+
+              } : null}
             </View>
-            <Text className="text-base mb-2">{quest.comment}</Text>
-            <TouchableOpacity>
-              <Text className="text-blue-600 font-medium mb-1">Reply</Text>
-            </TouchableOpacity>
-            {anw!=undefined?{
-              
-            } :null}
-          </View>
           )
         })}
         <View className="flex-row items-center bg-gray-200 p-2 border-t border-gray-300">

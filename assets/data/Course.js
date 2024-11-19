@@ -104,7 +104,7 @@ const courses = [
       "totalReview": 7051
     },
     {
-      "course_id": 8,
+      "course_id": 9,
       "title": "Grow your creative business with Insta!",
       "description": "Learn how to grow your business with Instagram.",
       "price": 19.99,
