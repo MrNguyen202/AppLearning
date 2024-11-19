@@ -46,7 +46,7 @@ const index = () => {
       <NavigationContainer independent={true}>
         <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
 
-        <Stack.Navigator initialRouteName="Tabs">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Login"
             component={Login}
@@ -101,6 +101,7 @@ const index = () => {
           <Stack.Screen
             name="Tabs"
             component={TabsLayout}
+            init
             options={{
               headerShown: false,
               statusBarColor: "black",

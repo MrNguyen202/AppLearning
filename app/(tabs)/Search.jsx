@@ -1,16 +1,18 @@
 import { View, Text, ScrollView, TextInput, TouchableOpacity, FlatList, Image, StatusBar } from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Icon from '../../constants/Icon'
 import Button from '../../components/Button'
 import Course from '../../assets/data/Course'
 import Category from '../../assets/data/Category'
 import SearchComponent from '../../components/SearchComponent'
 import RecommendComponent from '../../components/RecommendComponent'
+import categoryController from '../../controllers/category_controller'
 
 
 const Search = ({navigation}) => {
   const hotTopics = ['Java', 'SQL', 'Javascript', 'Python', 'Digital Marketing', 'Photoshop', 'Watercolor']
   const [txtSearch, setTxtSearch] = useState('')
+  const [lstCategory, setLstCategory] = useState([])
 
 
   const renderHotTopics = (lstTopic) => {
@@ -21,6 +23,16 @@ const Search = ({navigation}) => {
       ))
 
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const categories = await categoryController.getCategories()
+      setLstCategory(categories)
+    }
+    fetchData()
+  }, [])
+
+
 
   return (
     <ScrollView className={`bg-white pl-5 pr-5 flex-1`}>
@@ -52,17 +64,19 @@ const Search = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={Category}
+          data={lstCategory}
           renderItem={({item})=>{
+            // console.log(item)
             return (
               <TouchableOpacity className={`flex-row items-end justify-between border border-gray-200 mt-2 pl-2 pr-2 pb-2 rounded-md`}>
                 <View className={`flex-row items-center mt-3`}>
-                  <Image source={item.image} className={`w-7 h-7`} />
+                  <Image source={{uri: item.image}} className={`w-7 h-7`} />
                   <Text className={`pl-4 text-lg font-light`}>{item.name}</Text>
                 </View>
               </TouchableOpacity>
             )
           }}
+          keyExtractor={(item) => item.id}
           scrollEnabled={false}
         />
       </View>

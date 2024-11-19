@@ -19,9 +19,9 @@ const Login = ({ navigation }) => {
     }
   }, [userLogin]);
   
-  const handleLogin = () => {
-    const user = userController.checkLogin(username, password);
-    // setUserLogin(user || null);
+  const handleLogin = async () => {
+    const user = await userController.checkLogin(username, password)
+    setUserLogin(user || null);
   };
   
   return (

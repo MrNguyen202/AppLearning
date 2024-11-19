@@ -9,7 +9,6 @@ import Profile from './Profile'
 import Search from './Search'
 import PaymentMethod from './PaymentMethod'
 import PaymentSuccess from '././PaymentSuccess'
-import Home from './Home';
 import ProfileTeacher from './ProfileTeacher';
 
 const TabIcon = ({ icon, color, name, focused }) => {
