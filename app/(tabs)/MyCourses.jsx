@@ -5,17 +5,29 @@ import { useState } from 'react'
 import { router } from 'expo-router'
 import User_courses from '../../assets/data/User_course'
 import MyCourseCompletedComponent from '../../components/MyCourseCompletedComponent'
+import User from '../../assets/data/User'
 
 const MyCourses = ({navigation, route}) => {
 
-  const [status, setStatus] = useState('completed');
-  const [myCoursesCompleted, setMyCoursesCompleted] = useState(User_courses.filter((course) => course.progress === 'completed'));
-  const [myCoursesOngoing, setMyCoursesOngoing] = useState(User_courses.filter((course) => course.progress === 'ongoing'));
+  //Dữ liệu user đang đăng nhập
+  const [user, setUser] = useState(User[7])
 
+  //Trang thái khóa học
+  const [status, setStatus] = useState('completed');
+
+  //Dữ liệu khóa học đã hoàn thành
+  const [myCoursesCompleted, setMyCoursesCompleted] = useState("");
+
+  //Dữ liệu khóa học đang học
+  const [myCoursesOngoing, setMyCoursesOngoing] = useState("");
+
+
+  //Ghi nhận trạng thái khóa học
   const handleStatus = (newStatus) => {
     setStatus(newStatus);
   }
 
+  //Chuyển hướng đến trang MyCourseDetail kèm theo khóa học được chọn
   const handleMyCourse = (it) => {
     navigation.navigate('MyCourseDetail', { course: it });
   }
