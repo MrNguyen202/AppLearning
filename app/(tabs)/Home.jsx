@@ -15,7 +15,7 @@ import { useState } from 'react'
 const Home = ({ navigation, route }) => {
 
     //Dữ liệu user đang đăng nhập
-    const [user, setUser] = useState(User[7])
+    const [user, setUser] = useState(route.params.user)
 
     //Dữ liệu category phổ biến top 5
     const [categoryPopular, setCategoryPopular] = useState(Category.slice(0, 2))
@@ -46,7 +46,7 @@ const Home = ({ navigation, route }) => {
         <View>
             <View className={"bg-[#00B2FF] h-28 justify-evenly p-5"}>
                 <View className={"flex-row justify-between items-center"}>
-                    <Text className={"text-2xl font-semibold text-white"}>Hello, {user.fullname.split(' ').pop()}!</Text>
+                    <Text className={"text-2xl font-semibold text-white"}>Hello, {user.name.split(' ').pop()}!</Text>
                     <View className={"flex-row w-20 justify-evenly"}>
                         <TouchableOpacity>
                             <Image source={Icon.notification} className={"w-8 h-8"}></Image>

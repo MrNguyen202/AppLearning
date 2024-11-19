@@ -25,6 +25,9 @@ const TabIcon = ({ icon, color, name, focused }) => {
 const Tab = createBottomTabNavigator();
 
 const TabsLayout = ({ navigation, route }) => {
+
+  const [user, setUser] = useState(route.params.user)
+
   return (
     <Tab.Navigator initialRouteName='Home' screenOptions={{
       tabBarShowLabel: false,
@@ -35,6 +38,7 @@ const TabsLayout = ({ navigation, route }) => {
 
     }}>
       <Tab.Screen name="Home" component={Home}
+        initialParams={{ user: user }}
         options={{
           title: 'Home',
           headerShown: false,

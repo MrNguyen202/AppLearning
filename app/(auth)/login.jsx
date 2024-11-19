@@ -2,7 +2,7 @@ import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import React,{useState, useEffect} from 'react'
 import { Link } from 'expo-router'
 import Icon from '../../constants/Icon'
-import users from '../../assets/data/User'
+import userController from '../../controllers/user_controller'
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState("")
@@ -12,14 +12,15 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     if (userLogin) {
+      // console.log(userLogin)
       navigation.navigate("Tabs", { user: userLogin });
     } else if (userLogin === null) {
       alert("Invalid username or password");
     }
   }, [userLogin]);
   
-  const handleLogin = () => {
-    const user = users.find(user => user.email === username && user.password === password);
+  const handleLogin = async () => {
+    const user = await userController.checkLogin(username, password);
     setUserLogin(user || null);
   };
   

@@ -10,13 +10,13 @@ import User from '../../assets/data/User'
 const MyCourses = ({navigation, route}) => {
 
   //Dữ liệu user đang đăng nhập
-  const [user, setUser] = useState(User[7])
+  const [user, setUser] = useState(User[1])
 
   //Trang thái khóa học
   const [status, setStatus] = useState('completed');
 
   //Dữ liệu khóa học đã hoàn thành
-  const [myCoursesCompleted, setMyCoursesCompleted] = useState("");
+  const [myCoursesCompleted, setMyCoursesCompleted] = useState(User_courses.filter((item) => item.user_id === user.user_id && item.progress_status === 'completed'));
 
   //Dữ liệu khóa học đang học
   const [myCoursesOngoing, setMyCoursesOngoing] = useState("");
