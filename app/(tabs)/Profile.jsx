@@ -34,7 +34,7 @@ const Profile = ({ navigation, route }) => {
   const handleCourseProfile = (it) => {
     // console.log(it);
     const course = Course.find((a) => a.course_id === it);
-    navigation.navigate('CourseDetail', { course: course });
+    navigation.navigate('MyCourseDetail', { course: course });
   }
 
   
