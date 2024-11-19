@@ -34,7 +34,7 @@ const CourseDetail = ({ navigation, route }) => {
   useEffect(() => {
     const initializeData = async () => {
 
-      setCourse(courses[0])
+      setCourse(route.params.course);
 
       var section_course = sections.filter(
         (section) => section.course_id === course.course_id

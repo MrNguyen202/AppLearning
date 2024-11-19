@@ -2,9 +2,14 @@ import { Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "../constants/Icon";
 
-const CourseWatching= ({ item }) => {
+const CourseWatching= ({ item, getCourse }) => {
+
+  const handleGetCourse = (it) => {
+    getCourse(it);
+  };
+
   return (
-    <TouchableOpacity key={item.id} className={"my-2 mr-[11] h-56 w-44 justify-evenly"}>
+    <TouchableOpacity onPress={() => handleGetCourse(item)} key={item.course_id} className={"my-2 mr-[11] h-56 w-44 justify-evenly"}>
       <Image source={item.image} className="w-44 h-28 rounded-lg"/>
       <Text className="font-bold">{item.title}</Text>
       <Text>{item.teacher}</Text>

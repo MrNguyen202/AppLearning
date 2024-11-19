@@ -22,7 +22,7 @@ const index = () => {
         <TouchableOpacity
           onPress={() => {
             // console.log(navigation)
-            navigation.navigate("Search");
+            navigation.goBack();
           }}
         >
           <Image source={Icon.arrowLeft} className={``} />

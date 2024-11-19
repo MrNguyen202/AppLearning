@@ -14,20 +14,27 @@ import { useState } from 'react'
 
 const Home = ({ navigation, route }) => {
 
+    const [user, setUser] = useState(User[7])
     const [categoryPopular, setCategoryPopular] = useState(Category.slice(0, 2))
     const [courseMostWatching, setCourseMostWatching] = useState(Course.slice(5, 7))
     const [teacherPopular, setTeacherPopular] = useState(User.filter((item) => item.role === 'teacher').slice(-2))
     const [watchingInApp, setWatchingInApp] = useState(Course.slice(-2))
 
     const handleGetTeacherId = (id) => {
+        console.log(id);
         navigation.navigate('ProfileTeacher', { id: id });
     };
+
+    const handleGetCourse = (it) => {
+        console.log(it);
+        navigation.navigate('CourseDetail', { course: it });
+    }
 
     return (
         <View>
             <View className={"bg-[#00B2FF] h-28 justify-evenly p-5"}>
                 <View className={"flex-row justify-between items-center"}>
-                    <Text className={"text-2xl font-semibold text-white"}>Hello, !</Text>
+                    <Text className={"text-2xl font-semibold text-white"}>Hello, {user.fullname.split(' ').pop()}!</Text>
                     <View className={"flex-row w-20 justify-evenly"}>
                         <TouchableOpacity>
                             <Image source={Icon.notification} className={"w-8 h-8"}></Image>
@@ -109,7 +116,7 @@ const Home = ({ navigation, route }) => {
                         <FlatList
                             data={courseMostWatching}
                             renderItem={({ item }) => (
-                                <CourseWatching item={item} />
+                                <CourseWatching item={item} getCourse={handleGetCourse} />
                             )}
                             horizontal={true}
                         />
@@ -149,7 +156,7 @@ const Home = ({ navigation, route }) => {
                         <FlatList
                             data={watchingInApp}
                             renderItem={({ item }) => (
-                                <CourseWatching item={item} />
+                                <CourseWatching item={item} getCourse={handleGetCourse} />
                             )}
                             horizontal={true}
                         />

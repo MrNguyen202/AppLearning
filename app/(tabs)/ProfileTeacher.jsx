@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Image, Animated, Dimensions, ScrollView, FlatList } from 'react-native'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Icon from '../../constants/Icon'
 import User from '../../assets/data/User'
 import EnrolCourse from '../../assets/data/enroll_course'
@@ -7,10 +7,14 @@ import Course from '../../assets/data/Course'
 import Lesson from '../../assets/data/Lesson'
 import Section from '../../assets/data/Section'
 
-const ProfileTeacher = ({ route }) => {
-  const [user, setUser] = useState(User.find((a) => a.user_id === route.params.id));
+const ProfileTeacher = ({ navigation, route }) => {
+  const [user, setUser] = useState(User.filter((a) => a.user_id === route.params.id)[0]);
   const [courses, setCourses] = useState(EnrolCourse.filter((course) => course.user === user.user_id));
 
+  useEffect(() => {
+    const foundUser = User.find((a) => a.user_id === route.params.id);
+    setUser(foundUser || null);
+  }, [route.params.id]);
 
   const [progress_status, setProgressStatus] = useState("all");
 
@@ -24,7 +28,7 @@ const ProfileTeacher = ({ route }) => {
       <View className="container items-center">
         <View className="bg-[#3F79EB] h-28 justify-center items-end px-6 w-[100%]">
           <TouchableOpacity >
-            <Image source={Icon.setting} />
+            <Image source={Icon.share} />
           </TouchableOpacity>
         </View>
         <View className="w-[100%] items-center justify-end h-24">
