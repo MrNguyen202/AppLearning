@@ -6,7 +6,7 @@ import { router } from 'expo-router'
 import User_courses from '../../assets/data/User_course'
 import MyCourseCompletedComponent from '../../components/MyCourseCompletedComponent'
 
-const MyCourses = () => {
+const MyCourses = ({navigation, route}) => {
 
   const [status, setStatus] = useState('completed');
   const [myCoursesCompleted, setMyCoursesCompleted] = useState(User_courses.filter((course) => course.progress === 'completed'));
@@ -14,6 +14,10 @@ const MyCourses = () => {
 
   const handleStatus = (newStatus) => {
     setStatus(newStatus);
+  }
+
+  const handleMyCourse = (it) => {
+    navigation.navigate('MyCourseDetail', { course: it });
   }
 
   return (
@@ -42,7 +46,7 @@ const MyCourses = () => {
           data={status === 'completed' ? myCoursesCompleted : myCoursesOngoing}
           keyExtractor={(item) => item.course_id}
           renderItem={({ item }) => (
-            <MyCourseCompletedComponent item={item} status={status} />
+            <MyCourseCompletedComponent item={item} status={status} getMyCourse={handleMyCourse} />
           )}
         />
       </View>
