@@ -15,7 +15,7 @@ const CourseWatching= ({ item, getCourse }) => {
       <Text>{item.teacher.name}</Text>
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center">
-          <Text>{item.rating}</Text>
+          <Text>{item.rating ? item.rating.toFixed(1) : ""}</Text>
           <View className="flex-row ml-2">
             <Image source={Icon.star} />
             <Image source={Icon.star} />
