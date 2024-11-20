@@ -5,6 +5,11 @@ const courseController = {
         const data = await courseModel.getCourses();
         // console.log(data);
         return data;
+    },
+    getCoursesByTeacherId: async (teacherId: string) => {
+        const data = await courseModel.getCoursesByTeacherId(teacherId);
+        // console.log(data);
+        return data;
     }
 };
 

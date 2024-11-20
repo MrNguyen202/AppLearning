@@ -59,7 +59,6 @@ const Home = ({ navigation, route }) => {
     useEffect(() => {
         const fetchData = async () => {
             const teacher = await teacherController.getTeachers()
-            console.log(teacher)
             setTeacherPopular(teacher)
         }
         fetchData()
