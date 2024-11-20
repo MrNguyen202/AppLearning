@@ -1,29 +1,27 @@
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'expo-router'
 import Icon from '../../constants/Icon'
 import userController from '../../controllers/user_controller'
 
 const Login = ({ navigation }) => {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [userLogin, setUserLogin] = useState("")
+  const [username, setUsername] = useState("marketta.hodkiewicz@yahoo.com")
+  const [password, setPassword] = useState("nw6ot462e")
 
-
-  useEffect(() => {
-    if (userLogin) {
-      // console.log(userLogin)
-      navigation.navigate("Tabs", { user: userLogin });
-    } else if (userLogin === null) {
-      alert("Invalid username or password");
-    }
-  }, [userLogin]);
-  
   const handleLogin = async () => {
-    const user = await userController.checkLogin(username, password);
-    setUserLogin(user || null);
+    if (!username || !password) {
+      alert("Please fill in all fields");
+    } else {
+      const user = await userController.checkLogin(username, password);
+      console.log(user)
+      if (user === "Login failed") {
+        alert("Username or password is incorrect");
+      } else {
+        navigation.navigate("Tabs", { user: user });
+      }
+    }
   };
-  
+
   return (
     <View className="bg-[#F5F9FF] flex-1">
       <View className="justify-center items-center h-[184] mx-[34]">
@@ -43,7 +41,7 @@ const Login = ({ navigation }) => {
         <View className="w-[360] h-[60] flex-row items-center rounded-lg bg-white px-4">
           <View className="flex-row items-center">
             <View className="w-7 h-7 justify-center items-center"><Image source={Icon.lock} className="w-[19] h-[24]" /></View>
-            <TextInput placeholder='Password' secureTextEntry={true} className="text-[14] ml-2 font-bold text-[#545454] w-4/5" onChangeText={(val) =>{
+            <TextInput placeholder='Password' secureTextEntry={true} className="text-[14] ml-2 font-bold text-[#545454] w-4/5" onChangeText={(val) => {
               setPassword(val)
             }}></TextInput>
           </View>
@@ -74,7 +72,7 @@ const Login = ({ navigation }) => {
       </View>
       <View className="flex-row items-center justify-center my-3">
         <Text className="text-[14px] mr-2">Don't have an Account?</Text>
-        <TouchableOpacity onPress={() => {navigation.navigate("Signup")}}>
+        <TouchableOpacity onPress={() => { navigation.navigate("Signup") }}>
           <Text className="text-[#0961F5] text-[14px] font-bold uppercase underline">Sign Up</Text>
         </TouchableOpacity>
       </View>

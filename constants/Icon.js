@@ -50,6 +50,7 @@ import searchFillWhite from "../assets/icons/searchFillWhite.png";
 import bin from "../assets/icons/bin.png";
 
 import goBack from "../assets/icons/go-back.png";
+import arrowLeftWhite from "../assets/icons/arrow_left_white.png";
 
 export default {
   apple,
@@ -102,5 +103,6 @@ export default {
   cloud,
   bin,
   download,
-  goBack
+  goBack,
+  arrowLeftWhite
 };

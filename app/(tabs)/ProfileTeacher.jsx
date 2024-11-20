@@ -19,7 +19,7 @@ const ProfileTeacher = ({ navigation, route }) => {
       setUser(findUser)
     }
     fetchData()
-  }, [])
+  }, [route.params.id])
 
   const [progress_status, setProgressStatus] = useState("all");
 
@@ -30,7 +30,10 @@ const ProfileTeacher = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View className="container items-center">
-        <View className="bg-[#3F79EB] h-28 justify-center items-end px-6 w-[100%]">
+        <View className="bg-[#3F79EB] h-28 justify-between items-center flex-row px-6 w-[100%]">
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={Icon.arrowLeftWhite}/>
+          </TouchableOpacity>
           <TouchableOpacity >
             <Image source={Icon.share} />
           </TouchableOpacity>
