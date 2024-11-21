@@ -4,7 +4,7 @@ const userModels = {
     checkLogin: async (email: string, password: string) => {
         try {
           const response = await axios.post(
-            "http://10.0.2.2:8080/api/v1/users/login",
+            "http://192.168.1.58080/api/v1/users/login",
             {
               email,
               password,

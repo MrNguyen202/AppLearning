@@ -7,12 +7,14 @@ import Category from '../../assets/data/Category'
 import SearchComponent from '../../components/SearchComponent'
 import RecommendComponent from '../../components/RecommendComponent'
 import categoryController from '../../controllers/category_controller'
+import courseController from '../../controllers/course_controller'
 
 
 const Search = ({navigation}) => {
   const hotTopics = ['Java', 'SQL', 'Javascript', 'Python', 'Digital Marketing', 'Photoshop', 'Watercolor']
   const [txtSearch, setTxtSearch] = useState('')
   const [lstCategory, setLstCategory] = useState([])
+  const [lstCourse, setLstCourse] = useState([])
 
 
   const renderHotTopics = (lstTopic) => {
@@ -28,10 +30,11 @@ const Search = ({navigation}) => {
     const fetchData = async () => {
       const categories = await categoryController.getCategories()
       setLstCategory(categories)
+      const courses = await courseController.getCoursesTop(4,1)
+      setLstCourse(courses)
     }
     fetchData()
   }, [])
-
 
 
   return (
@@ -90,7 +93,7 @@ const Search = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={Course}
+          data={lstCourse}
           renderItem={({item})=>{
             return (
               <RecommendComponent item={item} onPress={() => {
