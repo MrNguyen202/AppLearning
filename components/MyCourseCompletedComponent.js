@@ -9,7 +9,7 @@ const CourseWatching = ({ item, status, getMyCourse }) => {
     }
 
     return (
-        <TouchableOpacity onPress={() => handleMyCourse(item)} className={"w-[360] bg-white h-[130] my-4 flex-row rounded-2xl shadow-xl"}>
+        <TouchableOpacity onPress={() => handleMyCourse(item.id.course)} className={"w-[360] bg-white h-[130] my-4 flex-row rounded-2xl shadow-xl"}>
             <View className="w-[130] bg-black rounded-l-2xl">
                 <Image source={{ uri: item.id.course.image }} className="w-full h-full object-contain rounded-l-2xl"></Image>
             </View>
