@@ -13,7 +13,6 @@ const Login = ({ navigation }) => {
       alert("Please fill in all fields");
     } else {
       const user = await userController.checkLogin(username, password);
-      console.log(user)
       if (user === "Login failed") {
         alert("Username or password is incorrect");
       } else {

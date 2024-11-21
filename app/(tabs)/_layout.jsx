@@ -67,6 +67,7 @@ const TabsLayout = ({ navigation, route }) => {
         }}
       />
       <Tab.Screen name="My Courses" component={MyCourses}
+        initialParams={{ user: user }}
         options={{
           title: 'myCourses',
           headerShown: false,
@@ -81,6 +82,7 @@ const TabsLayout = ({ navigation, route }) => {
         }}
       />
       <Tab.Screen name="Profile" component={Profile}
+        initialParams={{ user: user }}
         options={{
           title: 'profile',
           headerShown: false,

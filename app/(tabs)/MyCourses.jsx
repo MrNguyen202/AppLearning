@@ -1,26 +1,46 @@
 import { View, Text, TextInput, Image, TouchableOpacity, FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Icon from '../../constants/Icon'
 import { useState } from 'react'
 import { router } from 'expo-router'
 import User_courses from '../../assets/data/User_course'
 import MyCourseCompletedComponent from '../../components/MyCourseCompletedComponent'
 import User from '../../assets/data/User'
+import userController from '../../controllers/user_controller'
 
-const MyCourses = ({navigation, route}) => {
+const MyCourses = ({ navigation, route }) => {
 
   //Dữ liệu user đang đăng nhập
-  const [user, setUser] = useState(User[1])
+  // const [user, setUser] = useState(route.params.user);
+  // console.log(user)
 
   //Trang thái khóa học
   const [status, setStatus] = useState('completed');
 
   //Dữ liệu khóa học đã hoàn thành
-  const [myCoursesCompleted, setMyCoursesCompleted] = useState(User_courses.filter((item) => item.user_id === user.user_id && item.progress_status === 'completed'));
+  const [myCoursesCompleted, setMyCoursesCompleted] = useState([]);
+
+  // console.log(myCoursesCompleted)
 
   //Dữ liệu khóa học đang học
-  const [myCoursesOngoing, setMyCoursesOngoing] = useState("");
+  const [myCoursesOngoing, setMyCoursesOngoing] = useState([]);
 
+  //Lấy dữ liệu khóa học đã hoàn thành và đang học
+  useEffect(() => {
+    const fetchData = async () => {
+      const foundUser = await userController.getUserById(parseInt(route.params.user.id))
+      setMyCoursesCompleted(foundUser.enrollCourses.filter((item) => item.progress === 100))
+    }
+    fetchData()
+  }, [route.params.user])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const foundUser = await userController.getUserById(parseInt(route.params.user.id))
+      setMyCoursesOngoing(foundUser.enrollCourses.filter((item) => item.progress < 100))
+    }
+    fetchData()
+  }, [route.params.user])
 
   //Ghi nhận trạng thái khóa học
   const handleStatus = (newStatus) => {
@@ -56,7 +76,7 @@ const MyCourses = ({navigation, route}) => {
       <View className="h-[575] items-center">
         <FlatList
           data={status === 'completed' ? myCoursesCompleted : myCoursesOngoing}
-          keyExtractor={(item) => item.course_id}
+          keyExtractor={(item) => `${item.id.student.id}-${item.id.course.id}`}
           renderItem={({ item }) => (
             <MyCourseCompletedComponent item={item} status={status} getMyCourse={handleMyCourse} />
           )}
