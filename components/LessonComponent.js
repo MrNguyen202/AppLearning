@@ -9,6 +9,7 @@ const LessonComponent = (...props) => {
   const [lock, setLock] = useState(props[0].status);
   const[loading, setLoading] = useState(false)
   //   console.log(props[0].item)
+
   
   useEffect(() => {
     setSection(props[0].item);
@@ -30,18 +31,17 @@ const LessonComponent = (...props) => {
         {loading==false?setLoading(true):null}
       {section.map((section) => {
         return (
-          <View key={section.section_id}>
+          <View key={section.id}>
             <View className={`flex-row justify-between ml-3 mr-3 mt-4`}>
               <Text className={`font-bold`}>
-                Section {section.section_num} - <Text className={`text-[#0961F5]`}> {section.title}</Text>
+                Section {section.sectionNumber} - <Text className={`text-[#0961F5]`}> {section.title.length > 12?section.title.slice(0,11)+"...":section.title}</Text>
               </Text>
               <Text>? minutes</Text>
             </View>
-            {lesson
-              .filter((lesson) => lesson.section_id == section.section_id)
+            {section.lessons
               .map((item) => {
-                return (
-                  <View key={item.lesson_id}>
+                   return (
+                  <View key={item.id}>
                     <TouchableOpacity
                       className={` ml-3 mr-3 mt-4 flex-row justify-between items-center mb-5`}
                     >
@@ -50,13 +50,13 @@ const LessonComponent = (...props) => {
                           className={`h-[46] w-[46] border border-[#E8F1FF] bg-[#F5F9FF] justify-center rounded-full items-center mr-3`}
                         >
                           <Text className={`font-semibold`}>
-                            {item.num_lesson < 10
-                              ? "0" + item.num_lesson
-                              : item.num_lesson}
+                            {item.lessonNumber < 10
+                              ? "0" + item.lessonNumber
+                              : item.lessonNumber}
                           </Text>
                         </View>
                         <View>
-                          <Text className={`font-bold text-base`}>{item.title}</Text>
+                          <Text className={`font-bold text-base`}>{item.title.length > 20?item.title.slice(0,19)+"...":item.title}</Text>
                           <Text>{item.time} Mins</Text>
                         </View>
                       </View>
