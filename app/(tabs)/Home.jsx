@@ -130,7 +130,7 @@ const Home = ({ navigation, route }) => {
                     </View>
                 </View>
 
-                <View>
+                {/* <View>
                     <View className="flex-row justify-between mx-6 my-4 items-end">
                         <Text className="w-40 text-lg font-bold">
                             Popular category our in platform
@@ -148,7 +148,7 @@ const Home = ({ navigation, route }) => {
                             horizontal={true}
                         />
                     </View>
-                </View>
+                </View> */}
 
                 <View>
                     <View className="flex-row justify-between mx-6 my-4 items-end">
