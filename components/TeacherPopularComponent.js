@@ -9,7 +9,7 @@ const TeacherPopularComponent = ({ item, getTeacherId }) => {
     };
 
     return (
-        <TouchableOpacity onPress={() => handleTeacherId(item.teacherId)} key={item.id} className={"my-2 px-2 mr-[11] h-56 w-44 justify-evenly bg-white rounded-lg"}>
+        <TouchableOpacity onPress={() => handleTeacherId(item.teacherId)} key={item.id} className={"my-2 p-2 mr-[11] h-56 w-44 justify-between bg-white rounded-lg"}>
             <Image source={{uri: item.teacherAvatar}} className="w-40 h-28 rounded-lg" />
             <View>
                 <Text className="font-bold">{item.teacherName}</Text>

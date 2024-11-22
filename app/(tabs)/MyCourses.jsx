@@ -7,12 +7,14 @@ import User_courses from '../../assets/data/User_course'
 import MyCourseCompletedComponent from '../../components/MyCourseCompletedComponent'
 import User from '../../assets/data/User'
 import userController from '../../controllers/user_controller'
+import courseController from '../../controllers/course_controller'
 
 const MyCourses = ({ navigation, route }) => {
 
   //Dữ liệu user đang đăng nhập
   // const [user, setUser] = useState(route.params.user);
   // console.log(user)
+  
 
   //Trang thái khóa học
   const [status, setStatus] = useState('completed');
@@ -28,16 +30,16 @@ const MyCourses = ({ navigation, route }) => {
   //Lấy dữ liệu khóa học đã hoàn thành và đang học
   useEffect(() => {
     const fetchData = async () => {
-      const foundUser = await userController.getUserById(parseInt(route.params.user.id))
-      setMyCoursesCompleted(foundUser.enrollCourses.filter((item) => item.progress === 100))
+      const foundUser = await courseController.getMyCourses(route.params.user.id)
+      setMyCoursesCompleted(foundUser.filter((item) => item.progress === 100))
     }
     fetchData()
   }, [route.params.user])
 
   useEffect(() => {
     const fetchData = async () => {
-      const foundUser = await userController.getUserById(parseInt(route.params.user.id))
-      setMyCoursesOngoing(foundUser.enrollCourses.filter((item) => item.progress < 100))
+      const foundUser = await courseController.getMyCourses(route.params.user.id)
+      setMyCoursesOngoing(foundUser.filter((item) => item.progress < 100))
     }
     fetchData()
   }, [route.params.user])
@@ -76,7 +78,7 @@ const MyCourses = ({ navigation, route }) => {
       <View className="h-[575] items-center">
         <FlatList
           data={status === 'completed' ? myCoursesCompleted : myCoursesOngoing}
-          keyExtractor={(item) => `${item.id.student.id}-${item.id.course.id}`}
+          keyExtractor={(item) => item.courseId}
           renderItem={({ item }) => (
             <MyCourseCompletedComponent item={item} status={status} getMyCourse={handleMyCourse} />
           )}
