@@ -26,8 +26,6 @@ const Tab = createBottomTabNavigator();
 
 const TabsLayout = ({ navigation, route }) => {
 
-  const [user, setUser] = useState(route.params.user)
-
   return (
     <Tab.Navigator initialRouteName='Home' screenOptions={{
       tabBarShowLabel: false,
@@ -38,7 +36,7 @@ const TabsLayout = ({ navigation, route }) => {
 
     }}>
       <Tab.Screen name="Home" component={Home}
-        initialParams={{ user: user }}
+        initialParams={{ user: route.params.user }}
         options={{
           title: 'Home',
           headerShown: false,
@@ -67,7 +65,7 @@ const TabsLayout = ({ navigation, route }) => {
         }}
       />
       <Tab.Screen name="My Courses" component={MyCourses}
-        initialParams={{ user: user }}
+        initialParams={{ user: route.params.user }}
         options={{
           title: 'myCourses',
           headerShown: false,
@@ -82,7 +80,7 @@ const TabsLayout = ({ navigation, route }) => {
         }}
       />
       <Tab.Screen name="Profile" component={Profile}
-        initialParams={{ user: user }}
+        initialParams={{ user: route.params.user }}
         options={{
           title: 'profile',
           headerShown: false,

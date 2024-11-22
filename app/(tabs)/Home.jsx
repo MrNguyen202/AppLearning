@@ -22,11 +22,10 @@ const Home = ({ navigation, route }) => {
     //Dữ liệu category
     const [category, setCategory] = useState([])
 
-    //Dữ liệu category phổ biến top 5
-    const [categoryPopular, setCategoryPopular] = useState([])
-
     //Dữ liệu khóa học được xem nhiều nhất top 5
     const [courseMostWatching, setCourseMostWatching] = useState([])
+
+    // console.log(courseMostWatching);
 
     //Dữ liệu giáo viên phổ biến top 5
     const [teacherPopular, setTeacherPopular] = useState([])
@@ -38,9 +37,8 @@ const Home = ({ navigation, route }) => {
     //Hàm lấy dữ liệu category
     useEffect(() => {
         const fetchData = async () => {
-            const categories = await categoryController.getCategories()
-            setCategory(categories)
-            setCategoryPopular(categories.slice(-2))
+            const category = await categoryController.getCategories()
+            setCategory(category)
         }
         fetchData()
     }, [])
@@ -49,8 +47,8 @@ const Home = ({ navigation, route }) => {
     useEffect(() => {
         const fetchData = async () => {
             const courses = await courseController.getCourses()
-            setCourseMostWatching(JSON.parse(JSON.stringify(courses)))
-            setWatchingInApp(JSON.parse(JSON.stringify(courses)))
+            setCourseMostWatching(courses)
+            setWatchingInApp(courses)
         }
         fetchData()
     }, [])
@@ -153,7 +151,7 @@ const Home = ({ navigation, route }) => {
                 <View>
                     <View className="flex-row justify-between mx-6 my-4 items-end">
                         <Text className="w-40 text-lg font-bold">
-                            Most watching category in month
+                            Most watching
                         </Text>
                         <TouchableOpacity>
                             <Text className="text-gray-500">See more</Text>
@@ -193,7 +191,7 @@ const Home = ({ navigation, route }) => {
                 <View>
                     <View className="flex-row justify-between mx-6 my-4 items-end">
                         <Text className="w-40 text-lg font-bold">
-                            Most watching category in month
+                            Most watching in month
                         </Text>
                         <TouchableOpacity>
                             <Text className="text-gray-500">See more</Text>
