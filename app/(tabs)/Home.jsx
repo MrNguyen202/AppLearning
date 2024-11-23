@@ -1,20 +1,20 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, FlatList } from 'react-native'
 import React, { useEffect } from 'react'
-import { useIsFocused } from '@react-navigation/native'
 import Icon from '../../constants/Icon'
 import { Link } from 'expo-router'
 import CategoryComponent from '../../components/CategoryComponent'
 import CategoryPopularComponent from '../../components/CategoryPopularComponent'
 import CourseWatching from '../../components/CourseWatching'
 import TeacherPopularComponent from '../../components/TeacherPopularComponent'
+import Category from '../../assets/data/Category'
+import Course from '../../assets/data/Course'
+import User from '../../assets/data/User'
 import { useState } from 'react'
 import courseController from '../../controllers/course_controller'
 import categoryController from '../../controllers/category_controller'
 import teacherController from '../../controllers/teacher_controller'
 
 const Home = ({ navigation, route }) => {
-
-    const isFocused = useIsFocused();
 
     //Dữ liệu user đang đăng nhập
     const [user, setUser] = useState(route.params.user)
@@ -40,11 +40,8 @@ const Home = ({ navigation, route }) => {
             const category = await categoryController.getCategories()
             setCategory(category)
         }
-        fetchData();
-        if (isFocused){
-            fetchData();
-        }
-    }, [isFocused])
+        fetchData()
+    }, [])
 
     //Hàm lấy dữ liệu khóa học
     useEffect(() => {
@@ -53,11 +50,8 @@ const Home = ({ navigation, route }) => {
             setCourseMostWatching(courses)
             setWatchingInApp(courses)
         }
-        fetchData();
-        if (isFocused){
-            fetchData();
-        }
-    }, [isFocused])
+        fetchData()
+    }, [])
 
     //Hàm lấy dữ liệu teacher phổ biến
     useEffect(() => {
@@ -65,11 +59,8 @@ const Home = ({ navigation, route }) => {
             const teacher = await teacherController.getTeachers()
             setTeacherPopular(teacher)
         }
-        fetchData();
-        if (isFocused){
-            fetchData();
-        }
-    }, [isFocused])
+        fetchData()
+    }, [])
 
     //Hàm chuyển hướng đến trang ProfileTeacher
     const handleGetTeacherId = (id) => {
