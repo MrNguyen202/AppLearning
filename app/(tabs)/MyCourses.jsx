@@ -1,23 +1,17 @@
 import { View, Text, TextInput, Image, TouchableOpacity, FlatList } from 'react-native'
 import React, { useEffect } from 'react'
+import { useIsFocused } from '@react-navigation/native'
 import Icon from '../../constants/Icon'
 import { useState } from 'react'
-import { router } from 'expo-router'
-import User_courses from '../../assets/data/User_course'
 import MyCourseCompletedComponent from '../../components/MyCourseCompletedComponent'
-import User from '../../assets/data/User'
-import userController from '../../controllers/user_controller'
 import courseController from '../../controllers/course_controller'
 
 const MyCourses = ({ navigation, route }) => {
-
-  //Dữ liệu user đang đăng nhập
-  // const [user, setUser] = useState(route.params.user);
-  // console.log(user)
-  
-
   //Trang thái khóa học
   const [status, setStatus] = useState('completed');
+
+  //Kiểm tra màn hình có được focus không
+  const isFocused = useIsFocused();
 
   //Dữ liệu khóa học đã hoàn thành
   const [myCoursesCompleted, setMyCoursesCompleted] = useState([]);
@@ -33,16 +27,22 @@ const MyCourses = ({ navigation, route }) => {
       const foundUser = await courseController.getMyCourses(route.params.user.id)
       setMyCoursesCompleted(foundUser.filter((item) => item.progress === 100))
     }
-    fetchData()
-  }, [route.params.user])
+    fetchData();
+    if (isFocused) { // Chỉ fetch khi màn hình được focus
+      fetchData();
+    }
+  }, [isFocused, route.params.user, status])
 
   useEffect(() => {
     const fetchData = async () => {
       const foundUser = await courseController.getMyCourses(route.params.user.id)
       setMyCoursesOngoing(foundUser.filter((item) => item.progress < 100))
     }
-    fetchData()
-  }, [route.params.user])
+    fetchData();
+    if (isFocused) { // Chỉ fetch khi
+      fetchData();
+    }
+  }, [isFocused, route.params.user, status])
 
   //Ghi nhận trạng thái khóa học
   const handleStatus = (newStatus) => {
