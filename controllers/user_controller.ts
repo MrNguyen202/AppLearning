@@ -10,7 +10,17 @@ const userController = {
         const data = await userModels.getUserById(userId);
         // console.log(data);
         return data;
-    }
+    },
+    updateUser: async (data: any) => {
+        const response = await userModels.updateUser(data);
+        // console.log(response);
+        return response;
+    },
+    register: async (email: string, password: string, role: boolean) => {
+        const response = await userModels.register(email, password, role);
+        // console.log(response);
+        return response;
+    },
 }
 
 export default userController;

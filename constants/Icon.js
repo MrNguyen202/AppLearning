@@ -51,6 +51,7 @@ import bin from "../assets/icons/bin.png";
 
 import goBack from "../assets/icons/go-back.png";
 import arrowLeftWhite from "../assets/icons/arrow_left_white.png";
+import imageMyProfile from "../assets/icons/image-my-profile.png";
 
 export default {
   apple,
@@ -104,5 +105,6 @@ export default {
   bin,
   download,
   goBack,
-  arrowLeftWhite
+  arrowLeftWhite,
+  imageMyProfile
 };

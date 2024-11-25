@@ -4,17 +4,22 @@ import { Link } from 'expo-router'
 import Icon from '../../constants/Icon'
 import users from '../../assets/data/User'
 import RadioButton from '../../components/RadioButton'
+import userController from '../../controllers/user_controller'
 
 const Signup = ({ navigation }) => {
 
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [userSignup, setUserSignup] = useState("")
   const [isTeacher, setIsTeacher] = useState(false)
 
-  //Thuc hien dang ky
-  useEffect(() => {
-    if (userSignup) {
+
+  //Check if user exists
+  const handleSignup = async () => {
+    const user = await userController.register(username, password, isTeacher);
+    console.log(user)
+    if (user === "Account already exists") {
+      Alert.alert("Error", "User already exists");
+    } else {
       Alert.alert(
         "Success",
         "User created successfully. Do you want to proceed to Login?",
@@ -23,20 +28,8 @@ const Signup = ({ navigation }) => {
           { text: "OK", onPress: () => navigation.navigate("Login") },
         ]
       );
-    } else if (userSignup === null) {
-      Alert.alert("Error", "User already exists");
     }
-  }, [userSignup]);
-
-  //Check if user exists
-  const handleSignup = () => {
-    const user = users.find(user => user.email === username);
-    if (user) {
-      setUserSignup(null);
-    } else {
-      setUserSignup({ email: username, password: password });
-    }
-  }
+  };
 
   return (
     <View>

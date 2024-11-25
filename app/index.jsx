@@ -7,7 +7,7 @@ import Login from "./(auth)/login";
 import Signup from "./(auth)/signup";
 import CourseDetail from "./(tabs)/CourseDetail";
 import MyCourseDetail from "./(tabs)/MyCourseDetail";
-import ProfileTeacher from "./(tabs)/ProfileTeacher";
+import MyProfile from "./(tabs)/MyProfile";
 import Icon from "../constants/Icon";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -90,17 +90,11 @@ const index = () => {
             })}
           />
           <Stack.Screen
-            name="ProfileTeacher"
-            component={ProfileTeacher}
+            name="MyProfile"
+            initialParams={{ user: null }}
+            component={MyProfile}
             options={({ navigation }) => ({
-              title: "",
-              tabBarButton: () => null,
-              // headerShown:false
-              // statusBarTranslucent: true,
-              statusBarColor: "black",
-              statusBarHidden: true,
-              headerTitle: () => <Header navigation={navigation} />,
-              headerBackVisible: false,
+              headerShown: false,
             })}
           />
           <Stack.Screen

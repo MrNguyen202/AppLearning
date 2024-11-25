@@ -87,7 +87,7 @@ const Profile = ({ navigation, route }) => {
             }}
             className="absolute right-14 top-14 bg-white rounded-lg py-2 px-4 z-50 shadow-lg"
           >
-            <TouchableOpacity onPress={() => {navigation.navigate("MyProfile", {user: route.user})}}><Text className="text-base py-1">My profile</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => {navigation.navigate("MyProfile", {user: route.params.user}); setMenuVisible(false)}}><Text className="text-base py-1">My profile</Text></TouchableOpacity>
             {/* <TouchableOpacity><Text className="text-base py-1">Languages</Text></TouchableOpacity> */}
             <TouchableOpacity onPress={() => {navigation.navigate("Login")}}><Text className="text-base py-1">Log out</Text></TouchableOpacity>
             <TouchableOpacity onPress={toggleMenu}>
@@ -133,7 +133,7 @@ const Profile = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
         <View className="w-[112] h-28 rounded-full bg-slate-400 absolute top-[52] justify-center items-center">
-          <Image source={{ uri: route.params.user.avatar }} className="w-28 h-28 rounded-full" />
+          <Image source={{ uri: !route.params.user.avatar ? "https://res.cloudinary.com/dx0blzlhd/image/upload/v1732300438/appELearning/user-new_ahi9wj.jpg" : route.params.user.avatar }} className="w-28 h-28 rounded-full" />
         </View>
       </View>
       <View className="w-[100%]">
