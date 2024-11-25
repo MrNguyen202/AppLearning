@@ -10,7 +10,7 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import courses from "../../assets/data/Course";
@@ -26,86 +26,40 @@ import { shareAsync } from "expo-sharing";
 import questions from "../../assets/data/Question";
 import answers from "../../assets/data/Answer";
 import users from "../../assets/data/User";
+import YoutubeIframe from "react-native-youtube-iframe";
+import userLessonController from '../../controllers/userLesson_controller'
+
 
 const Tab = createMaterialTopTabNavigator();
 
-const MyCourseDetail = ({ navigation, route }) => {
-  const [section, setSection] = useState([]);
-  const [lesson, setLesson] = useState([]);
-  const [feedbackCourse, setFeedbackCourse] = useState([]);
-  const video = React.useRef(null);
+const MyCourseDetail =({ navigation, route }) => {
   const [status, setStatus] = React.useState({});
-  const [course, setCourse] = useState(courses[0]);
+  const [course, setCourse] = useState(route.params.course);
+  const [section, setSection] = useState(course.course.sections);
+
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [questionCourse, setQuestionCourse] = useState([]);
   const [answerQuestion, setAnswerQuestion] = useState([]);
+  const [video, setVideo] = useState(course.course.sections[0].lessons[0].url);
+  
 
-  useEffect(() => {
-    const initializeData = async () => {
-      if (!course) return; // Kiểm tra nếu `course` chưa được gán giá trị
 
-      // Lọc các section thuộc về khóa học này
-      const section_course = sections.filter(
-        (section) => section.course_id === course.course_id
-      );
 
-      // Cập nhật `section` chỉ nếu `section_course` thay đổi
-      setSection((prevSections) => {
-        const prevSectionIds = prevSections
-          .map((s) => s.section_id)
-          .sort()
-          .join(",");
-        const newSectionIds = section_course
-          .map((s) => s.section_id)
-          .sort()
-          .join(",");
-        return prevSectionIds === newSectionIds ? prevSections : section_course;
-      });
+  // useEffect(() => {
+  //   const filterQuestion = questions.filter(
+  //     (question) => question.course == course.course_id
+  //   );
+  //   setQuestionCourse(filterQuestion);
+  //   // console.log(questionCourse)
+  //   const questionIds = questionCourse.map((question) => question.question_id);
 
-      // Lọc các bài học thuộc về các section của khóa học
-      const lesson_course = lessons.filter((lesson) =>
-        section_course
-          .map((section) => section.section_id)
-          .includes(lesson.section_id)
-      );
-
-      // Cập nhật `lesson` chỉ nếu `lesson_course` thay đổi
-      setLesson((prevLessons) => {
-        const prevLessonIds = prevLessons
-          .map((l) => l.lesson_id)
-          .sort()
-          .join(",");
-        const newLessonIds = lesson_course
-          .map((l) => l.lesson_id)
-          .sort()
-          .join(",");
-        return prevLessonIds === newLessonIds ? prevLessons : lesson_course;
-      });
-    };
-
-    initializeData();
-  }, [sections, enroll_courses, lessons, course]);
-
-  useEffect(() => {
-    const filterQuestion = questions.filter(
-      (question) => question.course == course.course_id
-    );
-    setQuestionCourse(filterQuestion);
-    // console.log(questionCourse)
-    const questionIds = questionCourse.map((question) => question.question_id);
-
-    if (answers) {
-      const answer = answers.filter((answer) =>
-        questionIds.includes(answer.question)
-      );
-      setAnswerQuestion(answer);
-    }
-  }, []);
-
-  const time = lesson.reduce((total, lesson) => {
-    const [minutes, seconds] = lesson.time.split(":").map(Number);
-    return total + minutes * 60 + seconds;
-  }, 0);
+  //   if (answers) {
+  //     const answer = answers.filter((answer) =>
+  //       questionIds.includes(answer.question)
+  //     );
+  //     setAnswerQuestion(answer);
+  //   }
+  // }, []);
 
   const student = enroll_courses.reduce(
     (count, value) => (value.course === course.course_id ? count + 1 : count),
@@ -177,7 +131,7 @@ const MyCourseDetail = ({ navigation, route }) => {
 
     return (
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}
         style={{ alignSelf: "stretch" }}
         className={`bg-white pl-4 pr-4 pt-6`}
       >
@@ -285,11 +239,14 @@ const MyCourseDetail = ({ navigation, route }) => {
     return (
       <ScrollView
         className={`bg-white flex-1 rounded-2xl`}
-        contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+        contentContainerStyle={{ flexGrow: 1}}
         style={{ alignSelf: "stretch" }}
       >
         <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
-          <LessonComponent item={section} status={0} />
+          <LessonComponent item={section} status={0} page="MyCourseDetail" onPress={(item) => {
+            // console.log(item)
+            setVideo(item)
+          }} />
         </View>
       </ScrollView>
     );
@@ -303,26 +260,36 @@ const MyCourseDetail = ({ navigation, route }) => {
         style={{ alignSelf: "stretch" }}
       >
         {questionCourse.map((quest) => {
-          var anw = answerQuestion.find(({ question }) => question === quest.question_id)
+          var anw = answerQuestion.find(
+            ({ question }) => question === quest.question_id
+          );
           // console.log(anw)
           return (
-            <View key={quest.question_id} className="bg-blue p-4 mb-2" >
+            <View key={quest.question_id} className="bg-blue p-4 mb-2">
               <View className="flex-row items-center mb-2">
-                <Image source={require("../../assets/images/avatar.png")} className="w-10 h-10 rounded-full mr-3" />
+                <Image
+                  source={require("../../assets/images/avatar.png")}
+                  className="w-10 h-10 rounded-full mr-3"
+                />
                 <View>
-                  <Text className="font-bold text-base">{users.find(({ user_id }) => user_id === quest.user).fullname}</Text>
-                  <Text className="text-gray-500 text-sm">{quest.comment_date}</Text>
+                  <Text className="font-bold text-base">
+                    {
+                      users.find(({ user_id }) => user_id === quest.user)
+                        .fullname
+                    }
+                  </Text>
+                  <Text className="text-gray-500 text-sm">
+                    {quest.comment_date}
+                  </Text>
                 </View>
               </View>
               <Text className="text-base mb-2">{quest.comment}</Text>
               <TouchableOpacity>
                 <Text className="text-blue-600 font-medium mb-1">Reply</Text>
               </TouchableOpacity>
-              {anw != undefined ? {
-
-              } : null}
+              {anw != undefined ? {} : null}
             </View>
-          )
+          );
         })}
         <View className="flex-row items-center bg-gray-200 p-2 border-t border-gray-300">
           <Image
@@ -342,46 +309,64 @@ const MyCourseDetail = ({ navigation, route }) => {
     );
   }
 
+  const LoadVideo = React.memo(() =>{
+    const [playing, setPlaying] = useState(false);
+
+    const onStateChange = useCallback( async (state) => {
+      if (state === "ended") {
+         const res = await userLessonController.updateStatus(5, video.id) 
+        if(res){
+          alert("Video has finished")
+        }
+        setPlaying(false);
+
+      }
+    }, []);
+  
+    const togglePlaying = useCallback(() => {
+      setPlaying((prev) => !prev);
+    }, []);
+
+    return(
+      <YoutubeIframe
+        height={200}
+        play={playing}
+        videoId={video.url}
+        onChangeState={onStateChange}
+      />
+    )
+  })
+
+  
   return (
     <View className={`bg-white flex-1`}>
-      <Video
-        ref={video}
-        className={`w-full h-[200]`}
-        source={{
-          uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-        }}
-        useNativeControls
-        isLooping
-        onPlaybackStatusUpdate={setStatus}
-        resizeMode="contain"
-      />
-
+      <LoadVideo/>
       <View className={`ml-4 mt-3 mr-4`}>
         <Text
           className={` text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold w-1/4 text-center `}
         >
-          {course.status}
+          {course.course.status}
         </Text>
         <View className={`flex-row items-center`}>
           <Image
             className={`mt-2 mr-3`}
             source={require("../../assets/images/avatar.png")}
           />
-          <Text className={`font-bold`}>{course.teacher}</Text>
+          <Text className={`font-bold`}>{course.teacherName}</Text>
         </View>
-        <Text className={`font-bold text-xl `}>{course.title}</Text>
+        <Text className={`font-bold text-xl `}>{course.course.title}</Text>
         <View className={`justify-between flex-row mt-2`}>
           <View className={`flex-row items-center`}>
             <Image source={Icon.clock} />
             <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
-              {Math.floor(time / 3600)} hour {Math.floor((time % 3600) / 60)}{" "}
-              min
+              {Math.floor(course.totalMinutes / 60)} hour{" "}
+              {Math.floor(course.totalMinutes % 60)} min
             </Text>
           </View>
           <View className={`flex-row items-center`}>
             <Image source={Icon.camera} />
             <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
-              {lesson.length} lessons
+              {course.totalLesson} lessons
             </Text>
           </View>
         </View>
@@ -389,17 +374,23 @@ const MyCourseDetail = ({ navigation, route }) => {
           <View className={`flex-row items-center`}>
             <Image source={Icon.starNoFill} />
             <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
-              {course.rating}
+              {String(course.course.rating).includes(".")
+                ? course.course.rating
+                : `${course.course.rating}.0`}
             </Text>
           </View>
           <View className={`flex-row items-center`}>
             <Image source={Icon.user3} />
             <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
-              {student} students
+              {course.course.enrollCourses.length} students
             </Text>
           </View>
         </View>
-        <Text className={`mb-3`}>{course.description}</Text>
+        <Text className={`mb-3`}>
+          {course.course.description.length > 80
+            ? course.course.description.slice(0, 75) + "..."
+            : course.course.description}
+        </Text>
       </View>
       <ScrollView contentContainerStyle={{ height: "100%", flexGrow: 1 }}>
         <NavigationContainer independent={true}>

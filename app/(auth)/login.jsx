@@ -2,6 +2,7 @@ import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'expo-router'
 import Icon from '../../constants/Icon'
+
 import userController from '../../controllers/user_controller'
 
 const Login = ({ navigation }) => {
@@ -9,17 +10,26 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("nw6ot462e")
 
   const handleLogin = async () => {
+    // console.log("111111");
+    
     if (!username || !password) {
       alert("Please fill in all fields");
+      
     } else {
+      // console.log("111");
+      
       const user = await userController.checkLogin(username, password);
+      
       if (user === "Login failed") {
         alert("Username or password is incorrect");
       } else {
+        console.log("1111");
+        
         navigation.navigate("Tabs", { user: user });
       }
     }
   };
+  
 
   return (
     <View className="bg-[#F5F9FF] flex-1">

@@ -6,39 +6,25 @@ import sections from '../assets/data/Section'
 import lessons from '../assets/data/Lesson'
 
 const RecommendComponent = ({item, onPress}) => {
-  const [count, setCount] = useState(0)
   const [status, setStatus] = useState(false)
-  var course_sections = sections.filter(value => {return value.course_id == item.course_id})
-
-
-  useEffect(() =>{
-    var sum = 0
-    course_sections.map((value, index) => {
-      lessons.map(lessons => {
-        sum += lessons.section_id==value.section_id?1:0
-      })
-    })
-    setCount(count+sum)
-  },[])
-  
   
   return (
     <TouchableOpacity className={`mr-2 mt-2 rounded border pl-2 pr-2 pt-2 pb-2  border-[#6666663b]`} onPress={onPress}>
       <View >
-        <Image source={item.image} className={`w-[165] h-[75] rounded `}/>
-        <Text className={`absolute ml-2 mt-1 text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold `}>{item.status}</Text>
+        <Image source={{uri: item.course.image}} className={`w-[165] h-[75] rounded `}/>
+        <Text className={`absolute ml-2 mt-1 text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold `}>{item.course.status}</Text>
       </View> 
       <View className={`flex-row justify-between mt-1 pl-1 pr-1`}>
         <View>
-          <Text className={`font-bold`}>{item.title}</Text>
-          <Text className={`text-xs text-[#70747E]`}>{item.teacher}</Text>
-          <Text className = {`text-[#0961F5] font-bold`}>${item.price}</Text>
+          <Text className={`font-bold`}>{item.course.title.length>17?item.course.title.slice(0,17)+"...":item.course.title}</Text>
+          <Text className={`text-xs text-[#70747E]`}>{item.teacherName}</Text>
+          <Text className = {`text-[#0961F5] font-bold`}>${item.course.price}</Text>
           <View className={`flex-row items-center`}>
             <Image source={Icon.star} />
-            <Text className={`ml-1 font-bold`}>{item.rating}</Text>
-            <Text className={`ml-1 text-[#666666cc] text-xs`}>({enroll_courses.filter(value => {return value.course == item.course_id}).length})</Text>
+            <Text className={`ml-1 font-bold`}>{String(item.course.rating).includes(".") ? item.course.rating : `${item.course.rating}.0`}</Text>
+            <Text className={`ml-1 text-[#666666cc] text-xs`}>({item.totalRegister})</Text>
             <View className={`w-[2] h-[18] bg-black ml-2`}></View>
-            <Text className={`ml-2 font-bold`}>{count}</Text>
+            <Text className={`ml-2 font-bold`}>{item.totalLesson}</Text>
             <Text className={`ml-1 text-[#666666cc] text-xs`}>lessons</Text>
           </View>
         </View>

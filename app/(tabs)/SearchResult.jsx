@@ -3,21 +3,25 @@ import React, {useState, useEffect} from 'react'
 import Icon from '../../constants/Icon'
 import Button from '../../components/Button'
 import SearchComponent from '../../components/SearchComponent'
-import courses from '../../assets/data/Course'
 import ResultSearchComponent from '../../components/ResultSearchComponent'
+import courseController from '../../controllers/course_controller'
 
-const SearchResult = ({navigation, route}) => {
-    const [initCourses, setInitCourses] = useState(courses)
+
+const SearchResult = ({navigation, route}) =>  {
+    const [initCourses, setInitCourses] =  useState( async() => await courseController.getAllCourses())
     const [txtSearch, setTxtSearch] = useState(route.params.txtSearch)
 
-    const [coursesResult, setCoursesResult] = useState("")
+    const [coursesResult, setCoursesResult] = useState([])
 
     useEffect(() => {
-        setCoursesResult(initCourses.filter((course) => {
- 
-            return course.title.toLowerCase().includes(route.params.txtSearch.toLowerCase());
-         }))
-    },[route.params.txtSearch])
+        const searchResult = async () => {
+            setCoursesResult(await courseController.getSearchCourses(txtSearch))
+        }
+        searchResult()
+    }, [txtSearch])
+    // useE
+    
+    // console.log(coursesResult)
 
   return (
     <View className={`bg-white pl-5 pr-5 flex-1`}>
@@ -40,6 +44,6 @@ const SearchResult = ({navigation, route}) => {
       />
     </View>
   )
-}
+} 
 
 export default SearchResult

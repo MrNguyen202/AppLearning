@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import TabsLayout from "./(tabs)/_layout";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "./(auth)/login";
+import Login from "./(auth)/Login";
 import Signup from "./(auth)/signup";
 import CourseDetail from "./(tabs)/CourseDetail";
 import MyCourseDetail from "./(tabs)/MyCourseDetail";
