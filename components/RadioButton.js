@@ -9,7 +9,8 @@ const RadioButton = ({ color, width, height, select, click}) => {
                 width: width,
                 height: height,
             }}>
-                {select ? <View style={{ width: '80%', height: '80%', backgroundColor: color }} className="rounded-full"></View> : null}
+                {select ? <View style={{ width: '80%', height: '80%', backgroundColor: color }} className="rounded-full"></View> 
+                : <View style={{ width: '80%', height: '80%', borderColor: color, borderWidth: 2 }} className="rounded-full"></View>}
             </TouchableOpacity>
         </>
     )

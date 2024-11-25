@@ -1,21 +1,55 @@
 import { View, Text, TextInput, Image, TouchableOpacity, FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useIsFocused } from '@react-navigation/native'
 import Icon from '../../constants/Icon'
 import { useState } from 'react'
-import { router } from 'expo-router'
-import User_courses from '../../assets/data/User_course'
 import MyCourseCompletedComponent from '../../components/MyCourseCompletedComponent'
+import courseController from '../../controllers/course_controller'
 
-const MyCourses = ({navigation, route}) => {
-
+const MyCourses = ({ navigation, route }) => {
+  //Trang thái khóa học
   const [status, setStatus] = useState('completed');
-  const [myCoursesCompleted, setMyCoursesCompleted] = useState(User_courses.filter((course) => course.progress === 'completed'));
-  const [myCoursesOngoing, setMyCoursesOngoing] = useState(User_courses.filter((course) => course.progress === 'ongoing'));
 
+  //Kiểm tra màn hình có được focus không
+  const isFocused = useIsFocused();
+
+  //Dữ liệu khóa học đã hoàn thành
+  const [myCoursesCompleted, setMyCoursesCompleted] = useState([]);
+
+  // console.log(myCoursesCompleted)
+
+  //Dữ liệu khóa học đang học
+  const [myCoursesOngoing, setMyCoursesOngoing] = useState([]);
+
+  //Lấy dữ liệu khóa học đã hoàn thành và đang học
+  useEffect(() => {
+    const fetchData = async () => {
+      const foundUser = await courseController.getMyCourses(route.params.user.id)
+      setMyCoursesCompleted(foundUser.filter((item) => item.progress === 100))
+    }
+    fetchData();
+    if (isFocused) { // Chỉ fetch khi màn hình được focus
+      fetchData();
+    }
+  }, [isFocused, route.params.user, status])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const foundUser = await courseController.getMyCourses(route.params.user.id)
+      setMyCoursesOngoing(foundUser.filter((item) => item.progress < 100))
+    }
+    fetchData();
+    if (isFocused) { // Chỉ fetch khi
+      fetchData();
+    }
+  }, [isFocused, route.params.user, status])
+
+  //Ghi nhận trạng thái khóa học
   const handleStatus = (newStatus) => {
     setStatus(newStatus);
   }
 
+  //Chuyển hướng đến trang MyCourseDetail kèm theo khóa học được chọn
   const handleMyCourse = (it) => {
     navigation.navigate('MyCourseDetail', { course: it });
   }
@@ -44,7 +78,7 @@ const MyCourses = ({navigation, route}) => {
       <View className="h-[575] items-center">
         <FlatList
           data={status === 'completed' ? myCoursesCompleted : myCoursesOngoing}
-          keyExtractor={(item) => item.course_id}
+          keyExtractor={(item) => item.courseId}
           renderItem={({ item }) => (
             <MyCourseCompletedComponent item={item} status={status} getMyCourse={handleMyCourse} />
           )}

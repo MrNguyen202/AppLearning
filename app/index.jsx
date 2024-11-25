@@ -7,7 +7,7 @@ import Login from "./(auth)/login";
 import Signup from "./(auth)/signup";
 import CourseDetail from "./(tabs)/CourseDetail";
 import MyCourseDetail from "./(tabs)/MyCourseDetail";
-import ProfileTeacher from "./(tabs)/ProfileTeacher";
+import MyProfile from "./(tabs)/MyProfile";
 import Icon from "../constants/Icon";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -46,7 +46,7 @@ const index = () => {
       <NavigationContainer independent={true}>
         <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
 
-        <Stack.Navigator initialRouteName="Tabs">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Login"
             component={Login}
@@ -55,7 +55,12 @@ const index = () => {
               // statusBarTranslucent: true
             })}
           />
-          <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen name="Signup"
+            component={Signup}
+            options={({ navigation }) => ({
+              headerShown: false,
+              // statusBarTranslucent: true
+            })} />
           <Stack.Screen
             name="CourseDetail"
             component={CourseDetail}
@@ -85,22 +90,17 @@ const index = () => {
             })}
           />
           <Stack.Screen
-            name="ProfileTeacher"
-            component={ProfileTeacher}
+            name="MyProfile"
+            initialParams={{ user: null }}
+            component={MyProfile}
             options={({ navigation }) => ({
-              title: "",
-              tabBarButton: () => null,
-              // headerShown:false
-              // statusBarTranslucent: true,
-              statusBarColor: "black",
-              statusBarHidden: true,
-              headerTitle: () => <Header navigation={navigation} />,
-              headerBackVisible: false,
+              headerShown: false,
             })}
           />
           <Stack.Screen
             name="Tabs"
             component={TabsLayout}
+            initialParams={{ user: null }}
             options={{
               headerShown: false,
               statusBarColor: "black",
