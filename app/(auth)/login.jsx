@@ -2,6 +2,7 @@ import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'expo-router'
 import Icon from '../../constants/Icon'
+
 import userController from '../../controllers/user_controller'
 
 const Login = ({ navigation }) => {
@@ -19,6 +20,11 @@ const Login = ({ navigation }) => {
         navigation.navigate("Tabs", { user: user });
       }
     }
+  }, [userLogin]);
+  
+  const handleLogin = async () => {
+    const user = await userController.checkLogin(username, password)
+    setUserLogin(user || null);
   };
 
   return (

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+
 
 const userModels = {
     checkLogin: async (email: string, password: string) => {
@@ -29,6 +29,7 @@ const userModels = {
             throw new Error(error.message);
           }
         }
+
     },
     getUserById: async (userId: string) => {
         try {
