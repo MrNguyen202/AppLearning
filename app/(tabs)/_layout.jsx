@@ -7,6 +7,7 @@ import Home from './Home'
 import MyCourses from './MyCourses'
 import Profile from './Profile'
 import Search from './Search'
+import SearchResult from './SearchResult';
 import PaymentMethod from './PaymentMethod'
 import PaymentSuccess from '././PaymentSuccess'
 import ProfileTeacher from './ProfileTeacher';
@@ -112,6 +113,13 @@ const TabsLayout = ({ navigation, route }) => {
           headerShown: false,
           tabBarButton: () => null,
 
+        }}
+      />
+      <Tab.Screen name="SearchResult" component={SearchResult}
+        options={{
+          title: 'SearchResult',
+          headerShown: false,
+          tabBarButton: () => null,
         }}
       />
     </Tab.Navigator>

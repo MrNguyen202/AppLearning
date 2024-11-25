@@ -4,7 +4,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import courses from "../../assets/data/Course";
@@ -17,6 +17,8 @@ import CommentComponent from "../../components/CommentComponent";
 import Button from "../../components/Button";
 import LessonComponent from "../../components/LessonComponent";
 import { Video } from 'expo-av'
+import YoutubeIframe from "react-native-youtube-iframe";
+
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -26,9 +28,9 @@ const CourseDetail = ({ navigation, route }) => {
   const [section, setSection] = useState([]);
   const [lesson, setLesson] = useState([]);
   const [feedbackCourse, setFeedbackCourse] = useState([]);
-  const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [course, setCourse] = useState(route.params.course);
+  const [video, setVideo] = useState(course.course.sections[0].lessons[0].url);
   
 
   
@@ -164,10 +166,22 @@ const CourseDetail = ({ navigation, route }) => {
       </ScrollView>
     );
   }
+  const [playing, setPlaying] = useState(false);
 
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+      Alert.alert("video has finished playing!");
+    }
+  }, []);
+
+  const togglePlaying = useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
   return (
+    
     <View className={`bg-white flex-1`}>
-      <Video
+      {/* <Video
         ref={video}
         className={`w-full h-[200]`}
         source={{uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
@@ -176,8 +190,13 @@ const CourseDetail = ({ navigation, route }) => {
 
         onPlaybackStatusUpdate={setStatus}
         resizeMode="contain"
+      /> */}
+      <YoutubeIframe
+        height={200}
+        play={playing}
+        videoId={video}
+        onChangeState={onStateChange}
       />
-
       <View className={`ml-4 mt-3 mr-4`}>
         <Text
           className={` text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold w-1/4 text-center `}

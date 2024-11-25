@@ -21,7 +21,7 @@ const RecommendComponent = ({item, onPress}) => {
           <Text className = {`text-[#0961F5] font-bold`}>${item.course.price}</Text>
           <View className={`flex-row items-center`}>
             <Image source={Icon.star} />
-            <Text className={`ml-1 font-bold`}>{item.course.rating}</Text>
+            <Text className={`ml-1 font-bold`}>{String(item.course.rating).includes(".") ? item.course.rating : `${item.course.rating}.0`}</Text>
             <Text className={`ml-1 text-[#666666cc] text-xs`}>({item.totalRegister})</Text>
             <View className={`w-[2] h-[18] bg-black ml-2`}></View>
             <Text className={`ml-2 font-bold`}>{item.totalLesson}</Text>

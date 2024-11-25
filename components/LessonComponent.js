@@ -1,32 +1,39 @@
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import React, { useState, useEffect } from "react";
 import Icon from "../constants/Icon";
+import userLessonController from '../controllers/userLesson_controller'
 import lessons from "../assets/data/Lesson";
 
 const LessonComponent = (...props) => {
-  const [section, setSection] = useState([]);
-  const [lesson, setLesson] = useState([]);
-  const [lock, setLock] = useState(props[0].status);
+  const [section, setSection] = useState(props[0].item);
   const[loading, setLoading] = useState(false)
-  //   console.log(props[0].item)
-
   
   useEffect(() => {
-    setSection(props[0].item);
-    setLesson(lessons)
-    // console.log(lesson);
-  }, [loading]);
-//   console.log(props[0])
-//   console.log(lesson)
+    const fetchLessonStatuses = async () => {
+      const updatedSectionsData = await Promise.all(
+        section.map(async (section) => {
+          const updatedLessons = await Promise.all(
+            section.lessons.map(async (lesson) => {
+              const res = await userLessonController.checkStatus(5, lesson.id);
+              lesson.status = res;
+              return lesson;
+            })
+          );
+          section.lessons = updatedLessons; // Cập nhật lại lessons trong section
+          return section; // Trả về section đã cập nhật
+        })
+      );
+  
+      // Cập nhật state với dữ liệu mới
+      setSection(updatedSectionsData);
+    };
+  
+    fetchLessonStatuses();
+  }, []);
 
 
-    // return (
-    //     <View>
 
-    //     </View>
-    // )
-
-  return (
+  return  (
     <View className={`mt-5 ml-4 bg-white mr-4 rounded-2xl `}>
         {loading==false?setLoading(true):null}
       {section.map((section) => {
@@ -44,6 +51,7 @@ const LessonComponent = (...props) => {
                   <View key={item.id}>
                     <TouchableOpacity
                       className={` ml-3 mr-3 mt-4 flex-row justify-between items-center mb-5`}
+                      onPress={() => props[0].onPress(item)}
                     >
                       <View className={`flex-row items-center`}>
                         <View
@@ -64,9 +72,9 @@ const LessonComponent = (...props) => {
                         <TouchableOpacity>
                           <Image
                             source={
-                              lock==0
-                                ? Icon.lock
-                                : Icon.play
+                              props[0].page == "MyCourseDetail"
+                                ? item.status == "completed" ? Icon.check : Icon.play
+                                : Icon.lock
                             }
                           />
                         </TouchableOpacity>
@@ -83,4 +91,4 @@ const LessonComponent = (...props) => {
   );
 };
 
-export default LessonComponent;
+export default React.memo(LessonComponent);

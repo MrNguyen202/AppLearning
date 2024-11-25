@@ -1,3 +1,4 @@
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import courseModels from "../models/course_model";
 
 const courseController = {
@@ -34,6 +35,15 @@ const courseController = {
       throw error;
     }
   },
+  getSearchCourses: async (search: string) => {
+    try {
+      const data = await courseModels.getSearchCourses(search);
+      return data;
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách khóa học:", error.message);
+      throw error;
+    }
+  }
 };
 
 export default courseController;
