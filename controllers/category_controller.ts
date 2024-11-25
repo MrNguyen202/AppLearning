@@ -5,6 +5,7 @@ const categoryController = {
         const data = await categoryModels.getCategory();
         return data;
     }
+
 }
 
 export default categoryController;

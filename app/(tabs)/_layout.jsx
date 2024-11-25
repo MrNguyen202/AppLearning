@@ -26,6 +26,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
 const Tab = createBottomTabNavigator();
 
 const TabsLayout = ({ navigation, route }) => {
+
   return (
     <Tab.Navigator initialRouteName='Search' screenOptions={{
       tabBarShowLabel: false,
@@ -36,6 +37,7 @@ const TabsLayout = ({ navigation, route }) => {
 
     }}>
       <Tab.Screen name="Home" component={Home}
+        initialParams={{ user: route.params.user }}
         options={{
           title: 'Home',
           headerShown: false,
@@ -64,6 +66,7 @@ const TabsLayout = ({ navigation, route }) => {
         }}
       />
       <Tab.Screen name="My Courses" component={MyCourses}
+        initialParams={{ user: route.params.user }}
         options={{
           title: 'myCourses',
           headerShown: false,
@@ -78,6 +81,7 @@ const TabsLayout = ({ navigation, route }) => {
         }}
       />
       <Tab.Screen name="Profile" component={Profile}
+        initialParams={{ user: route.params.user }}
         options={{
           title: 'profile',
           headerShown: false,

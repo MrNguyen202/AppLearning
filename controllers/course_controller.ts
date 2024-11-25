@@ -43,7 +43,17 @@ const courseController = {
       console.error("Lỗi khi lấy danh sách khóa học:", error.message);
       throw error;
     }
-  }
+  },
+    getMyCourses: async (userId: string) => {
+        const data = await courseModel.getMyCourses(userId);
+        // console.log(data);
+        return data;
+    },
+    getCoursesByTeacherId: async (teacherId: string) => {
+        const data = await courseModel.getCoursesByTeacherId(teacherId);
+        // console.log(data);
+        return data;
+    }
 };
 
 export default courseController;
