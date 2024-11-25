@@ -84,7 +84,7 @@ const courseModels = {
     // Lấy chi tiết khóa học theo teacherId
     getCoursesByTeacherId: async (teacherId: string) => {
         try {
-            const response = await axios.get(`http://192.168.1.185:8080/api/v1/courses/teacher/${teacherId}`);
+            const response = await axios.get(`http://10.0.2.2:8080/api/v1/courses/teacher/${teacherId}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -103,7 +103,7 @@ const courseModels = {
     //my course
     getMyCourses: async (userId: string) => {
         try {
-            const response = await axios.get(`http://192.168.1.185:8080/api/v1/courses/student/${userId}`);
+            const response = await axios.get(`http://10.0.2.2:8080/api/v1/courses/student/${userId}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {

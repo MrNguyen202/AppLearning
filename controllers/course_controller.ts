@@ -45,12 +45,12 @@ const courseController = {
     }
   },
     getMyCourses: async (userId: string) => {
-        const data = await courseModel.getMyCourses(userId);
+        const data = await courseModels.getMyCourses(userId);
         // console.log(data);
         return data;
     },
     getCoursesByTeacherId: async (teacherId: string) => {
-        const data = await courseModel.getCoursesByTeacherId(teacherId);
+        const data = await courseModels.getCoursesByTeacherId(teacherId);
         // console.log(data);
         return data;
     }
