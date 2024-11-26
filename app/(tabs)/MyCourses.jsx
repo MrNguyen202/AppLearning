@@ -5,8 +5,13 @@ import Icon from '../../constants/Icon'
 import { useState } from 'react'
 import MyCourseCompletedComponent from '../../components/MyCourseCompletedComponent'
 import courseController from '../../controllers/course_controller'
+import { useSelector } from 'react-redux'
 
 const MyCourses = ({ navigation, route }) => {
+
+  //user đang đăng nhập
+  const user = useSelector((state) => state.user.user);
+
   //Trang thái khóa học
   const [status, setStatus] = useState('completed');
 
@@ -24,25 +29,25 @@ const MyCourses = ({ navigation, route }) => {
   //Lấy dữ liệu khóa học đã hoàn thành và đang học
   useEffect(() => {
     const fetchData = async () => {
-      const foundUser = await courseController.getMyCourses(route.params.user.id)
+      const foundUser = await courseController.getMyCourses(user.id)
       setMyCoursesCompleted(foundUser.filter((item) => item.progress === 100))
     }
     fetchData();
     if (isFocused) { // Chỉ fetch khi màn hình được focus
       fetchData();
     }
-  }, [isFocused, route.params.user, status])
+  }, [isFocused, user, status])
 
   useEffect(() => {
     const fetchData = async () => {
-      const foundUser = await courseController.getMyCourses(route.params.user.id)
+      const foundUser = await courseController.getMyCourses(user.id)
       setMyCoursesOngoing(foundUser.filter((item) => item.progress < 100))
     }
     fetchData();
     if (isFocused) { // Chỉ fetch khi
       fetchData();
     }
-  }, [isFocused, route.params.user, status])
+  }, [isFocused, user, status])
 
   //Ghi nhận trạng thái khóa học
   const handleStatus = (newStatus) => {

@@ -3,9 +3,14 @@ import React, { useState, useRef, useEffect } from 'react'
 import Icon from '../../constants/Icon'
 import courseController from '../../controllers/course_controller'
 import { useIsFocused } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 
 const Profile = ({ navigation, route }) => {
+
+  //user đang đăng nhập
+  const user = useSelector((state) => state.user.user);
+
   //Kiểm tra
   const isFocused = useIsFocused();
 
@@ -24,7 +29,7 @@ const Profile = ({ navigation, route }) => {
   //Course profile
   useEffect(() => {
     const fetchData = async () => {
-      const course = await courseController.getMyCourses(route.params.user.id)
+      const course = await courseController.getMyCourses(user.id)
       setCourses(course)
       setCompletedCourses(course.filter((item) => item.progress === 100))
       setOngoingCourses(course.filter((item) => item.progress < 100))
@@ -33,7 +38,7 @@ const Profile = ({ navigation, route }) => {
     if(isFocused){
       fetchData()
     }
-  }, [route.params.user.id])
+  }, [user.id])
 
 
   //Ghi nhận trạng thái khóa học
@@ -87,7 +92,7 @@ const Profile = ({ navigation, route }) => {
             }}
             className="absolute right-14 top-14 bg-white rounded-lg py-2 px-4 z-50 shadow-lg"
           >
-            <TouchableOpacity onPress={() => {navigation.navigate("MyProfile", {user: route.params.user}); setMenuVisible(false)}}><Text className="text-base py-1">My profile</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => {navigation.navigate("MyProfile", {user: user}); setMenuVisible(false)}}><Text className="text-base py-1">My profile</Text></TouchableOpacity>
             {/* <TouchableOpacity><Text className="text-base py-1">Languages</Text></TouchableOpacity> */}
             <TouchableOpacity onPress={() => {navigation.navigate("Login")}}><Text className="text-base py-1">Log out</Text></TouchableOpacity>
             <TouchableOpacity onPress={toggleMenu}>
@@ -101,10 +106,10 @@ const Profile = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
         <View className="w-[100%] items-center justify-end h-24">
-          <Text className="text-3xl font-bold">{route.params.user.name}</Text>
+          <Text className="text-3xl font-bold">{user.name}</Text>
         </View>
         <View>
-          <Text className="text-center w-72 my-4 text-gray-500">{route.params.user.description}</Text>
+          <Text className="text-center w-72 my-4 text-gray-500">{user.description}</Text>
         </View>
         <View className="flex-row justify-evenly w-[100%] mx-6">
           <TouchableOpacity
@@ -133,7 +138,7 @@ const Profile = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
         <View className="w-[112] h-28 rounded-full bg-slate-400 absolute top-[52] justify-center items-center">
-          <Image source={{ uri: !route.params.user.avatar ? "https://res.cloudinary.com/dx0blzlhd/image/upload/v1732300438/appELearning/user-new_ahi9wj.jpg" : route.params.user.avatar }} className="w-28 h-28 rounded-full" />
+          <Image source={{ uri: !user.avatar ? "https://res.cloudinary.com/dx0blzlhd/image/upload/v1732300438/appELearning/user-new_ahi9wj.jpg" : route.params.user.avatar }} className="w-28 h-28 rounded-full" />
         </View>
       </View>
       <View className="w-[100%]">

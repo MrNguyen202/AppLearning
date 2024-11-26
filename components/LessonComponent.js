@@ -14,7 +14,7 @@ const LessonComponent = (...props) => {
         section.map(async (section) => {
           const updatedLessons = await Promise.all(
             section.lessons.map(async (lesson) => {
-              const res = await userLessonController.checkStatus(5, lesson.id);
+              const res = await userLessonController.checkStatus(3, lesson.id);
               lesson.status = res;
               return lesson;
             })
