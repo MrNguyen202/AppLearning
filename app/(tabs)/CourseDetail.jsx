@@ -37,19 +37,6 @@ const CourseDetail = ({ navigation, route }) => {
 
   useEffect(() => {
     const initializeData = async () => {
-      var section_course = sections.filter(
-        (section) => section.course_id === course.course_id
-      );
-
-      setSection(section_course);
-
-
-      const lesson_course = lessons.filter((lesson) =>
-        section_course
-          .map((section) => section.section_id)
-          .includes(lesson.section_id)
-      );
-      setLesson(lesson_course);
 
       const filteredFeedback = feedback.filter(
         (value) => value.course === course.course_id
@@ -161,7 +148,7 @@ const CourseDetail = ({ navigation, route }) => {
       <ScrollView className={`bg-white flex-1 rounded-2xl`} contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
       style={{ alignSelf: 'stretch' }} >
           <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
-            <LessonComponent item={course.course.sections} status={0} />
+            <LessonComponent item={course.course.sections} status={0} page="CourseDetail" />
         </View>
       </ScrollView>
     );
@@ -263,6 +250,9 @@ const CourseDetail = ({ navigation, route }) => {
           icon={Icon.shoppingCart}
           txtColor={"text-white"}
           valTxt={"Add to cart"}
+          onPress={() => {
+            navigation.navigate("PaymentMethod", {courseId: course.course.id});
+          }}
         />
       </View>
     </View>

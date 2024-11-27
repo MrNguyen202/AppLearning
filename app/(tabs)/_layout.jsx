@@ -34,6 +34,8 @@ const TabsLayout = ({ navigation, route }) => {
       tabBarStyle: {
         height: 60,
       },
+      
+       tabBarHideOnKeyboard: true,
 
     }}>
       <Tab.Screen name="Home" component={Home}

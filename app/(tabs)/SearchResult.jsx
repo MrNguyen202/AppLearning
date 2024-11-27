@@ -21,7 +21,7 @@ const SearchResult = ({navigation, route}) =>  {
     }, [txtSearch])
     // useE
     
-    // console.log(coursesResult)
+    console.log(coursesResult)
 
   return (
     <View className={`bg-white pl-5 pr-5 flex-1`}>
