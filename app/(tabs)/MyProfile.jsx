@@ -6,6 +6,7 @@ import userController from "../../controllers/user_controller";
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../reuduxToolkit/userSlice';
+import axios from "axios";
 
 
 const MyProfile = ({ navigation, route }) => {
@@ -18,9 +19,11 @@ const MyProfile = ({ navigation, route }) => {
   const [initialProfile, setInitialProfile] = useState(user);
   const [isEdit, setIsEdit] = useState(false);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
-  // const [selectedFiles, setSelectedFiles] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
 
-  //
+  // console.log(imageUrl);
 
   // Hàm xử lý cập nhật giá trị
   const handleInputChange = (key, value) => {
@@ -38,8 +41,18 @@ const MyProfile = ({ navigation, route }) => {
 
   //update profile
   const handleUpdateProfile = async () => {
+    if (selectedFiles.length > 0) {
+      await uploadImageToCloudinary();
+      if (imageUrl) {
+        profile.avatar = imageUrl; // Update avatar with the new image URL
+      }
+    } else {
+      // If no new image, use the existing avatar
+      profile.avatar = initialProfile.avatar;
+    }
+
     const user = await userController.updateUser(profile);
-    console.log(user);
+    
     if (user === "User not found") {
       alert("Update failed");
     } else {
@@ -48,17 +61,47 @@ const MyProfile = ({ navigation, route }) => {
     };
   }
 
-  const selectFiles = async () => {
+  const layFile = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: 'image/*', // Chọn file ảnh
         multiple: false, // Cho phép chọn nhiều file
       });
 
-      setSelectedFiles(result.assets || [result]); // Sử dụng `assets` nếu chọn nhiều file, hoặc lưu thông tin của file đơn
-      console.log("Selected files:", result.assets || [result]);
+      const formData = new FormData();
+      formData.append('file', {
+        uri: result.uri,
+        type: 'image/jpeg',
+        name: result.name || 'image.jpg',
+      });
+      formData.append('upload_preset', 'fbizj8rm'); // Preset upload
+      formData.append('cloud_name', 'dx0blzlhd'); // Cloud name của bạn
+      return formData;
     } catch (error) {
       console.error("Error picking document:", error);
+    }
+  };
+
+  console.log(layFile);
+
+  const uploadImage = async (formData) => {
+    try {
+      const response = await axios.post(
+        'https://api.cloudinary.com/v1_1/dx0blzlhd/image/upload',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      // console.log('Upload successful:', response.data);
+      setImageUrl(response.data.secure_url); // Lưu URL của ảnh đã tải lên
+    } catch (error) {
+      console.error('Upload failed:', error);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -77,7 +120,7 @@ const MyProfile = ({ navigation, route }) => {
             <Text className="mx-4 text-xl font-bold">My profile</Text>
           </View>
           <View className="items-center justify-center">
-            <TouchableOpacity disabled={!isEdit} onPress={selectFiles} className="w-28 h-28 rounded-full border-2 border-[#167F71] items-center justify-center">
+            <TouchableOpacity disabled={!isEdit} onPress={layFile} className="w-28 h-28 rounded-full border-2 border-[#167F71] items-center justify-center">
               {profile.avatar ? (
                 <Image className="w-full h-full rounded-full" source={{ uri: profile.avatar }} />
               ) : (
