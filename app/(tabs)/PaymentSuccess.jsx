@@ -35,7 +35,7 @@ const PaymentSuccess = ({ navigation, route }) => {
                 </View>
                 <View className="flex-row justify-between items-center my-2">
                     <Text className="text-base font-bold">Category:</Text>
-                    <Text className="text-base">{course.category}</Text>
+                    <Text className="text-base">{course.category.name}</Text>
                 </View>
             </View>
 
