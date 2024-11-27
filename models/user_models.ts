@@ -7,7 +7,7 @@ const userModels = {
           // console.log("11111");
           
           const response = await axios.post(
-            "http://10.0.2.2:8080/api/v1/users/login",
+            "http://192.168.1.176:8080/api/v1/users/login",
             {
               email,
               password,
@@ -35,7 +35,7 @@ const userModels = {
     },
     getUserById: async (userId: string) => {
         try {
-            const response = await axios.get(`http://10.0.2.2:8080/api/v1/users/${userId}`);
+            const response = await axios.get(`http://192.168.1.176:8080/api/v1/users/${userId}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -52,7 +52,7 @@ const userModels = {
     },
     updateUser: async (data: any) => {
         try {
-            const response = await axios.put(`http://10.0.2.2:8080/api/v1/users/update/${data.id}`, data);
+            const response = await axios.put(`http://192.168.1.176:8080/api/v1/users/update/${data.id}`, data);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -70,7 +70,7 @@ const userModels = {
     register: async (email: string, password: string, role: boolean) => {
       try {
         const response = await axios.post(
-          "http://10.0.2.2:8080/api/v1/users/register",
+          "http://192.168.1.176:8080/api/v1/users/register",
           {
             email,
             password,

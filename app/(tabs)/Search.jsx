@@ -97,7 +97,7 @@ const Search = ({navigation}) => {
           renderItem={({item})=>{
             return (
               <RecommendComponent item={item} onPress={() => {
-                navigation.navigate('MyCourseDetail', {course:item})
+                navigation.navigate('CourseDetail', {course:item})
               }}/>
             )
           }}

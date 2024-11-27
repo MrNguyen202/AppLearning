@@ -9,26 +9,28 @@ const LessonComponent = (...props) => {
   const[loading, setLoading] = useState(false)
   
   useEffect(() => {
-    const fetchLessonStatuses = async () => {
-      const updatedSectionsData = await Promise.all(
-        section.map(async (section) => {
-          const updatedLessons = await Promise.all(
-            section.lessons.map(async (lesson) => {
-              const res = await userLessonController.checkStatus(5, lesson.id);
-              lesson.status = res;
-              return lesson;
-            })
-          );
-          section.lessons = updatedLessons; // Cập nhật lại lessons trong section
-          return section; // Trả về section đã cập nhật
-        })
-      );
-  
-      // Cập nhật state với dữ liệu mới
-      setSection(updatedSectionsData);
-    };
-  
-    fetchLessonStatuses();
+    if(props[0].page == "MyCourseDetail"){
+      const fetchLessonStatuses = async () => {
+        const updatedSectionsData = await Promise.all(
+          section.map(async (section) => {
+            const updatedLessons = await Promise.all(
+              section.lessons.map(async (lesson) => {
+                const res = await userLessonController.checkStatus(5, lesson.id);
+                lesson.status = res;
+                return lesson;
+              })
+            );
+            section.lessons = updatedLessons; // Cập nhật lại lessons trong section
+            return section; // Trả về section đã cập nhật
+          })
+        );
+    
+        // Cập nhật state với dữ liệu mới
+        setSection(updatedSectionsData);
+      };
+    
+      fetchLessonStatuses();
+    }
   }, []);
 
 
@@ -51,7 +53,7 @@ const LessonComponent = (...props) => {
                   <View key={item.id}>
                     <TouchableOpacity
                       className={` ml-3 mr-3 mt-4 flex-row justify-between items-center mb-5`}
-                      onPress={() => props[0].onPress(item)}
+                      onPress={() => props[0].page=="MyCourseDetail"? props[0].onPress(item):alert("You can't access this lesson")}
                     >
                       <View className={`flex-row items-center`}>
                         <View
