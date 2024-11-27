@@ -29,6 +29,7 @@ const TabsLayout = ({ navigation, route }) => {
 
   return (
     <Tab.Navigator initialRouteName='Search' screenOptions={{
+      tabBarHideOnKeyboard: true,
       tabBarShowLabel: false,
       tabBarActiveTintColor: '#265AE8',
       tabBarStyle: {

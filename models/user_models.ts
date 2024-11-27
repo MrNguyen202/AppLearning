@@ -4,8 +4,6 @@ import axios from "axios";
 const userModels = {
     checkLogin: async (email: string, password: string) => {
         try {
-          // console.log("11111");
-          
           const response = await axios.post(
             "http://192.168.1.176:8080/api/v1/users/login",
             {
@@ -52,7 +50,7 @@ const userModels = {
     },
     updateUser: async (data: any) => {
         try {
-            const response = await axios.put(`http://192.168.1.176:8080/api/v1/users/update/${data.id}`, data);
+            const response = await axios.put(`http://10.0.2.2:8080/api/v1/users/update`, data);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -95,7 +93,7 @@ const userModels = {
           throw new Error(error.message);
         }
       }
-    }            
+    }           
 };
 
 export default userModels;

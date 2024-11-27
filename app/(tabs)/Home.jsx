@@ -13,11 +13,13 @@ import { useState } from 'react'
 import courseController from '../../controllers/course_controller'
 import categoryController from '../../controllers/category_controller'
 import teacherController from '../../controllers/teacher_controller'
+import { useSelector } from 'react-redux'
 
 const Home = ({ navigation, route }) => {
 
     //Dữ liệu user đang đăng nhập
-    const [user, setUser] = useState(route.params.user)
+    const user = useSelector((state) => state.user.user);
+    // console.log(user);
 
     //Dữ liệu category
     const [category, setCategory] = useState([])
@@ -75,11 +77,12 @@ const Home = ({ navigation, route }) => {
         navigation.navigate('CourseDetail', { course: it });
     }
 
+    console.log(user.name);
     return (
         <View>
             <View className={"bg-[#00B2FF] h-28 justify-evenly p-5"}>
                 <View className={"flex-row justify-between items-center"}>
-                    <Text className={"text-2xl font-semibold text-white"}>Hello, {user.name.split(' ').pop()}!</Text>
+                    <Text className={"text-2xl font-semibold text-white"}>Hello, {user.name}!</Text>
                     <View className={"flex-row w-20 justify-evenly"}>
                         <TouchableOpacity>
                             <Image source={Icon.notification} className={"w-8 h-8"}></Image>

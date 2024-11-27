@@ -2,6 +2,8 @@ import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'expo-router'
 import Icon from '../../constants/Icon'
+import { useDispatch  } from 'react-redux'
+import { setUser } from '../reuduxToolkit/userSlice'
 
 import userController from '../../controllers/user_controller'
 
@@ -9,23 +11,21 @@ const Login = ({ navigation }) => {
   const [username, setUsername] = useState("marketta.hodkiewicz@yahoo.com")
   const [password, setPassword] = useState("nw6ot462e")
 
+  const dispatch = useDispatch()
+
   const handleLogin = async () => {
-    // console.log("111111");
-    
     if (!username || !password) {
       alert("Please fill in all fields");
       
     } else {
-      // console.log("111");
-      
       const user = await userController.checkLogin(username, password);
       
       if (user === "Login failed") {
         alert("Username or password is incorrect");
       } else {
-        console.log("1111");
-        
-        navigation.navigate("Tabs", { user: user });
+        dispatch(setUser(user));
+        // navigation.navigate("Tabs", { user: user });
+        navigation.navigate("Tabs");
       }
     }
   };
