@@ -37,6 +37,7 @@ const courseController = {
   },
   getSearchCourses: async (search: string) => {
     try {
+      // console.log("modle", search);
       const data = await courseModels.getSearchCourses(search);
       return data;
     } catch (error) {

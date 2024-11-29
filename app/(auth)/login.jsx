@@ -8,8 +8,8 @@ import { setUser } from '../reuduxToolkit/userSlice'
 import userController from '../../controllers/user_controller'
 
 const Login = ({ navigation }) => {
-  const [username, setUsername] = useState("marketta.hodkiewicz@yahoo.com")
-  const [password, setPassword] = useState("nw6ot462e")
+  const [username, setUsername] = useState("a@gmail.com")
+  const [password, setPassword] = useState("123")
 
   const dispatch = useDispatch()
 
@@ -18,11 +18,14 @@ const Login = ({ navigation }) => {
       alert("Please fill in all fields");
       
     } else {
+      // console.log("1111")
+
       const user = await userController.checkLogin(username, password);
-      
+      // console.log(user)
       if (user === "Login failed") {
         alert("Username or password is incorrect");
       } else {
+        console.log(user);
         dispatch(setUser(user));
         // navigation.navigate("Tabs", { user: user });
         navigation.navigate("Tabs");

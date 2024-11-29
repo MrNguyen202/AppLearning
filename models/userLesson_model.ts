@@ -4,7 +4,7 @@ const userLessonModels = {
         try {
             // Gửi yêu cầu GET tới API để lấy trạng thái bài học cho user cụ thể
             const response = await axios.get(
-                `http://192.168.1.176:8080/api/v1/lesson-user/status/${userId}/${lessonId}`  
+                `http://192.168.102.155:8080/api/v1/lesson-user/status/${userId}/${lessonId}`  
 
               );
       
@@ -27,9 +27,8 @@ const userLessonModels = {
     updateStatus: async (userId: string, lessonId: string) => {
       try {
         // Gửi yêu cầu PUT tới API để cập nhật trạng thái bài học cho user cụ thể\
-        console.log(userId +" abc "+ lessonId);
         const response = await axios.put(
-          'http://192.168.1.176:8080/api/v1/lesson-user/update-status',
+          'http://192.168.102.155:8080/api/v1/lesson-user/update-status',
           {
             userId: userId,
             lessonId: lessonId,

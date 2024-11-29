@@ -3,7 +3,7 @@ import axios from "axios";
 const categoryModels = {
     getCategory: async () => {
         try{
-          const response = await axios.get("http://192.168.1.176:8080/api/v1/categories",);
+          const response = await axios.get("http://192.168.102.155:8080/api/v1/categories",);
           return response.data;
         }catch (error: any) {
           if (error.response) {

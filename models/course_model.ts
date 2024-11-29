@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const url = "http://192.168.1.176:8080/api/v1/users/login"
-// const url  = "http://192.168.1.176:8080/api/v1/users/login"
+const url = "http://192.168.102.155:8080/api/v1/users/login"
+// const url  = "http://192.168.102.155:8080/api/v1/users/login"
 
 const courseModels = {
   getCourses: async () => {
     try {
       const response = await axios.get(
-        "http://192.168.1.176:8080/api/v1/courses", 
+        "http://192.168.102.155:8080/api/v1/courses", 
       );
       return response.data; 
     } catch (error: any) {
@@ -27,7 +27,7 @@ const courseModels = {
   getCourseById: async (id: string | number) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.176:8080/api/v1/courses/${id}`, // API để lấy thông tin khóa học cụ thể
+        `http://192.168.102.155:8080/api/v1/courses/${id}`, // API để lấy thông tin khóa học cụ thể
       );
       // console.log(response.data)
       return response.data; // Trả về dữ liệu của khóa học
@@ -47,7 +47,7 @@ const courseModels = {
     getCoursesTop: async (top: number) => {
         try {
           const response = await axios.get(
-            `http://192.168.1.176:8080/api/v1/courses/top/${top}`, 
+            `http://192.168.102.155:8080/api/v1/courses/top/${top}`, 
           );
           return response.data; 
         } catch (error: any) {
@@ -65,8 +65,9 @@ const courseModels = {
       },
   getSearchCourses: async (keyword: string) => {
     try {
+      // console.log(keyword)
       const response = await axios.get(
-        `http://192.168.1.176:8080/api/v1/courses/search?name=${keyword}`, 
+        `http://192.168.102.155:8080/api/v1/courses/search?name=${keyword}`, 
       );
       return response.data; 
     } catch (error: any) {
@@ -85,7 +86,7 @@ const courseModels = {
     // Lấy chi tiết khóa học theo teacherId
     getCoursesByTeacherId: async (teacherId: string) => {
         try {
-            const response = await axios.get(`http://192.168.1.176:8080/api/v1/courses/teacher/${teacherId}`);
+            const response = await axios.get(`http://192.168.102.155:8080/api/v1/courses/teacher/${teacherId}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -104,7 +105,7 @@ const courseModels = {
     //my course
     getMyCourses: async (userId: string) => {
         try {
-            const response = await axios.get(`http://192.168.1.176:8080/api/v1/courses/student/${userId}`);
+            const response = await axios.get(`http://192.168.102.155:8080/api/v1/courses/student/${userId}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
