@@ -309,8 +309,9 @@ const MyCourseDetail =({ navigation, route }) => {
     );
   }
 
-  const LoadVideo = React.memo(() =>{
+  const LoadVideo = (() =>{
     const [playing, setPlaying] = useState(false);
+    const [status, setStatus] = useState(false);
 
     const onStateChange = useCallback( async (state) => {
       if (state === "ended") {
@@ -319,7 +320,6 @@ const MyCourseDetail =({ navigation, route }) => {
           alert("Video has finished")
         }
         setPlaying(false);
-
       }
     }, []);
   
