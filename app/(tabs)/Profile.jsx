@@ -138,7 +138,7 @@ const Profile = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
         <View className="w-[112] h-28 rounded-full bg-slate-400 absolute top-[52] justify-center items-center">
-          <Image source={{ uri: !user.avatar ? "https://res.cloudinary.com/dx0blzlhd/image/upload/v1732300438/appELearning/user-new_ahi9wj.jpg" : route.params.user.avatar }} className="w-28 h-28 rounded-full" />
+          <Image source={{ uri: !user.avatar ? "https://res.cloudinary.com/dx0blzlhd/image/upload/v1732300438/appELearning/user-new_ahi9wj.jpg" : user.avatar }} className="w-28 h-28 rounded-full" />
         </View>
       </View>
       <View className="w-[100%]">

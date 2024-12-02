@@ -43,7 +43,7 @@ const PaymentMethod = ({ navigation, route }) => {
 
   const handleBuyNow = () => {
     const bill = {
-      courseId: course.id,
+      courseId: course.course.id,
       userId: 3,
       paymentId: payment[indexSelect].id,
       status: "paid",
@@ -56,14 +56,6 @@ const PaymentMethod = ({ navigation, route }) => {
     });
   };
 
-  if (loading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
   if (!course || !payment.length) {
     return (
       <View className="flex-1 justify-center items-center">
@@ -72,6 +64,7 @@ const PaymentMethod = ({ navigation, route }) => {
     );
   }
 
+  console.log(course)
   return (
     <View className="container">
       <View className="h-16 justify-end mx-6">
@@ -85,7 +78,7 @@ const PaymentMethod = ({ navigation, route }) => {
       <View className="mx-6 my-6">
         <View className="flex-row justify-between">
           <Image
-            source={{ uri: course.image }}
+            source={{ uri: course.course.image }}
             className="w-28 h-24 rounded-md"
           />
           <View className="w-60 justify-between">
@@ -94,12 +87,12 @@ const PaymentMethod = ({ navigation, route }) => {
               ellipsizeMode="tail"
               className="text-lg font-bold"
             >
-              {course.title}
+              {course.course.title}
             </Text>
-            <Text className="text-sm">{course.teacher}</Text>
+            <Text className="text-sm">{course.teacherName}</Text>
             <View className="items-end">
               <Text className="text-lg font-bold">
-                $ {course.price.toFixed(2)}
+                $ {course.course.price.toFixed(2)}
               </Text>
             </View>
           </View>

@@ -3,7 +3,7 @@ import axios from "axios";
 const teacherModel = {
     getTeachers: async () => {
         try {
-            const response = await axios.get("http://192.168.102.155:8080/api/v1/teachers/popular",);
+            const response = await axios.get("http://10.0.2.2:8080/api/v1/teachers/popular",);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -20,7 +20,7 @@ const teacherModel = {
     },
     getTeacherById: async (teacherId: string) => {
         try {
-            const response = await axios.get(`http://192.168.102.155:8080/api/v1/teachers/${teacherId}`);
+            const response = await axios.get(`http://10.0.2.2:8080/api/v1/teachers/${teacherId}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
