@@ -1,19 +1,15 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, FlatList } from 'react-native'
 import React, { useEffect } from 'react'
 import Icon from '../../constants/Icon'
-import { Link } from 'expo-router'
 import CategoryComponent from '../../components/CategoryComponent'
-import CategoryPopularComponent from '../../components/CategoryPopularComponent'
 import CourseWatching from '../../components/CourseWatching'
 import TeacherPopularComponent from '../../components/TeacherPopularComponent'
-import Category from '../../assets/data/Category'
-import Course from '../../assets/data/Course'
-import User from '../../assets/data/User'
 import { useState } from 'react'
 import courseController from '../../controllers/course_controller'
 import categoryController from '../../controllers/category_controller'
 import teacherController from '../../controllers/teacher_controller'
 import { useSelector } from 'react-redux'
+import NotificationBanner from '../../components/NotificationBanner'
 
 const Home = ({ navigation, route }) => {
 
@@ -77,9 +73,15 @@ const Home = ({ navigation, route }) => {
         navigation.navigate('CourseDetail', { course: it });
     }
 
-    console.log(user.name);
+    const handleUpdate = () => {
+        navigation.navigate('MyProfile');
+    };
+
     return (
         <View>
+            <View>
+                <NotificationBanner onUpdate={handleUpdate} />
+            </View>
             <View className={"bg-[#00B2FF] h-28 justify-evenly p-5"}>
                 <View className={"flex-row justify-between items-center"}>
                     <Text className={"text-2xl font-semibold text-white"}>Hello, {user.name}!</Text>
