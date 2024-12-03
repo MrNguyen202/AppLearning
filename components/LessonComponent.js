@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Icon from "../constants/Icon";
 import userLessonController from '../controllers/userLesson_controller'
 import lessons from "../assets/data/Lesson";
@@ -15,7 +15,7 @@ const LessonComponent = (...props) => {
           section.map(async (section) => {
             const updatedLessons = await Promise.all(
               section.lessons.map(async (lesson) => {
-                const res = await userLessonController.checkStatus(5, lesson.id);
+                const res = await userLessonController.checkStatus(props[0].userId, lesson.id);
                 lesson.status = res;
                 return lesson;
               })
@@ -33,7 +33,13 @@ const LessonComponent = (...props) => {
     }
   }, []);
 
-
+  const handlePress = useCallback((item) => {
+    if (props[0].page === "MyCourseDetail") {
+      props[0].onPress(item);
+    } else {
+      alert("You can't access this lesson");
+    }
+  }, [props]);
 
   return  (
     <View className={`mt-5 ml-4 bg-white mr-4 rounded-2xl `}>
@@ -53,7 +59,7 @@ const LessonComponent = (...props) => {
                   <View key={item.id}>
                     <TouchableOpacity
                       className={` ml-3 mr-3 mt-4 flex-row justify-between items-center mb-5`}
-                      onPress={() => props[0].page=="MyCourseDetail"? props[0].onPress(item):alert("You can't access this lesson")}
+                      onPress={() => props[0].page=="MyCourseDetail"? handlePress(item):alert("You can't access this lesson")}
                     >
                       <View className={`flex-row items-center`}>
                         <View

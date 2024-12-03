@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-} from "react-native";
+import { View, Text, ScrollView, Image, ActivityIndicator } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,10 +11,8 @@ import feedback from "../../assets/data/FeedBack";
 import CommentComponent from "../../components/CommentComponent";
 import Button from "../../components/Button";
 import LessonComponent from "../../components/LessonComponent";
-import { Video } from 'expo-av'
 import YoutubeIframe from "react-native-youtube-iframe";
-
-
+import courseController from "../../controllers/course_controller";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,30 +22,24 @@ const CourseDetail = ({ navigation, route }) => {
   const [lesson, setLesson] = useState([]);
   const [feedbackCourse, setFeedbackCourse] = useState([]);
   const [status, setStatus] = React.useState({});
-  const [course, setCourse] = useState(route.params.course);
-  const [video, setVideo] = useState(course.course.sections[0].lessons[0].url);
-  
-
-  
+  const [course, setCourse] = useState(null);
+  const [video, setVideo] = useState();
 
   useEffect(() => {
     const initializeData = async () => {
+      try {
+        const data = await courseController.getCourseById(route.params.course);
+        // console.log(data);
+        setCourse(data);
+        setVideo(data.course.sections[0].lessons[0].url)
 
-      const filteredFeedback = feedback.filter(
-        (value) => value.course === course.course_id
-      );
-      setFeedbackCourse(filteredFeedback);
-
+      } catch (error) {
+        console.error("Failed to fetch course:", error);
+      }
     };
 
     initializeData();
-  }, [
-    sections,
-    enroll_courses,
-    lessons,
-    feedback,
-    course,
-  ]);
+  }, []);
 
 
   function OverView() {
@@ -68,7 +55,7 @@ const CourseDetail = ({ navigation, route }) => {
     return (
       <ScrollView
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }}
-      style={{ alignSelf: 'stretch' }} 
+      style={{ alignSelf: 'stretch' }}
               className={`bg-white pl-4 pr-4 pt-6`}
       >
         <Text className={`font-bold mb-4 text-lg`}>Introduction</Text>
@@ -165,8 +152,7 @@ const CourseDetail = ({ navigation, route }) => {
   const togglePlaying = useCallback(() => {
     setPlaying((prev) => !prev);
   }, []);
-  return (
-    
+  return course ? (
     <View className={`bg-white flex-1`}>
       {/* <Video
         ref={video}
@@ -183,6 +169,7 @@ const CourseDetail = ({ navigation, route }) => {
         play={playing}
         videoId={video}
         onChangeState={onStateChange}
+        
       />
       <View className={`ml-4 mt-3 mr-4`}>
         <Text
@@ -255,6 +242,10 @@ const CourseDetail = ({ navigation, route }) => {
           }}
         />
       </View>
+    </View>
+  ) : (
+    <View className="flex-1 justify-center items-center">
+     <ActivityIndicator size="large" color="#0000ff" />
     </View>
   );
 };

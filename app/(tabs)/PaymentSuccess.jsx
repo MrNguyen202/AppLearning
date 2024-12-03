@@ -31,18 +31,18 @@ const PaymentSuccess = ({ navigation, route }) => {
                 </View>
                 <View className="flex-row justify-between items-center my-2">
                     <Text className="text-base font-bold">Course:</Text>
-                    <Text numberOfLines={1} ellipsizeMode="tail" className="text-base w-3/4 text-right">{course.title}</Text>
+                    <Text numberOfLines={1} ellipsizeMode="tail" className="text-base w-3/4 text-right">{course.course.title}</Text>
                 </View>
                 <View className="flex-row justify-between items-center my-2">
                     <Text className="text-base font-bold">Category:</Text>
-                    <Text className="text-base">{course.category.name}</Text>
+                    <Text className="text-base">{course.course.category.name}</Text>
                 </View>
             </View>
 
             <View className="mx-6 my-10">
                 <View className="flex-row justify-between items-center my-2">
                     <Text className="text-base font-bold">Price:</Text>
-                    <Text className="text-base">${course.price}</Text>
+                    <Text className="text-base">${course.course.price}</Text>
                 </View>
                 <View className="flex-row justify-between items-center my-2">
                     <Text className="text-base font-bold">Date:</Text>

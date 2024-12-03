@@ -27,7 +27,6 @@ const userLessonModels = {
     updateStatus: async (userId: string, lessonId: string) => {
       try {
         // Gửi yêu cầu PUT tới API để cập nhật trạng thái bài học cho user cụ thể\
-        console.log(userId +" abc "+ lessonId);
         const response = await axios.put(
           'http://10.0.2.2:8080/api/v1/lesson-user/update-status',
           {

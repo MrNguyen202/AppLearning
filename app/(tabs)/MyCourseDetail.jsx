@@ -9,6 +9,7 @@ import {
   Platform,
   StyleSheet,
   TextInput,
+  ActivityIndicator
 } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -23,27 +24,48 @@ import { Video } from "expo-av";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
-import questions from "../../assets/data/Question";
-import answers from "../../assets/data/Answer";
 import users from "../../assets/data/User";
 import YoutubeIframe from "react-native-youtube-iframe";
-import userLessonController from '../../controllers/userLesson_controller'
+import userLessonController from "../../controllers/userLesson_controller";
+import courseController from "../../controllers/course_controller";
+import { useSelector } from 'react-redux'
 
 
 const Tab = createMaterialTopTabNavigator();
 
-const MyCourseDetail =({ navigation, route }) => {
-  const [status, setStatus] = React.useState({});
-  const [course, setCourse] = useState(route.params.course);
-  const [section, setSection] = useState(course.course.sections);
-
+const MyCourseDetail = ({ navigation, route }) => {
+  const [section, setSection] = useState(null);
+  const user = useSelector((state) => state.user.user);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [questionCourse, setQuestionCourse] = useState([]);
   const [answerQuestion, setAnswerQuestion] = useState([]);
-  const [video, setVideo] = useState(course.course.sections[0].lessons[0].url);
-  
+  const [video, setVideo] = useState();
+  const [course, setCourse] = useState(null);
+  const [playing, setPlaying] = useState(false);
 
 
+  useEffect(() => {
+    const initializeData = async () => {
+      try {
+        const data = await courseController.getCourseById(route.params.course);
+        setCourse(data);
+        setVideo(await data.course.sections[0].lessons[0]);
+      
+      } catch (error) {
+        console.error("Failed to fetch course:", error);
+      }
+    };
+
+    initializeData();
+  }, []);
+
+
+
+  // useEffect(() => {
+  //   if (video) {
+  //     console.log(video)
+  //   }
+  // }, [video]);
 
   // useEffect(() => {
   //   const filterQuestion = questions.filter(
@@ -60,11 +82,6 @@ const MyCourseDetail =({ navigation, route }) => {
   //     setAnswerQuestion(answer);
   //   }
   // }, []);
-
-  const student = enroll_courses.reduce(
-    (count, value) => (value.course === course.course_id ? count + 1 : count),
-    0
-  );
 
   const selectFiles = async () => {
     try {
@@ -235,18 +252,25 @@ const MyCourseDetail =({ navigation, route }) => {
     );
   }
 
+  const handlePress = useCallback((item) => {
+    setVideo(item);
+  }, []);
+
   function Lessons() {
     return (
       <ScrollView
         className={`bg-white flex-1 rounded-2xl`}
-        contentContainerStyle={{ flexGrow: 1}}
+        contentContainerStyle={{ flexGrow: 1 }}
         style={{ alignSelf: "stretch" }}
       >
         <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
-          <LessonComponent item={section} status={0} page="MyCourseDetail" onPress={(item) => {
-            // console.log(item)
-            setVideo(item)
-          }} />
+          <LessonComponent
+            item={course.course.sections}
+            status={0}
+            page="MyCourseDetail"
+            onPress={ handlePress}
+            userId={user.id}
+          />
         </View>
       </ScrollView>
     );
@@ -309,38 +333,34 @@ const MyCourseDetail =({ navigation, route }) => {
     );
   }
 
-  const LoadVideo = (() =>{
-    const [playing, setPlaying] = useState(false);
-    const [status, setStatus] = useState(false);
-
-    const onStateChange = useCallback( async (state) => {
-      if (state === "ended") {
-         const res = await userLessonController.updateStatus(5, video.id) 
-        if(res){
-          alert("Video has finished")
-        }
-        setPlaying(false);
+  const onStateChange = async (state) => {
+    if(state === "started") {
+      setPlaying(true);
+    }
+    if (state === "ended") {
+      const res = await userLessonController.updateStatus(user.id, video.id);
+      if (res) {
+        alert("Video has finished");
       }
-    }, []);
-  
-    const togglePlaying = useCallback(() => {
-      setPlaying((prev) => !prev);
-    }, []);
+      setPlaying(false);
+    }
+  };
 
-    return(
+
+  const togglePlaying = useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
+
+  // console.log(video)
+
+  return video ? (
+    <View className={`bg-white flex-1`}>
       <YoutubeIframe
         height={200}
         play={playing}
         videoId={video.url}
         onChangeState={onStateChange}
       />
-    )
-  })
-
-  
-  return (
-    <View className={`bg-white flex-1`}>
-      <LoadVideo/>
       <View className={`ml-4 mt-3 mr-4`}>
         <Text
           className={` text-white bg-[#26C4E8] rounded text-xs pl-2 pr-2 pt-1 pb-1 font-bold w-1/4 text-center `}
@@ -401,6 +421,10 @@ const MyCourseDetail =({ navigation, route }) => {
           </Tab.Navigator>
         </NavigationContainer>
       </ScrollView>
+    </View>
+  ) : (
+    <View className="flex-1 justify-center items-center">
+      <ActivityIndicator size="large" color="#0000ff" />
     </View>
   );
 };

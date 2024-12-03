@@ -18,11 +18,14 @@ const Login = ({ navigation }) => {
       alert("Please fill in all fields");
       
     } else {
+      // console.log("1111")
+
       const user = await userController.checkLogin(username, password);
-      
+      // console.log(user)
       if (user === "Login failed") {
         alert("Username or password is incorrect");
       } else {
+        console.log(user);
         dispatch(setUser(user));
         // navigation.navigate("Tabs", { user: user });
         navigation.navigate("Tabs");

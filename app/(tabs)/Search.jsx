@@ -47,7 +47,7 @@ const Search = ({navigation}) => {
         <View>
         
           <Button bgColor='#265AE8' width='60%' height={40} size={20} valTxt='Search' txtColor={"text-white"} onPress={() => {
-            navigation.navigate('SearchResult',{txtSearch})
+            navigation.navigate('SearchResult',{txtSearch: txtSearch})
           }}/>
         </View>
       </View>
@@ -71,7 +71,12 @@ const Search = ({navigation}) => {
           renderItem={({item})=>{
             // console.log(item)
             return (
-              <TouchableOpacity className={`flex-row items-end justify-between border border-gray-200 mt-2 pl-2 pr-2 pb-2 rounded-md`}>
+              <TouchableOpacity className={`flex-row items-end justify-between border border-gray-200 mt-2 pl-2 pr-2 pb-2 rounded-md`}
+                onPress={() => {
+                  
+                  navigation.navigate('SearchResult',{txtSearch: item.name})
+                }}
+              >
                 <View className={`flex-row items-center mt-3`}>
                   <Image source={{uri: item.image}} className={`w-7 h-7`} />
                   <Text className={`pl-4 text-lg font-light`}>{item.name}</Text>
@@ -97,7 +102,7 @@ const Search = ({navigation}) => {
           renderItem={({item})=>{
             return (
               <RecommendComponent item={item} onPress={() => {
-                navigation.navigate('CourseDetail', {course:item})
+                navigation.navigate('CourseDetail', {course:item.course.id})
               }}/>
             )
           }}

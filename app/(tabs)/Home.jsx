@@ -69,7 +69,7 @@ const Home = ({ navigation, route }) => {
 
     //Hàm chuyển hướng đến trang CourseDetail
     const handleGetCourse = (it) => {
-        console.log(it);
+        // console.log(it);
         navigation.navigate('CourseDetail', { course: it });
     }
 
@@ -125,7 +125,10 @@ const Home = ({ navigation, route }) => {
                         <FlatList className="mx-6 h-48"
                             data={category}
                             renderItem={({ item }) => (
-                                <CategoryComponent item={item} />
+                                <CategoryComponent item={item} onPress={() => {
+                  
+                                    navigation.navigate('SearchResult',{txtSearch: item.name})
+                                  }} />
                             )}
                             numColumns={2}
                             columnWrapperStyle={{ justifyContent: 'space-between' }}
