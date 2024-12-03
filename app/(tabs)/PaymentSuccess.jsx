@@ -2,7 +2,12 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import Icon from "../../constants/Icon";
 
+import { useSelector } from 'react-redux'
+
 const PaymentSuccess = ({ navigation, route }) => {
+
+    //Dữ liệu user đang đăng nhập
+    const user = useSelector((state) => state.user.user);
 
     const [course, setCourse] = useState(route.params.course);
     const [payment, setPayment] = useState(route.params.payment);
@@ -23,11 +28,11 @@ const PaymentSuccess = ({ navigation, route }) => {
             <View className="mx-6 my-10">
                 <View className="flex-row justify-between items-center my-2">
                     <Text className="text-base font-bold">Name:</Text>
-                    <Text className="text-base"></Text>
+                    <Text className="text-base">{user.name}</Text>
                 </View>
                 <View className="flex-row justify-between items-center my-2">
                     <Text className="text-base font-bold">Email:</Text>
-                    <Text className="text-base"></Text>
+                    <Text className="text-base">{user.email_contact}</Text>
                 </View>
                 <View className="flex-row justify-between items-center my-2">
                     <Text className="text-base font-bold">Course:</Text>

@@ -24,6 +24,8 @@ const MyProfile = ({ navigation, route }) => {
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
 
+  // console.log(profile);
+
   // Hàm xử lý cập nhật giá trị
   const handleInputChange = (key, value) => {
     setProfile((prevProfile) => ({
@@ -92,7 +94,7 @@ const MyProfile = ({ navigation, route }) => {
         }
       );
 
-      console.log(response)
+      // console.log(response)
 
       if (response.data.secure_url) {
         setUploading(false);
@@ -173,8 +175,8 @@ const MyProfile = ({ navigation, route }) => {
               <Text className="mr-2 w-32 text-lg font-bold">Email:</Text>
               <TextInput
                 className="text-lg border-b border-gray-400 flex-1 text-black"
-                value={profile.email}
-                onChangeText={(value) => handleInputChange("email", value)}
+                value={profile.email_contact}
+                onChangeText={(value) => handleInputChange("email_contact", value)}
                 editable={isEdit}
 
                 selectTextOnFocus={true}
