@@ -79,9 +79,11 @@ const Home = ({ navigation, route }) => {
 
     return (
         <View>
+            {user.status === "NO" ? (
             <View>
                 <NotificationBanner onUpdate={handleUpdate} />
             </View>
+            ) : ""}
             <View className={"bg-[#00B2FF] h-28 justify-evenly p-5"}>
                 <View className={"flex-row justify-between items-center"}>
                     <Text className={"text-2xl font-semibold text-white"}>Hello, {user.name}!</Text>

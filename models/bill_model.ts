@@ -4,7 +4,7 @@ const billModels = {
   addBill: async (bill: any) => {
     try {
       // Gửi yêu cầu POST tới endpoint thêm bill
-      const response = await axios.post("http://192.168.1.176:8080/api/v1/bills", bill);
+      const response = await axios.post("http://10.0.2.2:8080/api/v1/bills", bill);
       return response.data; // Trả về dữ liệu từ server (bill đã được thêm)
     } catch (error: any) {
       if (error.response) {
