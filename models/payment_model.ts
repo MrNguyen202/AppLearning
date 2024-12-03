@@ -4,7 +4,7 @@ const paymentModels = {
   getPayments: async () => {
     try {
       // Gửi request GET tới endpoint API lấy danh sách payments
-      const response = await axios.get("http://192.168.1.176:8080/api/v1/payments");
+      const response = await axios.get("http://10.0.2.2:8080/api/v1/payments");
       return response.data;
     } catch (error: any) {
       if (error.response) {

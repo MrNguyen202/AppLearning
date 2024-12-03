@@ -8,8 +8,8 @@ import { setUser } from '../reuduxToolkit/userSlice'
 import userController from '../../controllers/user_controller'
 
 const Login = ({ navigation }) => {
-  const [username, setUsername] = useState("marketta.hodkiewicz@yahoo.com")
-  const [password, setPassword] = useState("nw6ot462e")
+  const [username, setUsername] = useState("a@gmail.com")
+  const [password, setPassword] = useState("123")
 
   const dispatch = useDispatch()
 

@@ -19,11 +19,10 @@ const MyProfile = ({ navigation, route }) => {
   const [initialProfile, setInitialProfile] = useState(user);
   const [isEdit, setIsEdit] = useState(false);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
-  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const [document, setDocument] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-
-  // console.log(imageUrl);
 
   // Hàm xử lý cập nhật giá trị
   const handleInputChange = (key, value) => {
@@ -41,18 +40,8 @@ const MyProfile = ({ navigation, route }) => {
 
   //update profile
   const handleUpdateProfile = async () => {
-    if (selectedFiles.length > 0) {
-      await uploadImageToCloudinary();
-      if (imageUrl) {
-        profile.avatar = imageUrl; // Update avatar with the new image URL
-      }
-    } else {
-      // If no new image, use the existing avatar
-      profile.avatar = initialProfile.avatar;
-    }
-
+    profile.status = "YES";
     const user = await userController.updateUser(profile);
-    
     if (user === "User not found") {
       alert("Update failed");
     } else {
@@ -61,30 +50,37 @@ const MyProfile = ({ navigation, route }) => {
     };
   }
 
-  const layFile = async () => {
+  const pickImage = async () => {
     try {
+      // Mở bộ chọn tài liệu và chỉ cho phép chọn file ảnh duy nhất
       const result = await DocumentPicker.getDocumentAsync({
-        type: 'image/*', // Chọn file ảnh
-        multiple: false, // Cho phép chọn nhiều file
+        type: 'image/*',
+        multiple: false,  // Chỉ cho phép chọn file ảnh
       });
 
-      const formData = new FormData();
-      formData.append('file', {
-        uri: result.uri,
-        type: 'image/jpeg',
-        name: result.name || 'image.jpg',
-      });
-      formData.append('upload_preset', 'fbizj8rm'); // Preset upload
-      formData.append('cloud_name', 'dx0blzlhd'); // Cloud name của bạn
-      return formData;
+      if (result.type !== 'cancel') {
+        setDocument(result);  // Lưu thông tin file ảnh đã chọn
+        uploadImageToCloudinary(result.uri);  // Upload ảnh lên Cloudinary
+      }
     } catch (error) {
-      console.error("Error picking document:", error);
+      console.log('DocumentPicker Error:', error);
     }
   };
 
-  console.log(layFile);
+  const uploadImageToCloudinary = async (uri) => {
+    setUploading(true);
 
-  const uploadImage = async (formData) => {
+    const formData = new FormData();
+    formData.append('file', {
+      uri,
+      name: 'photo.jpg',  // Tên ảnh (có thể lấy từ result.name nếu muốn)
+      type: 'image/jpeg',  // Loại file (có thể thay đổi theo loại ảnh)
+    });
+    formData.append('upload_preset', 'fbizj8rm'); // Tên preset upload của bạn
+    formData.append('cloud_name', 'dx0blzlhd'); // Tên Cloudinary của bạn
+
+    console.log(JSON.stringify(formData));
+
     try {
       const response = await axios.post(
         'https://api.cloudinary.com/v1_1/dx0blzlhd/image/upload',
@@ -96,14 +92,18 @@ const MyProfile = ({ navigation, route }) => {
         }
       );
 
-      // console.log('Upload successful:', response.data);
-      setImageUrl(response.data.secure_url); // Lưu URL của ảnh đã tải lên
+      console.log(response)
+
+      if (response.data.secure_url) {
+        setUploading(false);
+        setImageUrl(response.data.secure_url);  // Lưu URL ảnh sau khi upload thành công
+      }
     } catch (error) {
-      console.error('Upload failed:', error);
-    } finally {
       setUploading(false);
+      console.log('Upload to Cloudinary failed:', error.response || error.message || error);
     }
   };
+
 
   return (
     <KeyboardAwareScrollView
@@ -120,7 +120,7 @@ const MyProfile = ({ navigation, route }) => {
             <Text className="mx-4 text-xl font-bold">My profile</Text>
           </View>
           <View className="items-center justify-center">
-            <TouchableOpacity disabled={!isEdit} onPress={layFile} className="w-28 h-28 rounded-full border-2 border-[#167F71] items-center justify-center">
+            <TouchableOpacity disabled={!isEdit} onPress={pickImage} className="w-28 h-28 rounded-full border-2 border-[#167F71] items-center justify-center">
               {profile.avatar ? (
                 <Image className="w-full h-full rounded-full" source={{ uri: profile.avatar }} />
               ) : (
@@ -161,7 +161,7 @@ const MyProfile = ({ navigation, route }) => {
               <Text className="mr-2 w-32 text-lg font-bold">Date of birth:</Text>
               <TextInput
                 className="text-lg border-b border-gray-400 flex-1 text-black"
-                value={new Date(profile.date_of_birth).toLocaleDateString('en-GB')}
+                value={profile.date_of_birth}
                 onChangeText={(value) => handleInputChange("date_of_birth", value)}
                 editable={isEdit}
                 selectTextOnFocus={true}
@@ -201,7 +201,7 @@ const MyProfile = ({ navigation, route }) => {
                 <Text className="text-white text-lg font-bold">Save</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={handleCancel} className="w-40 h-12 bg-red-500 rounded-lg items-center justify-center">
-                <Text className="text-black text-lg font-bold">Cancel</Text>
+                <Text className="text-white text-lg font-bold">Cancel</Text>
               </TouchableOpacity>
             </View>
           ) : (

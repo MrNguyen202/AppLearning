@@ -61,7 +61,7 @@ const MyCourses = ({ navigation, route }) => {
 
   return (
     <View>
-      <View className="justify-center items-center h-12">
+      <View className="justify-center items-center h-24">
         <Text className="text-[21px] font-bold">My Course</Text>
       </View>
       <View className="items-center">
