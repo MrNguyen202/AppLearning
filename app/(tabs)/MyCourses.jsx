@@ -80,7 +80,7 @@ const MyCourses = ({ navigation, route }) => {
           <Text className={`${status === 'ongoing' ? 'text-white' : 'text-black'} text-[17px] font-bold`}>Ongoing</Text>
         </TouchableOpacity>
       </View>
-      <View className="h-[575] items-center">
+      <View className="h-[530] items-center">
         <FlatList
           data={status === 'completed' ? myCoursesCompleted : myCoursesOngoing}
           keyExtractor={(item) => item.courseId}
