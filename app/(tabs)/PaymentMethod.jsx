@@ -11,12 +11,15 @@ import RadioButton from "../../components/RadioButton";
 import courseController from "../../controllers/course_controller";
 import paymentController from "../../controllers/payment_controller";
 import billController from "../../controllers/bill_controller";
+import { useSelector } from "react-redux";
 
 const PaymentMethod = ({ navigation, route }) => {
   const [course, setCourse] = useState(null);
   const [indexSelect, setIndexSelect] = useState(0);
   const [payment, setPayment] = useState([]);
   const [loading, setLoading] = useState(true);
+  const user = useSelector((state) => state.user.user);
+
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -44,7 +47,7 @@ const PaymentMethod = ({ navigation, route }) => {
   const handleBuyNow = () => {
     const bill = {
       courseId: course.course.id,
-      userId: 3,
+      userId: user.id,
       paymentId: payment[indexSelect].id,
       status: "paid",
       createdDate: new Date(),

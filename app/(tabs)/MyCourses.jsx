@@ -30,7 +30,7 @@ const MyCourses = ({ navigation, route }) => {
   useEffect(() => {
     const fetchData = async () => {
       const foundUser = await courseController.getMyCourses(user.id)
-      setMyCoursesCompleted(foundUser.filter((item) => item.progress === 100))
+      setMyCoursesCompleted(foundUser.filter((item) => (item.totalLessonComplete*100)/item.totalLesson===100))
     }
     fetchData();
     if (isFocused) { // Chỉ fetch khi màn hình được focus
@@ -41,7 +41,7 @@ const MyCourses = ({ navigation, route }) => {
   useEffect(() => {
     const fetchData = async () => {
       const foundUser = await courseController.getMyCourses(user.id)
-      setMyCoursesOngoing(foundUser.filter((item) => item.progress < 100))
+      setMyCoursesOngoing(foundUser.filter((item) => (item.totalLessonComplete*100)/item.totalLesson<100))
     }
     fetchData();
     if (isFocused) { // Chỉ fetch khi
