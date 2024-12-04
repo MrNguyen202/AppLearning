@@ -64,11 +64,7 @@ const Search = ({navigation}) => {
       <View>
         <View className={`flex-row items-center justify-between mt-6`}>
           <Text className={`font-bold text-lg`}>Categories</Text>
-          <TouchableOpacity >
-            <Text className={`text-cyan-500`}>
-            View more
-            </Text>
-          </TouchableOpacity>
+
         </View>
         <FlatList
           data={lstCategory}
@@ -95,11 +91,6 @@ const Search = ({navigation}) => {
       <ScrollView>
         <View className={`flex-row items-center justify-between mt-6`}>
           <Text className={`font-bold text-lg`}>Recommend for you</Text>
-          <TouchableOpacity >
-            <Text className={`text-cyan-500`}>
-            View more
-            </Text>
-          </TouchableOpacity>
         </View>
         <FlatList
           data={lstCourse}

@@ -32,7 +32,7 @@ const Profile = ({ navigation, route }) => {
       const course = await courseController.getMyCourses(user.id)
       setCourses(course)
       setCompletedCourses(course.filter((item) => (item.totalLessonComplete*100)/item.totalLesson===100))
-      setOngoingCourses(course.filter((item) => (item.totalLessonComplete*100)/item.totalLesson<100))
+      setOngoingCourses(course.filter((item) => (item.totalLessonComplete*100)/item.totalLesson < 100))
     }
     fetchData()
     if(isFocused){

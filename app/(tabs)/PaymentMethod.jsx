@@ -67,7 +67,7 @@ const PaymentMethod = ({ navigation, route }) => {
     );
   }
 
-  console.log(course)
+  // console.log(course)
   return (
     <View className="container">
       <View className="h-16 justify-end mx-6">
