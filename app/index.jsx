@@ -3,13 +3,17 @@ import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import TabsLayout from "./(tabs)/_layout";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "./(auth)/login";
+import Login from "./(auth)/Login";
 import Signup from "./(auth)/signup";
-const Stack = createNativeStackNavigator();
 import CourseDetail from "./(tabs)/CourseDetail";
 import MyCourseDetail from "./(tabs)/MyCourseDetail";
+import MyProfile from "./(tabs)/MyProfile";
 import Icon from "../constants/Icon";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import store from "./reuduxToolkit/store";
+
+const Stack = createNativeStackNavigator();
 
 const index = () => {
   const [status, setStatus] = useState(false);
@@ -20,7 +24,7 @@ const index = () => {
         <TouchableOpacity
           onPress={() => {
             // console.log(navigation)
-            navigation.navigate("Search");
+            navigation.goBack();
           }}
         >
           <Image source={Icon.arrowLeft} className={``} />
@@ -40,59 +44,76 @@ const index = () => {
     );
   };
   return (
-    <SafeAreaProvider>
-      <NavigationContainer independent={true}>
-        <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <NavigationContainer independent={true}>
+          <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
 
-        <Stack.Navigator initialRouteName="MyCourseDetail">
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={({ navigation }) => ({
-              headerShown: false,
-              // statusBarTranslucent: true
-            })}
-          />
-          <Stack.Screen name="Signup" component={Signup} />
-          <Stack.Screen
-            name="CourseDetail"
-            component={CourseDetail}
-            options={({ navigation }) => ({
-              title: "",
-              tabBarButton: () => null,
-              // headerShown:false
-              // statusBarTranslucent: true,
-              statusBarColor: "black",
-              statusBarHidden: true,
-              headerTitle: () => <Header navigation={navigation} />,
-              headerBackVisible: false,
-            })}
-          />
-          <Stack.Screen
-            name="MyCourseDetail"
-            component={MyCourseDetail}
-            options={({ navigation }) => ({
-              title: "",
-              tabBarButton: () => null,
-              // headerShown:false
-              // statusBarTranslucent: true,
-              statusBarColor: "black",
-              statusBarHidden: true,
-              headerTitle: () => <Header navigation={navigation} />,
-              headerBackVisible: false,
-            })}
-          />
-          <Stack.Screen
-            name="Tabs"
-            component={TabsLayout}
-            options={{
-              headerShown: false,
-              statusBarColor: "black",
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={({ navigation }) => ({
+                headerShown: false,
+                // statusBarTranslucent: true
+              })}
+            />
+            <Stack.Screen name="Signup"
+              component={Signup}
+              options={({ navigation }) => ({
+                headerShown: false,
+                // statusBarTranslucent: true
+              })} />
+            <Stack.Screen
+              name="CourseDetail"
+              component={CourseDetail}
+              options={({ navigation }) => ({
+                title: "",
+                tabBarButton: () => null,
+                // headerShown:false
+                // statusBarTranslucent: true,
+                statusBarColor: "black",
+                statusBarHidden: true,
+                headerTitle: () => <Header navigation={navigation} />,
+                headerBackVisible: false,
+              })}
+            />
+            <Stack.Screen
+              name="MyCourseDetail"
+              component={MyCourseDetail}
+              options={({ navigation }) => ({
+                title: "",
+                tabBarButton: () => null,
+                // headerShown:false
+                // statusBarTranslucent: true,
+                statusBarColor: "black",
+                statusBarHidden: true,
+                headerTitle: () => <Header navigation={navigation} />,
+                headerBackVisible: false,
+              })}
+            />
+            <Stack.Screen
+              name="MyProfile"
+              initialParams={{ user: null }}
+              component={MyProfile}
+              options={({ navigation }) => ({
+                headerShown: false,
+              })}
+            />
+            <Stack.Screen
+              name="Tabs"
+              component={TabsLayout}
+              initialParams={{ user: null }}
+              options={{
+                headerShown: false,
+                statusBarColor: "black",
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </Provider>
+
   );
 };
 
