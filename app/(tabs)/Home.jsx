@@ -44,7 +44,7 @@ const Home = ({ navigation, route }) => {
     //Hàm lấy dữ liệu khóa học
     useEffect(() => {
         const fetchData = async () => {
-            const courses = await courseController.getCourses()
+            const courses = await courseController.getTopCourseUserNoCart(user.id)
             setCourseMostWatching(courses)
             setWatchingInApp(courses)
         }

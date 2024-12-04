@@ -59,6 +59,11 @@ const courseController = {
         const data = await courseModels.getRecommendCourses(userId);
         // console.log(data);
         return data;
+    },
+    getTopCourseUserNoCart: async (userId: string) => {
+        const data = await courseModels.getTopCourseUserNoCart(userId);
+        // console.log(data);
+        return data;
     }
 };
 
