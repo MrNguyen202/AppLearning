@@ -11,8 +11,7 @@ import RadioButton from "../../components/RadioButton";
 import courseController from "../../controllers/course_controller";
 import paymentController from "../../controllers/payment_controller";
 import billController from "../../controllers/bill_controller";
-import { useSelector } from 'react-redux'
-
+import { useSelector } from "react-redux";
 
 const PaymentMethod = ({ navigation, route }) => {
   const [course, setCourse] = useState(null);
