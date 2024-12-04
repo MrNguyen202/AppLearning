@@ -31,8 +31,9 @@ const CourseDetail = ({ navigation, route }) => {
         const data = await courseController.getCourseById(route.params.course);
         // console.log(data);
         setCourse(data);
-        setVideo(data.course.sections[0].lessons[0].url)
+        setVideo(data.course.sections[0].lessons[0].url);
 
+        setFeedbackCourse(data.course.feedbacks);
       } catch (error) {
         console.error("Failed to fetch course:", error);
       }
@@ -40,7 +41,6 @@ const CourseDetail = ({ navigation, route }) => {
 
     initializeData();
   }, []);
-
 
   function OverView() {
     const [status, setStatus] = useState(true);
@@ -54,9 +54,9 @@ const CourseDetail = ({ navigation, route }) => {
 
     return (
       <ScrollView
-      contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }}
-      style={{ alignSelf: 'stretch' }}
-              className={`bg-white pl-4 pr-4 pt-6`}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }}
+        style={{ alignSelf: "stretch" }}
+        className={`bg-white pl-4 pr-4 pt-6`}
       >
         <Text className={`font-bold mb-4 text-lg`}>Introduction</Text>
         <Text className={`text-[#666666] mb-4`}>
@@ -116,27 +116,36 @@ const CourseDetail = ({ navigation, route }) => {
           return <CommentComponent key={index} item={value} />;
         })}
         <View className={`mb-5`}></View>
-        <Button
-          border={"border"}
-          txtColor={"text-[#265AE8]"}
-          height={60}
-          width={375}
-          valTxt={status ? "Load more" : "Hide"}
-          onPress={() => {
-            setStatus(!status);
-          }}
-        />
+        {showFeedback.length < 3 ? null : (
+          <Button
+            border={"border"}
+            txtColor={"text-[#265AE8]"}
+            height={60}
+            width={375}
+            valTxt={status ? "Load more" : "Hide"}
+            onPress={() => {
+              setStatus(!status);
+            }}
+          />
+        )}
       </ScrollView>
     );
   }
 
   function Lessons() {
     return (
-      <ScrollView className={`bg-white flex-1 rounded-2xl`} contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
-      style={{ alignSelf: 'stretch' }} >
-          <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
-            <LessonComponent item={course.course.sections} status={0} page="CourseDetail" />
-        </View>
+      <ScrollView
+        className={`bg-white flex-1 rounded-2xl`}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+        style={{ alignSelf: "stretch" }}
+      >
+        <View className="pl-4 pr-4 pt-5 rounded-2xl shadow-md shadow-[#d4d3d3] pb-6 ">
+          <LessonComponent
+            item={course.course.sections}
+            status={0}
+            page="CourseDetail"
+            />
+          </View>
       </ScrollView>
     );
   }
@@ -169,7 +178,6 @@ const CourseDetail = ({ navigation, route }) => {
         play={playing}
         videoId={video}
         onChangeState={onStateChange}
-        
       />
       <View className={`ml-4 mt-3 mr-4`}>
         <Text
@@ -184,15 +192,13 @@ const CourseDetail = ({ navigation, route }) => {
           />
           <Text className={`font-bold`}>{course.teacherName}</Text>
         </View>
-        <Text className={`font-bold text-xl `}>
-          {course.course.title}
-        </Text>
+        <Text className={`font-bold text-xl `}>{course.course.title}</Text>
         <View className={`justify-between flex-row mt-2`}>
           <View className={`flex-row items-center`}>
             <Image source={Icon.clock} />
             <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
-              {Math.floor(course.totalMinutes / 60)} hour {Math.floor((course.totalMinutes % 60))}{" "}
-              min
+              {Math.floor(course.totalMinutes / 60)} hour{" "}
+              {Math.floor(course.totalMinutes % 60)} min
             </Text>
           </View>
           <View className={`flex-row items-center`}>
@@ -206,7 +212,9 @@ const CourseDetail = ({ navigation, route }) => {
           <View className={`flex-row items-center`}>
             <Image source={Icon.starNoFill} />
             <Text className={`ml-2 text-[#666666] text-xs opacity-60`}>
-            {String(course.course.rating).includes(".") ? course.course.rating : `${course.course.rating}.0`}
+              {String(course.course.rating).includes(".")
+                ? course.course.rating
+                : `${course.course.rating}.0`}
             </Text>
           </View>
           <View className={`flex-row items-center`}>
@@ -216,7 +224,11 @@ const CourseDetail = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
-        <Text className={`mb-3`}>{course.course.description.length > 80?course.course.description.slice(0,75) +"..." : course.course.description}</Text>
+        <Text className={`mb-3`}>
+          {course.course.description.length > 80
+            ? course.course.description.slice(0, 75) + "..."
+            : course.course.description}
+        </Text>
       </View>
       <ScrollView contentContainerStyle={{ height: "100%", flexGrow: 1 }}>
         <NavigationContainer independent={true}>
@@ -227,9 +239,7 @@ const CourseDetail = ({ navigation, route }) => {
         </NavigationContainer>
       </ScrollView>
       <View className="absolute bottom-0 inset-x-0 border-t border-[#DDDDDD] py-4 bg-[#F5F9FF] flex-row justify-between pl-8 pr-8 items-center">
-        <Text className=" text-black font-bold">
-          $ {course.course.price}
-        </Text>
+        <Text className=" text-black font-bold">$ {course.course.price}</Text>
         <Button
           bgColor={"#265AE8"}
           width={141}
@@ -238,14 +248,16 @@ const CourseDetail = ({ navigation, route }) => {
           txtColor={"text-white"}
           valTxt={"Add to cart"}
           onPress={() => {
-            navigation.navigate("PaymentMethod", {courseId: course.course.id});
+            navigation.navigate("PaymentMethod", {
+              courseId: course.course.id,
+            });
           }}
         />
       </View>
     </View>
   ) : (
     <View className="flex-1 justify-center items-center">
-     <ActivityIndicator size="large" color="#0000ff" />
+      <ActivityIndicator size="large" color="#0000ff" />
     </View>
   );
 };

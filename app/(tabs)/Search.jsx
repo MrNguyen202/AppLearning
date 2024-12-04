@@ -8,6 +8,8 @@ import SearchComponent from '../../components/SearchComponent'
 import RecommendComponent from '../../components/RecommendComponent'
 import categoryController from '../../controllers/category_controller'
 import courseController from '../../controllers/course_controller'
+import { useSelector } from 'react-redux'
+
 
 
 const Search = ({navigation}) => {
@@ -15,6 +17,8 @@ const Search = ({navigation}) => {
   const [txtSearch, setTxtSearch] = useState('')
   const [lstCategory, setLstCategory] = useState([])
   const [lstCourse, setLstCourse] = useState([])
+  const user = useSelector((state) => state.user.user);
+
 
 
   const renderHotTopics = (lstTopic) => {
@@ -30,7 +34,7 @@ const Search = ({navigation}) => {
     const fetchData = async () => {
       const categories = await categoryController.getCategories()
       setLstCategory(categories)
-      const courses = await courseController.getCoursesTop(4,1)
+      const courses = await courseController.getRecommendCourses(user.id)
       setLstCourse(courses)
     }
     fetchData()

@@ -47,10 +47,11 @@ const MyCourseDetail = ({ navigation, route }) => {
   useEffect(() => {
     const initializeData = async () => {
       try {
-        const data = await courseController.getCourseById(route.params.course);
+        const data = await courseController.getCourseById(route.params.course); 
         setCourse(data);
+        console.log(data)
         setVideo(await data.course.sections[0].lessons[0]);
-      
+        setQuestionCourse(data.course.questions);
       } catch (error) {
         console.error("Failed to fetch course:", error);
       }
@@ -277,6 +278,7 @@ const MyCourseDetail = ({ navigation, route }) => {
   }
 
   function QA() {
+    const [comment, setComment] = useState("");
     return (
       <ScrollView
         className={`bg-white flex-1 rounded-2xl`}
@@ -284,26 +286,19 @@ const MyCourseDetail = ({ navigation, route }) => {
         style={{ alignSelf: "stretch" }}
       >
         {questionCourse.map((quest) => {
-          var anw = answerQuestion.find(
-            ({ question }) => question === quest.question_id
-          );
-          // console.log(anw)
           return (
             <View key={quest.question_id} className="bg-blue p-4 mb-2">
               <View className="flex-row items-center mb-2">
                 <Image
-                  source={require("../../assets/images/avatar.png")}
+                  source={{ uri: quest.user.avatar }}
                   className="w-10 h-10 rounded-full mr-3"
                 />
                 <View>
                   <Text className="font-bold text-base">
-                    {
-                      users.find(({ user_id }) => user_id === quest.user)
-                        .fullname
-                    }
+                    {quest.user.name}
                   </Text>
                   <Text className="text-gray-500 text-sm">
-                    {quest.comment_date}
+                    {quest.createdDate.slice(0, 10)}  
                   </Text>
                 </View>
               </View>
@@ -311,21 +306,23 @@ const MyCourseDetail = ({ navigation, route }) => {
               <TouchableOpacity>
                 <Text className="text-blue-600 font-medium mb-1">Reply</Text>
               </TouchableOpacity>
-              {anw != undefined ? {} : null}
             </View>
           );
         })}
-        <View className="flex-row items-center bg-gray-200 p-2 border-t border-gray-300">
+        <View className="absolute bottom-0 inset-x-0 flex-row items-center bg-gray-200 p-2 border-t border-gray-300">
           <Image
-            source={{ uri: "https://v0.dev/placeholder.svg" }}
+            source={{ uri: user.avatar }}
             className="w-8 h-8 rounded-full mr-2"
           />
           <TextInput
             className="flex-1 bg-white rounded-full px-4 py-2 text-base"
             placeholder="Write a Q&A"
             placeholderTextColor="#999"
+            onChangeText={(text) => setComment(text)}
           />
-          <TouchableOpacity className="bg-blue-600 w-8 h-8 rounded-full justify-center items-center ml-2">
+          <TouchableOpacity className="bg-blue-600 w-8 h-8 rounded-full justify-center items-center ml-2" onPress={() => {
+            
+          }}>
             <Text className="text-white text-lg">➤</Text>
           </TouchableOpacity>
         </View>
