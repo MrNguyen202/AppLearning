@@ -191,7 +191,7 @@ const MyCourseDetail = ({ navigation, route }) => {
           <Text className={`font-bold mb-4 text-lg`}>
             Description for project
           </Text>
-          <Text className={`text-[#666666] mb-4`}>{course.description}</Text>
+          <Text className={`text-[#666666] mb-4`}>{course.course.description}</Text>
         </View>
         <View>
           <Text className={`font-bold mb-4 text-lg`}>
@@ -287,7 +287,7 @@ const MyCourseDetail = ({ navigation, route }) => {
       >
         {questionCourse.map((quest) => {
           return (
-            <View key={quest.question_id} className="bg-blue p-4 mb-2">
+            <View key={quest.id} className="bg-blue p-4 mb-2">
               <View className="flex-row items-center mb-2">
                 <Image
                   source={{ uri: quest.user.avatar }}

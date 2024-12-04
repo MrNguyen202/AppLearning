@@ -163,9 +163,6 @@ const Home = ({ navigation, route }) => {
                         <Text className="w-40 text-lg font-bold">
                             Most watching
                         </Text>
-                        <TouchableOpacity>
-                            <Text className="text-gray-500">See more</Text>
-                        </TouchableOpacity>
                     </View>
                     <View className="mx-6">
                         <FlatList
@@ -183,9 +180,7 @@ const Home = ({ navigation, route }) => {
                         <Text className="w-40 text-lg font-bold">
                             Our top popular teacher this month
                         </Text>
-                        <TouchableOpacity>
-                            <Text className="text-gray-500">See more</Text>
-                        </TouchableOpacity>
+
                     </View>
                     <View className="mx-6">
                         <FlatList
@@ -203,9 +198,7 @@ const Home = ({ navigation, route }) => {
                         <Text className="w-40 text-lg font-bold">
                             Most watching in month
                         </Text>
-                        <TouchableOpacity>
-                            <Text className="text-gray-500">See more</Text>
-                        </TouchableOpacity>
+
                     </View>
                     <View className="mx-6">
                         <FlatList
